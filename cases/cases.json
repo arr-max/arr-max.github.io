@@ -1,5 +1,16 @@
 [
   {
+    "id": "case_11",
+    "title": "Крыльцо",
+    "titleEn": "Porch",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["after_1.jpg", "after_2.jpg", "during_1.jpg", "during_2.jpg", "before_1.jpg", "before_2.jpg"]
+  },
+  {
     "id": "case_1",
     "title": "Балкон",
     "titleEn": "Balcony",
@@ -108,17 +119,6 @@
     "duration": "—",
     "cost": "— Р",
     "photos": ["photo.jpg"]
-  },
-  {
-    "id": "case_11",
-    "title": "Крыльцо",
-    "titleEn": "Porch",
-    "location": "Укажите локацию",
-    "area": "— кв. м",
-    "material": "TerraWay / укажите материал",
-    "duration": "—",
-    "cost": "— Р",
-    "photos": ["after_1.jpg", "after_2.jpg", "during_1.jpg", "during_2.jpg", "before_1.jpg", "before_2.jpg"]
   },
   {
     "id": "case_12_asta",
