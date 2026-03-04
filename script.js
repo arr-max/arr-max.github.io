@@ -123,6 +123,18 @@
       return getLang();
     }
 
+    function getCaseTitle(c, lang) {
+      return (lang === 'en' && c.titleEn) ? c.titleEn : c.title;
+    }
+
+    function updateCaseTabsLang() {
+      var lang = getLangForCase();
+      tabsEl.querySelectorAll('.cases-tabs__tab').forEach(function (tab, i) {
+        var c = cases[i];
+        if (c) tab.textContent = getCaseTitle(c, lang);
+      });
+    }
+
     function renderCase(index) {
       var c = cases[index];
       if (!c) return;
@@ -141,7 +153,7 @@
         var locationPart = (c.location && c.location !== 'Укажите локацию' && c.location !== 'Specify location')
           ? t.inLocation + c.location
           : '';
-        titleEl.textContent = c.title + locationPart;
+        titleEl.textContent = getCaseTitle(c, lang) + locationPart;
       }
 
       if (metaArea) metaArea.textContent = translateCaseValue(c.area, 'area', lang);
@@ -202,7 +214,10 @@
     }
 
     window.ARRMAX_REFRESH_CASE = function () {
-      if (cases.length) renderCase(currentIndex);
+      if (cases.length) {
+        updateCaseTabsLang();
+        renderCase(currentIndex);
+      }
     };
 
     var casesUrl = new URL('cases/cases.json', window.location.href).href;
@@ -231,7 +246,7 @@
           tab.setAttribute('aria-selected', i === 0);
           tab.setAttribute('aria-controls', 'case-panel');
           tab.id = 'case-tab-' + i;
-          tab.textContent = c.title;
+          tab.textContent = getCaseTitle(c, getLangForCase());
           tab.dataset.index = String(i);
           tabsEl.appendChild(tab);
         });

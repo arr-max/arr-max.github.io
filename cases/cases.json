@@ -2,6 +2,7 @@
   {
     "id": "case_1",
     "title": "Объект 1",
+    "titleEn": "Object 1",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -12,6 +13,7 @@
   {
     "id": "case_2",
     "title": "Объект 2",
+    "titleEn": "Object 2",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -22,6 +24,7 @@
   {
     "id": "case_3",
     "title": "Объект 3",
+    "titleEn": "Object 3",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -32,6 +35,7 @@
   {
     "id": "case_4",
     "title": "Объект 4",
+    "titleEn": "Object 4",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -42,6 +46,7 @@
   {
     "id": "case_5",
     "title": "Объект 5",
+    "titleEn": "Object 5",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -52,6 +57,7 @@
   {
     "id": "case_6",
     "title": "Объект 6",
+    "titleEn": "Object 6",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -62,6 +68,7 @@
   {
     "id": "case_7",
     "title": "Объект 7",
+    "titleEn": "Object 7",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -72,6 +79,7 @@
   {
     "id": "case_8",
     "title": "Объект 8",
+    "titleEn": "Object 8",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -82,6 +90,7 @@
   {
     "id": "case_9",
     "title": "Объект 9",
+    "titleEn": "Object 9",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -92,6 +101,7 @@
   {
     "id": "case_10",
     "title": "Объект 10",
+    "titleEn": "Object 10",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -102,6 +112,7 @@
   {
     "id": "case_11",
     "title": "Объект 11",
+    "titleEn": "Object 11",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
@@ -112,6 +123,7 @@
   {
     "id": "case_12_asta",
     "title": "Объект Asta",
+    "titleEn": "Object Asta",
     "location": "Укажите локацию",
     "area": "— кв. м",
     "material": "TerraWay / укажите материал",
