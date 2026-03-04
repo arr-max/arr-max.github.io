@@ -261,25 +261,18 @@ a:hover { color: var(--color-accent-hover); }
   margin: 0 0 1.5rem;
 }
 
-.hero__typewriter {
-  font-family: 'Oswald', var(--font-sans);
-  font-weight: 600;
-  font-size: clamp(1.25rem, 3.5vw, 1.65rem);
-  color: #fff;
-  margin: 0 0 1.5rem;
-  min-height: 1.5em;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-  text-shadow: 0 0 20px rgba(232, 212, 138, 0.4);
+/* Typewriter in header (btn-stone) */
+.btn-stone--typewriter .header__typewriter-text {
+  display: inline;
 }
 
-.hero__typewriter-cursor {
+.header__typewriter-cursor {
   display: inline-block;
-  width: 0.12em;
-  height: 1em;
-  margin-left: 2px;
-  background: #e8d48a;
-  vertical-align: -0.12em;
+  width: 2px;
+  height: 0.9em;
+  margin-left: 1px;
+  background: currentColor;
+  vertical-align: -0.1em;
   animation: typewriter-cursor 0.9s step-end infinite;
 }
 
@@ -554,6 +547,40 @@ a:hover { color: var(--color-accent-hover); }
 }
 
 /* ===== Wellbeing (body & self-care) ===== */
+.section--wellbeing {
+  position: relative;
+  background-image: url('body/for_legs.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: #fff;
+}
+
+.section--wellbeing::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 0;
+}
+
+.section--wellbeing .container {
+  position: relative;
+  z-index: 1;
+}
+
+.section--wellbeing .section__title {
+  color: #fff;
+}
+
+.section--wellbeing .section__lead {
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.section--wellbeing .wellbeing-list li {
+  color: rgba(255, 255, 255, 0.95);
+}
+
 .wellbeing-list {
   list-style: none;
   margin: 0;

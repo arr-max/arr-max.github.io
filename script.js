@@ -294,8 +294,8 @@
   }
 
   (function typewriter() {
-    var el = document.querySelector('.hero__typewriter-text');
-    var cursorEl = document.querySelector('.hero__typewriter-cursor');
+    var el = document.querySelector('.header__typewriter-text');
+    var cursorEl = document.querySelector('.header__typewriter-cursor');
     if (!el || !cursorEl) return;
 
     var timeoutId = null;
