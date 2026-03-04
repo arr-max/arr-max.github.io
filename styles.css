@@ -69,6 +69,33 @@ a:hover { color: var(--color-accent-hover); }
   letter-spacing: 0.02em;
 }
 
+.lang-switch {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.lang-switch__btn {
+  padding: 0.35rem 0.5rem;
+  font-size: 1.1rem;
+  line-height: 1;
+  background: transparent;
+  border: 1px solid var(--color-border);
+  border-radius: 6px;
+  cursor: pointer;
+  transition: border-color var(--transition), background var(--transition);
+}
+
+.lang-switch__btn:hover {
+  border-color: var(--color-accent);
+  background: rgba(139, 105, 20, 0.06);
+}
+
+.lang-switch__btn.is-active {
+  border-color: var(--color-accent);
+  background: rgba(139, 105, 20, 0.12);
+}
+
 .btn-stone {
   display: inline-flex;
   align-items: center;
@@ -598,12 +625,27 @@ a:hover { color: var(--color-accent-hover); }
 .case-carousel__slide {
   flex: 0 0 100%;
   height: 100%;
+  position: relative;
 }
 
 .case-carousel__slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
+}
+
+.case-carousel__caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #fff;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
 }
 
 .case-carousel__btn {
@@ -816,6 +858,12 @@ a:hover { color: var(--color-accent-hover); }
   margin-top: 0.5rem;
   padding-top: 0.75rem;
   border-top: 1px solid var(--color-border);
+  }
+
+  .lang-switch__btn {
+    padding: 0.4rem 0.5rem;
+    min-width: 44px;
+    min-height: 44px;
   }
 
   .btn-stone {
