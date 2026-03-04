@@ -1,0 +1,122 @@
+[
+  {
+    "id": "case_1",
+    "title": "Объект 1",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_2",
+    "title": "Объект 2",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_3",
+    "title": "Объект 3",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_4",
+    "title": "Объект 4",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_5",
+    "title": "Объект 5",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_6",
+    "title": "Объект 6",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_7",
+    "title": "Объект 7",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_8",
+    "title": "Объект 8",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_9",
+    "title": "Объект 9",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_10",
+    "title": "Объект 10",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["photo.jpg"]
+  },
+  {
+    "id": "case_11",
+    "title": "Объект 11",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["after_1.jpg", "after_2.jpg", "during_1.jpg", "during_2.jpg", "before_1.jpg", "before_2.jpg"]
+  },
+  {
+    "id": "case_12_asta",
+    "title": "Объект Asta",
+    "location": "Укажите локацию",
+    "area": "— кв. м",
+    "material": "TerraWay / укажите материал",
+    "duration": "—",
+    "cost": "— Р",
+    "photos": ["after.jpg", "before.jpg"]
+  }
+]
