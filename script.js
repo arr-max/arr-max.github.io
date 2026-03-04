@@ -75,8 +75,12 @@
     };
 
     wrap.addEventListener('click', function (e) {
-      var btn = e.target && e.target.closest && e.target.closest('.lang-switch__btn');
-      if (!btn) return;
+      var btn = e.target;
+      while (btn && btn !== wrap) {
+        if (btn.classList && btn.classList.contains('lang-switch__btn')) break;
+        btn = btn.parentElement;
+      }
+      if (!btn || btn === wrap) return;
       var lang = btn.getAttribute('data-lang');
       if (!lang) return;
       e.preventDefault();
@@ -269,7 +273,7 @@
         var errEl = cardEl.querySelector('.case-card__load-err');
         if (errEl) errEl.textContent = t.casesLoadError || 'Не удалось загрузить объекты';
       });
-  })();
+  }
 
   (function () {
     var lang = getLang();
