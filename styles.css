@@ -144,10 +144,15 @@ a:hover { color: var(--color-accent-hover); }
   z-index: 1;
 }
 
-.hero__title,
-.hero__lead,
-.hero__scroll {
-  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
+.hero__panel {
+  background: rgba(44, 40, 37, 0.82);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 2rem 2.25rem;
+  border-radius: 16px;
+  max-width: 36rem;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
 }
 
 .hero__title {
@@ -156,7 +161,7 @@ a:hover { color: var(--color-accent-hover); }
   font-size: clamp(2rem, 5vw, 3.25rem);
   line-height: 1.2;
   color: #fff;
-  margin: 0 0 1.25rem;
+  margin: 0 0 1rem;
   max-width: 18ch;
 }
 
@@ -166,26 +171,65 @@ a:hover { color: var(--color-accent-hover); }
 }
 
 .hero__lead {
-  font-size: 1.15rem;
-  color: rgba(255, 255, 255, 0.98);
+  font-size: 1.1rem;
+  line-height: 1.55;
+  color: rgba(255, 255, 255, 0.95);
   max-width: 42ch;
-  margin: 0 0 2rem;
+  margin: 0 0 1.5rem;
+}
+
+.hero__infographic {
+  list-style: none;
+  margin: 0 0 1.5rem;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem 2rem;
+}
+
+.hero__info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+}
+
+.hero__info-icon {
+  font-size: 1.5rem;
+  line-height: 1;
+}
+
+.hero__info-value {
+  font-weight: 700;
+  font-size: 1.1rem;
+  color: #fff;
+}
+
+.hero__info-label {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.75);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
 }
 
 .hero__actions .btn--outline {
-  border-color: #fff;
+  border-color: rgba(255, 255, 255, 0.7);
   color: #fff;
 }
 
 .hero__actions .btn--outline:hover {
   background: #fff;
   color: var(--color-dark);
+  border-color: #fff;
 }
 
-.hero__actions {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 1rem;
+.hero__scroll {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .btn {
@@ -748,12 +792,26 @@ a:hover { color: var(--color-accent-hover); }
     padding-bottom: 3rem;
   }
 
+  .hero__panel {
+    padding: 1.5rem 1.25rem;
+    border-radius: 12px;
+  }
+
   .hero__title {
     font-size: 1.65rem;
     max-width: none;
   }
 
   .hero__lead {
+    font-size: 1rem;
+  }
+
+  .hero__infographic {
+    gap: 1rem 1.5rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .hero__info-value {
     font-size: 1rem;
   }
 
@@ -872,8 +930,17 @@ a:hover { color: var(--color-accent-hover); }
     padding-top: 4.5rem;
   }
 
+  .hero__panel {
+    padding: 1.25rem 1rem;
+  }
+
   .hero__title {
     font-size: 1.45rem;
+  }
+
+  .hero__infographic {
+    flex-direction: column;
+    gap: 0.75rem;
   }
 
   .case-card__gallery {
