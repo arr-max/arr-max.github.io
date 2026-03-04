@@ -126,19 +126,16 @@ a:hover { color: var(--color-accent-hover); }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.15) 0%, transparent 40%, rgba(0, 0, 0, 0.25) 100%),
-    url('back/photo.jpg') center / cover no-repeat;
+    linear-gradient(180deg, rgba(0, 0, 0, 0.5) 0%, rgba(0, 0, 0, 0.35) 40%, rgba(0, 0, 0, 0.55) 100%),
+    url('back/photo.jpg') center top / cover no-repeat;
   z-index: 0;
 }
 
 .hero__bg::after {
   content: '';
   position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  height: 50%;
-  background: linear-gradient(to top, rgba(44, 40, 37, 0.5), transparent);
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0.25) 0%, transparent 35%, rgba(0, 0, 0, 0.4) 100%);
   pointer-events: none;
 }
 
@@ -148,12 +145,9 @@ a:hover { color: var(--color-accent-hover); }
 }
 
 .hero__title,
-.hero__lead {
-  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
-}
-
-.hero__lead {
-  color: rgba(255, 255, 255, 0.95);
+.hero__lead,
+.hero__scroll {
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.6), 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .hero__title {
@@ -167,15 +161,25 @@ a:hover { color: var(--color-accent-hover); }
 }
 
 .hero__accent {
-  color: var(--color-accent);
+  color: #e8d48a;
   font-style: italic;
 }
 
 .hero__lead {
   font-size: 1.15rem;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.98);
   max-width: 42ch;
   margin: 0 0 2rem;
+}
+
+.hero__actions .btn--outline {
+  border-color: #fff;
+  color: #fff;
+}
+
+.hero__actions .btn--outline:hover {
+  background: #fff;
+  color: var(--color-dark);
 }
 
 .hero__actions {
