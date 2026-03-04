@@ -84,6 +84,16 @@ a:hover { color: var(--color-accent-hover); }
   color: var(--color-accent);
 }
 
+.nav__phone {
+  font-weight: 600;
+  color: var(--color-accent);
+  white-space: nowrap;
+}
+
+.nav__phone:hover {
+  color: var(--color-accent-hover);
+}
+
 .burger {
   display: none;
   flex-direction: column;
@@ -116,8 +126,8 @@ a:hover { color: var(--color-accent-hover); }
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(135deg, rgba(139, 105, 20, 0.06) 0%, transparent 50%),
-    linear-gradient(180deg, var(--color-bg) 0%, var(--color-bg-alt) 100%);
+    linear-gradient(180deg, rgba(44, 40, 37, 0.4) 0%, rgba(44, 40, 37, 0.2) 50%, rgba(44, 40, 37, 0.5) 100%),
+    url('back/photo.jpg') center / cover no-repeat;
   z-index: 0;
 }
 
@@ -137,12 +147,21 @@ a:hover { color: var(--color-accent-hover); }
   z-index: 1;
 }
 
+.hero__title,
+.hero__lead {
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.hero__lead {
+  color: rgba(255, 255, 255, 0.95);
+}
+
 .hero__title {
   font-family: var(--font-display);
   font-weight: 700;
   font-size: clamp(2rem, 5vw, 3.25rem);
   line-height: 1.2;
-  color: var(--color-dark);
+  color: #fff;
   margin: 0 0 1.25rem;
   max-width: 18ch;
 }
@@ -206,7 +225,7 @@ a:hover { color: var(--color-accent-hover); }
   left: 50%;
   transform: translateX(-50%);
   font-size: 0.8rem;
-  color: var(--color-text-muted);
+  color: rgba(255, 255, 255, 0.85);
   letter-spacing: 0.1em;
   text-transform: uppercase;
 }
@@ -214,6 +233,10 @@ a:hover { color: var(--color-accent-hover); }
 /* ===== Sections ===== */
 .section {
   padding: 4.5rem 0;
+}
+
+.section--cases-first {
+  padding-top: 5.5rem;
 }
 
 .section--alt {
@@ -567,10 +590,18 @@ a:hover { color: var(--color-accent-hover); }
   margin: 0 0 0.5rem;
 }
 
-.contact-placeholder {
-  margin-top: 1rem;
-  font-size: 0.9rem;
-  opacity: 0.8;
+.contact-phone {
+  margin-top: 0.75rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+}
+
+.contact-phone a {
+  color: inherit;
+}
+
+.contact-phone a:hover {
+  color: #c9a227;
 }
 
 /* ===== Footer ===== */
