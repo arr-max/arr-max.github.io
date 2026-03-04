@@ -314,7 +314,13 @@
         t.typewriter2,
         t.typewriter3,
         t.typewriter4,
-        t.typewriter5
+        t.typewriter5,
+        t.typewriter6,
+        t.typewriter7,
+        t.typewriter8,
+        t.typewriter9,
+        t.typewriter10,
+        t.typewriter11
       ].filter(Boolean);
     }
 
