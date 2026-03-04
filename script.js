@@ -133,10 +133,12 @@
       var metaDuration = cardEl.querySelector('.case-card__meta--duration .case-card__meta-value');
       var metaCost = cardEl.querySelector('.case-card__meta--cost .case-card__meta-value');
 
-      var locationPart = (c.location && c.location !== 'Укажите локацию' && c.location !== 'Specify location')
-        ? t.inLocation + c.location
-        : '';
-      titleEl.textContent = c.title + locationPart;
+      if (titleEl) {
+        var locationPart = (c.location && c.location !== 'Укажите локацию' && c.location !== 'Specify location')
+          ? t.inLocation + c.location
+          : '';
+        titleEl.textContent = c.title + locationPart;
+      }
 
       if (metaArea) metaArea.textContent = translateCaseValue(c.area, 'area', lang);
       if (metaMaterial) metaMaterial.textContent = translateCaseValue(c.material, 'material', lang);
@@ -145,12 +147,15 @@
       if (metaCost) metaCost.textContent = translateCaseValue(c.cost, 'cost', lang);
 
       var listEl = cardEl.querySelector('.case-carousel__list');
-      var base = 'cases/' + c.id + '/';
+      if (!listEl) return;
+      var photos = Array.isArray(c.photos) ? c.photos : [];
+      var photoList = photos.length ? photos : ['photo.jpg'];
+      var numPhotos = photoList.length;
+      var base = 'cases/' + (c.id || 'case_1') + '/';
       listEl.innerHTML = '';
-      var numPhotos = c.photos.length;
       listEl.style.width = (numPhotos * 100) + '%';
 
-      c.photos.forEach(function (photo) {
+      photoList.forEach(function (photo) {
         var slide = document.createElement('div');
         slide.className = 'case-carousel__slide';
         slide.style.flexBasis = (100 / numPhotos) + '%';
