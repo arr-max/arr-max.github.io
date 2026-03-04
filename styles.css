@@ -623,8 +623,46 @@ a:hover { color: var(--color-accent-hover); }
   border: 1px solid var(--color-border);
 }
 
-.case-card[hidden] {
+.case-card--loading {
+  min-height: 280px;
+  display: grid;
+  place-items: center;
+}
+
+.case-card--loading .case-card__gallery,
+.case-card--loading .case-card__info {
   display: none;
+}
+
+.case-card--loading::before {
+  content: '';
+  width: 32px;
+  height: 32px;
+  border: 3px solid var(--color-border);
+  border-top-color: var(--color-accent);
+  border-radius: 50%;
+  animation: case-spin 0.8s linear infinite;
+}
+
+.case-card[data-load-error="1"]::before {
+  content: none;
+}
+
+.case-card__load-err {
+  display: none;
+  padding: 1rem 2rem;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  grid-column: 1 / -1;
+}
+
+.case-card--loading[data-load-error="1"] .case-card__load-err {
+  display: block;
+}
+
+@keyframes case-spin {
+  to { transform: rotate(360deg); }
 }
 
 .case-card__gallery {

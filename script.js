@@ -237,11 +237,16 @@
           });
         }
 
-        cardEl.hidden = false;
+        cardEl.classList.remove('case-card--loading');
+        cardEl.removeAttribute('data-load-error');
         renderCase(0);
       })
       .catch(function () {
-        cardEl.hidden = true;
+        cardEl.classList.add('case-card--loading');
+        cardEl.setAttribute('data-load-error', '1');
+        var t = getT(getLangForCase());
+        var errEl = cardEl.querySelector('.case-card__load-err');
+        if (errEl) errEl.textContent = t.casesLoadError || 'Не удалось загрузить объекты';
       });
   })();
 
