@@ -5,6 +5,7 @@ window.ARRMAX_I18N = {
     navTerraway: 'TerraWay',
     navCases: 'Кейсы',
     navBenefits: 'Преимущества',
+    navWellbeing: 'Тело',
     navApplications: 'Применение',
     navServices: 'Услуги',
     navContact: 'Контакты',
@@ -97,7 +98,13 @@ window.ARRMAX_I18N = {
     typewriter2: 'Хочу проконсультировать',
     typewriter3: 'Хочу бассейн',
     typewriter4: 'Хочу ковёр на кухню',
-    typewriter5: 'У меня есть вопрос'
+    typewriter5: 'У меня есть вопрос',
+    wellbeingTitle: 'Тело и забота о себе',
+    wellbeingLead: 'Ходить по естественному каменному покрытию полезно для развития тела: стопы получают естественную стимуляцию, улучшается баланс и осанка. Это не только про двор или дорожку — это про любовь к себе и к месту, где вы живёте.',
+    wellbeing1: 'Стопы и голеностоп работают естественно — укрепляются связки и мелкие мышцы.',
+    wellbeing2: 'Баланс и координация: неровность поверхности тренирует чувство равновесия.',
+    wellbeing3: 'Экологичное покрытие под ногами — забота об окружающей среде и о себе.',
+    wellbeing4: 'Любовь к себе начинается с малого: комфортное, безопасное пространство у дома.'
   },
   en: {
     logo: 'Arr-Max Team',
@@ -105,6 +112,7 @@ window.ARRMAX_I18N = {
     navTerraway: 'TerraWay',
     navCases: 'Cases',
     navBenefits: 'Benefits',
+    navWellbeing: 'Wellbeing',
     navApplications: 'Applications',
     navServices: 'Services',
     navContact: 'Contact',
@@ -197,6 +205,12 @@ window.ARRMAX_I18N = {
     typewriter2: 'I want to consult',
     typewriter3: 'I want a pool',
     typewriter4: 'I want a carpet for the kitchen',
-    typewriter5: 'I have a question'
+    typewriter5: 'I have a question',
+    wellbeingTitle: 'Body & self-care',
+    wellbeingLead: 'Walking on natural stone surfaces is good for your body: your feet get gentle stimulation, balance and posture improve. It’s not just about the yard or the path — it’s about loving yourself and the place you call home.',
+    wellbeing1: 'Feet and ankles work naturally — ligaments and small muscles get stronger.',
+    wellbeing2: 'Balance and coordination: the uneven surface trains your sense of equilibrium.',
+    wellbeing3: 'Eco-friendly surface underfoot — care for the environment and for yourself.',
+    wellbeing4: 'Self-care starts small: a comfortable, safe space right outside your door.'
   }
 };
