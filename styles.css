@@ -615,6 +615,7 @@ a:hover { color: var(--color-accent-hover); }
 .case-card {
   display: grid;
   grid-template-columns: 1fr 1fr;
+  grid-template-rows: 1fr;
   gap: 0;
   background: var(--color-surface);
   border-radius: 12px;
@@ -623,9 +624,27 @@ a:hover { color: var(--color-accent-hover); }
   border: 1px solid var(--color-border);
 }
 
+.case-card__gallery {
+  grid-column: 1;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.case-card__info {
+  grid-column: 2;
+  grid-row: 1;
+  min-width: 0;
+}
+
+.case-card__load-err {
+  grid-column: 1 / -1;
+  grid-row: 1;
+  z-index: 2;
+}
+
 .case-card--loading {
   min-height: 280px;
-  display: grid;
+  grid-template-rows: auto;
   place-items: center;
 }
 
@@ -654,7 +673,6 @@ a:hover { color: var(--color-accent-hover); }
   text-align: center;
   color: var(--color-text-muted);
   font-size: 0.95rem;
-  grid-column: 1 / -1;
 }
 
 .case-card--loading[data-load-error="1"] .case-card__load-err {

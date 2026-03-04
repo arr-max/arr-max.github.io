@@ -146,10 +146,13 @@
       var listEl = cardEl.querySelector('.case-carousel__list');
       var base = 'cases/' + c.id + '/';
       listEl.innerHTML = '';
+      var numPhotos = c.photos.length;
+      listEl.style.width = (numPhotos * 100) + '%';
 
       c.photos.forEach(function (photo) {
         var slide = document.createElement('div');
         slide.className = 'case-carousel__slide';
+        slide.style.flexBasis = (100 / numPhotos) + '%';
         var img = document.createElement('img');
         img.src = base + photo;
         img.alt = c.title + ' — ';
@@ -174,7 +177,10 @@
 
     function updateCarousel() {
       var listEl = cardEl.querySelector('.case-carousel__list');
-      if (listEl) listEl.style.transform = 'translateX(-' + currentSlide * 100 + '%)';
+      if (!listEl) return;
+      var total = cases[currentIndex] && cases[currentIndex].photos.length;
+      var pct = total > 0 ? (currentSlide / total) * 100 : 0;
+      listEl.style.transform = 'translateX(-' + pct + '%)';
     }
 
     function updateCarouselButtons() {
