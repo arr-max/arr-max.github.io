@@ -675,8 +675,13 @@ a:hover { color: var(--color-accent-hover); }
   font-size: 0.95rem;
 }
 
-.case-card--loading[data-load-error="1"] .case-card__load-err {
+.case-card[data-load-error="1"] .case-card__load-err {
   display: block;
+}
+
+.case-card[data-load-error="1"] .case-card__gallery,
+.case-card[data-load-error="1"] .case-card__info {
+  display: none;
 }
 
 @keyframes case-spin {

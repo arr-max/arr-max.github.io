@@ -10,7 +10,7 @@ window.ARRMAX_I18N = {
     navContact: 'Контакты',
     navPhone: 'Макс +7 988 768 08 35',
     ariaMenu: 'Меню',
-    casesTitle: 'Наши объекты',
+    casesTitle: 'Наши кейсы',
     casesLead: 'Реальные кейсы: результат, процесс и исходное состояние.',
     casesLoadError: 'Не удалось загрузить объекты. Попробуйте обновить страницу.',
     ariaCaseTabs: 'Выбор объекта',

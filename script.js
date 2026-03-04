@@ -74,14 +74,15 @@
       });
     };
 
-    wrap.querySelectorAll('.lang-switch__btn').forEach(function (btn) {
-      btn.addEventListener('click', function () {
-        var lang = btn.getAttribute('data-lang');
-        if (!lang) return;
-        setLang(lang);
-        applyI18n(lang);
-        updateActive();
-      });
+    wrap.addEventListener('click', function (e) {
+      var btn = e.target && e.target.closest && e.target.closest('.lang-switch__btn');
+      if (!btn) return;
+      var lang = btn.getAttribute('data-lang');
+      if (!lang) return;
+      e.preventDefault();
+      setLang(lang);
+      applyI18n(lang);
+      updateActive();
     });
 
     updateActive();
@@ -195,11 +196,22 @@
       if (cases.length) renderCase(currentIndex);
     };
 
-    fetch('cases/cases.json')
-      .then(function (r) { return r.json(); })
+    var casesUrl = new URL('cases/cases.json', window.location.href).href;
+    fetch(casesUrl)
+      .then(function (r) {
+        if (!r.ok) throw new Error('Fetch failed');
+        return r.json();
+      })
       .then(function (data) {
-        cases = data || [];
-        if (!cases.length) return;
+        cases = Array.isArray(data) ? data : [];
+        cardEl.classList.remove('case-card--loading');
+        cardEl.removeAttribute('data-load-error');
+        if (!cases.length) {
+          cardEl.setAttribute('data-load-error', '1');
+          var errEl = cardEl.querySelector('.case-card__load-err');
+          if (errEl) errEl.textContent = getT(getLangForCase()).casesLoadError || 'Нет объектов';
+          return;
+        }
 
         tabsEl.innerHTML = '';
         cases.forEach(function (c, i) {
@@ -243,8 +255,6 @@
           });
         }
 
-        cardEl.classList.remove('case-card--loading');
-        cardEl.removeAttribute('data-load-error');
         renderCase(0);
       })
       .catch(function () {
