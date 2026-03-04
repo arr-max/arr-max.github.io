@@ -92,7 +92,12 @@ window.ARRMAX_I18N = {
     placeholderMaterial: 'TerraWay / укажите материал',
     placeholderDuration: '—',
     placeholderCost: '— Р',
-    inLocation: ' в '
+    inLocation: ' в ',
+    typewriter1: 'Хочу каменный ковёр',
+    typewriter2: 'Хочу проконсультировать',
+    typewriter3: 'Хочу бассейн',
+    typewriter4: 'Хочу ковёр на кухню',
+    typewriter5: 'У меня есть вопрос'
   },
   en: {
     logo: 'Arr-Max Team',
@@ -187,6 +192,11 @@ window.ARRMAX_I18N = {
     placeholderMaterial: 'TerraWay / specify material',
     placeholderDuration: '—',
     placeholderCost: '—',
-    inLocation: ' in '
+    inLocation: ' in ',
+    typewriter1: 'I want a stone carpet',
+    typewriter2: 'I want to consult',
+    typewriter3: 'I want a pool',
+    typewriter4: 'I want a carpet for the kitchen',
+    typewriter5: 'I have a question'
   }
 };

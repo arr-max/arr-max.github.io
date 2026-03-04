@@ -42,6 +42,9 @@
     if (typeof window.ARRMAX_REFRESH_CASE === 'function') {
       window.ARRMAX_REFRESH_CASE();
     }
+    if (typeof window.ARRMAX_TYPEWRITER_RESTART === 'function') {
+      window.ARRMAX_TYPEWRITER_RESTART();
+    }
   }
 
   function getPhotoLabel(filename, lang) {
@@ -289,6 +292,69 @@
         if (errEl) errEl.textContent = t.casesLoadError || 'Не удалось загрузить объекты';
       });
   }
+
+  (function typewriter() {
+    var el = document.querySelector('.hero__typewriter-text');
+    var cursorEl = document.querySelector('.hero__typewriter-cursor');
+    if (!el || !cursorEl) return;
+
+    var timeoutId = null;
+    var phraseIndex = 0;
+    var charIndex = 0;
+    var isDeleting = false;
+    var TYPING_MS = 90;
+    var DELETING_MS = 50;
+    var PAUSE_AFTER_PHRASE_MS = 2200;
+    var PAUSE_AFTER_DELETE_MS = 400;
+
+    function getPhrases() {
+      var t = getT(getLang());
+      return [
+        t.typewriter1,
+        t.typewriter2,
+        t.typewriter3,
+        t.typewriter4,
+        t.typewriter5
+      ].filter(Boolean);
+    }
+
+    function tick() {
+      var phrases = getPhrases();
+      if (!phrases.length) return;
+      var phrase = phrases[phraseIndex];
+      if (isDeleting) {
+        charIndex--;
+        el.textContent = phrase.slice(0, charIndex);
+        timeoutId = setTimeout(tick, charIndex > 0 ? DELETING_MS : PAUSE_AFTER_DELETE_MS);
+        if (charIndex <= 0) {
+          isDeleting = false;
+          phraseIndex = (phraseIndex + 1) % phrases.length;
+        }
+      } else {
+        charIndex++;
+        el.textContent = phrase.slice(0, charIndex);
+        if (charIndex >= phrase.length) {
+          isDeleting = true;
+          timeoutId = setTimeout(tick, PAUSE_AFTER_PHRASE_MS);
+        } else {
+          timeoutId = setTimeout(tick, TYPING_MS);
+        }
+      }
+    }
+
+    function start() {
+      if (timeoutId) clearTimeout(timeoutId);
+      var phrases = getPhrases();
+      phraseIndex = 0;
+      charIndex = 0;
+      isDeleting = false;
+      el.textContent = '';
+      if (phrases.length) timeoutId = setTimeout(tick, TYPING_MS);
+    }
+
+    window.ARRMAX_TYPEWRITER_RESTART = start;
+    start();
+  })();
 
   (function () {
     var lang = getLang();

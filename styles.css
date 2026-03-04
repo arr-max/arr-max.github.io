@@ -261,6 +261,33 @@ a:hover { color: var(--color-accent-hover); }
   margin: 0 0 1.5rem;
 }
 
+.hero__typewriter {
+  font-family: 'Oswald', var(--font-sans);
+  font-weight: 600;
+  font-size: clamp(1.25rem, 3.5vw, 1.65rem);
+  color: #fff;
+  margin: 0 0 1.5rem;
+  min-height: 1.5em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-shadow: 0 0 20px rgba(232, 212, 138, 0.4);
+}
+
+.hero__typewriter-cursor {
+  display: inline-block;
+  width: 0.12em;
+  height: 1em;
+  margin-left: 2px;
+  background: #e8d48a;
+  vertical-align: -0.12em;
+  animation: typewriter-cursor 0.9s step-end infinite;
+}
+
+@keyframes typewriter-cursor {
+  0%, 50% { opacity: 1; }
+  51%, 100% { opacity: 0; }
+}
+
 .hero__infographic {
   list-style: none;
   margin: 0 0 1.5rem;
