@@ -1,9 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
+  // Initialize 3D visualization
+  const canvas3d = document.getElementById('canvas3d');
+  const viz = new TronVisualization(canvas3d);
+  window.addEventListener('resize', () => viz.resize());
+
   const areaInput = document.getElementById('area');
   const areaSlider = document.getElementById('areaSlider');
   const perimeterInput = document.getElementById('perimeter');
   const discountInput = document.getElementById('discount');
   const edgeCheckbox = document.querySelector('input[value="edge"]');
+  const prepCheckbox = document.querySelector('input[value="prep"]');
+  const sealingCheckbox = document.querySelector('input[value="sealing"]');
+  const removalCheckbox = document.querySelector('input[value="removal"]');
   const edgeGroup = document.getElementById('edgeGroup');
 
   const baseCostDisplay = document.getElementById('baseCost');
@@ -61,9 +69,21 @@ document.addEventListener('DOMContentLoaded', function() {
     window.location.href = `https://t.me/arrmax_pub?text=${encodeURIComponent(message)}`;
   });
 
+  function updateVisualization() {
+    const area = parseFloat(areaInput.value) || 0;
+    viz.updateServices({
+      prep: prepCheckbox.checked,
+      edge: edgeCheckbox.checked,
+      sealing: sealingCheckbox.checked,
+      removal: removalCheckbox.checked
+    }, area);
+  }
+
   function calculateTotal() {
     const area = parseFloat(areaInput.value) || 0;
     if (area <= 0) return;
+
+    updateVisualization();
 
     // Базовая стоимость (материал + укладка)
     const coverageRadio = document.querySelector('input[name="coverage"]:checked');
@@ -156,5 +176,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
   // Первый расчет и установка периметра
   updatePerimeterForSquare(parseFloat(areaInput.value));
+  updateVisualization();
   calculateTotal();
 });
