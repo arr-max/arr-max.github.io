@@ -18,11 +18,13 @@ document.addEventListener('DOMContentLoaded', function() {
   areaInput.addEventListener('input', function() {
     const value = parseFloat(this.value) || 0;
     areaSlider.value = value;
+    updatePerimeterForSquare(value);
     calculateTotal();
   });
 
   areaSlider.addEventListener('input', function() {
     areaInput.value = this.value;
+    updatePerimeterForSquare(parseFloat(this.value));
     calculateTotal();
   });
 
@@ -143,6 +145,16 @@ document.addEventListener('DOMContentLoaded', function() {
     }).format(price);
   }
 
-  // Первый расчет
+  // Функция для расчета периметра квадрата (4 * √площадь)
+  function updatePerimeterForSquare(area) {
+    if (edgeCheckbox.checked && area > 0) {
+      const sideLength = Math.sqrt(area);
+      const perimeter = 4 * sideLength;
+      perimeterInput.value = perimeter.toFixed(1);
+    }
+  }
+
+  // Первый расчет и установка периметра
+  updatePerimeterForSquare(parseFloat(areaInput.value));
   calculateTotal();
 });
