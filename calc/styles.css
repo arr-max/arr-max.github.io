@@ -190,6 +190,14 @@ button {
 }
 
 @media (max-width: 900px) {
+  .calculator__visualization {
+    margin-bottom: 1.5rem;
+  }
+
+  .viz-container {
+    height: 300px;
+  }
+
   .calculator__inner {
     grid-template-columns: 1fr;
   }

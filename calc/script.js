@@ -1,181 +1,190 @@
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize 3D visualization
-  const canvas3d = document.getElementById('canvas3d');
-  const viz = new TronVisualization(canvas3d);
-  window.addEventListener('resize', () => viz.resize());
+class Calculator {
+  constructor() {
+    this.setupDOM();
+    this.setupVisualization();
+    this.attachEventListeners();
+    this.initialize();
+  }
 
-  const areaInput = document.getElementById('area');
-  const areaSlider = document.getElementById('areaSlider');
-  const perimeterInput = document.getElementById('perimeter');
-  const discountInput = document.getElementById('discount');
-  const edgeCheckbox = document.querySelector('input[value="edge"]');
-  const prepCheckbox = document.querySelector('input[value="prep"]');
-  const sealingCheckbox = document.querySelector('input[value="sealing"]');
-  const removalCheckbox = document.querySelector('input[value="removal"]');
-  const edgeGroup = document.getElementById('edgeGroup');
+  setupDOM() {
+    // Inputs
+    this.areaInput = document.getElementById('area');
+    this.areaSlider = document.getElementById('areaSlider');
+    this.perimeterInput = document.getElementById('perimeter');
+    this.discountInput = document.getElementById('discount');
 
-  const baseCostDisplay = document.getElementById('baseCost');
-  const totalCostDisplay = document.getElementById('totalCost');
-  const quickPriceDisplay = document.getElementById('quickPrice');
-  const discountRow = document.getElementById('discountRow');
-  const discountAmount = document.getElementById('discountAmount');
-  const servicesBreakdown = document.getElementById('servicesBreakdown');
-  const contactBtn = document.getElementById('contactBtn');
+    // Checkboxes
+    this.edgeCheckbox = document.querySelector('input[value="edge"]');
+    this.prepCheckbox = document.querySelector('input[value="prep"]');
+    this.sealingCheckbox = document.querySelector('input[value="sealing"]');
+    this.removalCheckbox = document.querySelector('input[value="removal"]');
+    this.edgeGroup = document.getElementById('edgeGroup');
 
-  // Синхронизация площади между инпутом и слайдером
-  areaInput.addEventListener('input', function() {
-    const value = parseFloat(this.value) || 0;
-    areaSlider.value = value;
-    updatePerimeterForSquare(value);
-    calculateTotal();
-  });
+    // Outputs
+    this.baseCostDisplay = document.getElementById('baseCost');
+    this.totalCostDisplay = document.getElementById('totalCost');
+    this.quickPriceDisplay = document.getElementById('quickPrice');
+    this.discountRow = document.getElementById('discountRow');
+    this.discountAmount = document.getElementById('discountAmount');
+    this.servicesBreakdown = document.getElementById('servicesBreakdown');
+    this.contactBtn = document.getElementById('contactBtn');
+  }
 
-  areaSlider.addEventListener('input', function() {
-    areaInput.value = this.value;
-    updatePerimeterForSquare(parseFloat(this.value));
-    calculateTotal();
-  });
+  setupVisualization() {
+    const canvas3d = document.getElementById('canvas3d');
+    this.viz = new TronVisualization(canvas3d);
+    window.addEventListener('resize', () => this.viz.resize());
+  }
 
-  // Показать/скрыть поле периметра для бордюра
-  edgeCheckbox.addEventListener('change', function() {
-    edgeGroup.style.display = this.checked ? 'flex' : 'none';
-    if (!this.checked) {
-      perimeterInput.value = '';
+  attachEventListeners() {
+    // Area sync
+    this.areaInput.addEventListener('input', () => this.syncArea());
+    this.areaSlider.addEventListener('input', () => this.syncArea(true));
+
+    // Services
+    this.edgeCheckbox.addEventListener('change', () => this.handleEdgeChange());
+    document.querySelectorAll('input[name="coverage"]').forEach(radio => {
+      radio.addEventListener('change', () => this.calculate());
+    });
+    document.querySelectorAll('input[name="service"]').forEach(checkbox => {
+      checkbox.addEventListener('change', () => this.calculate());
+    });
+
+    // Other
+    this.perimeterInput.addEventListener('input', () => this.calculate());
+    this.discountInput.addEventListener('input', () => this.calculate());
+    this.contactBtn.addEventListener('click', () => this.sendToTelegram());
+  }
+
+  syncArea(fromSlider = false) {
+    const value = parseFloat(fromSlider ? this.areaSlider.value : this.areaInput.value) || 0;
+    if (!fromSlider) this.areaSlider.value = value;
+    else this.areaInput.value = value;
+
+    this.updatePerimeterForSquare(value);
+    this.calculate();
+  }
+
+  handleEdgeChange() {
+    this.edgeGroup.style.display = this.edgeCheckbox.checked ? 'flex' : 'none';
+    if (!this.edgeCheckbox.checked) this.perimeterInput.value = '';
+    this.calculate();
+  }
+
+  updatePerimeterForSquare(area) {
+    if (this.edgeCheckbox.checked && area > 0) {
+      const perimeter = 4 * Math.sqrt(area);
+      this.perimeterInput.value = perimeter.toFixed(1);
     }
-    calculateTotal();
-  });
+  }
 
-  // Слушатели на все элементы формы
-  document.querySelectorAll('input[name="coverage"]').forEach(radio => {
-    radio.addEventListener('change', calculateTotal);
-  });
-
-  document.querySelectorAll('input[name="service"]').forEach(checkbox => {
-    checkbox.addEventListener('change', calculateTotal);
-  });
-
-  perimeterInput.addEventListener('input', calculateTotal);
-  discountInput.addEventListener('input', calculateTotal);
-
-  // Кнопка контакта
-  contactBtn.addEventListener('click', function() {
-    const area = parseFloat(areaInput.value) || 0;
-    const coverage = document.querySelector('input[name="coverage"]:checked');
-    const selectedServices = Array.from(document.querySelectorAll('input[name="service"]:checked'))
-      .map(cb => cb.parentElement.querySelector('.checkbox-label strong').textContent)
-      .join(', ');
-
-    const message = `Я интересуюсь калькулятором каменных ковров. Площадь: ${area} м². Тип покрытия: ${coverage.parentElement.querySelector('.radio-label strong').textContent}. Услуги: ${selectedServices || 'стандартный пакет'}`;
-    window.location.href = `https://t.me/arrmax_pub?text=${encodeURIComponent(message)}`;
-  });
-
-  function updateVisualization() {
-    const area = parseFloat(areaInput.value) || 0;
-    viz.updateServices({
-      prep: prepCheckbox.checked,
-      edge: edgeCheckbox.checked,
-      sealing: sealingCheckbox.checked,
-      removal: removalCheckbox.checked
+  updateVisualization() {
+    const area = parseFloat(this.areaInput.value) || 0;
+    this.viz.updateServices({
+      prep: this.prepCheckbox.checked,
+      edge: this.edgeCheckbox.checked,
+      sealing: this.sealingCheckbox.checked,
+      removal: this.removalCheckbox.checked
     }, area);
   }
 
-  function calculateTotal() {
-    const area = parseFloat(areaInput.value) || 0;
+  calculate() {
+    const area = parseFloat(this.areaInput.value) || 0;
     if (area <= 0) return;
 
-    updateVisualization();
+    this.updateVisualization();
 
-    // Базовая стоимость (материал + укладка)
+    const baseCost = this.calculateBaseCost(area);
+    const { cost: servicesCost, items: servicesItems } = this.calculateServices(area);
+    const subtotal = baseCost + servicesCost;
+    const { discount: discountValue, final: finalTotal } = this.applyDiscount(subtotal);
+
+    this.renderResults(baseCost, servicesItems, discountValue, finalTotal);
+  }
+
+  calculateBaseCost(area) {
     const coverageRadio = document.querySelector('input[name="coverage"]:checked');
     const basePrice = parseFloat(coverageRadio.dataset.price) || 0;
-    let baseCost = area * basePrice;
+    return area * basePrice;
+  }
 
-    // Дополнительные услуги
-    let servicesCost = 0;
-    const servicesItems = [];
-    const checkedServices = document.querySelectorAll('input[name="service"]:checked');
+  calculateServices(area) {
+    let cost = 0;
+    const items = [];
 
-    checkedServices.forEach(checkbox => {
-      const servicePrice = parseFloat(checkbox.dataset.price) || 0;
-      const serviceName = checkbox.parentElement.querySelector('.checkbox-label strong').textContent;
-      let cost = 0;
+    document.querySelectorAll('input[name="service"]:checked').forEach(checkbox => {
+      const price = parseFloat(checkbox.dataset.price) || 0;
+      const name = checkbox.parentElement.querySelector('.checkbox-label strong').textContent;
 
       if (checkbox.value === 'edge') {
-        // Бордюр считается по периметру
-        const perimeter = parseFloat(perimeterInput.value) || 0;
-        cost = perimeter * servicePrice;
+        const perimeter = parseFloat(this.perimeterInput.value) || 0;
+        const itemCost = perimeter * price;
         if (perimeter > 0) {
-          servicesItems.push({
-            name: `${serviceName} (${perimeter} п.м)`,
-            cost: cost
-          });
+          items.push({ name: `${name} (${perimeter} п.м)`, cost: itemCost });
+          cost += itemCost;
         }
       } else {
-        // Остальные услуги считаются по площади
-        cost = area * servicePrice;
-        servicesItems.push({
-          name: serviceName,
-          cost: cost
-        });
+        const itemCost = area * price;
+        items.push({ name, cost: itemCost });
+        cost += itemCost;
       }
-      servicesCost += cost;
     });
 
-    // Обновление детализации услуг
-    if (servicesItems.length > 0) {
-      servicesBreakdown.innerHTML = servicesItems
-        .map(item => `
+    return { cost, items };
+  }
+
+  applyDiscount(subtotal) {
+    const percent = parseFloat(this.discountInput.value) || 0;
+    const discount = (subtotal * percent) / 100;
+    return { discount, final: subtotal - discount };
+  }
+
+  renderResults(baseCost, servicesItems, discountValue, finalTotal) {
+    const formatPrice = (price) => new Intl.NumberFormat('ru-RU', {
+      style: 'currency',
+      currency: 'RUB',
+      minimumFractionDigits: 0
+    }).format(price);
+
+    this.baseCostDisplay.textContent = formatPrice(baseCost);
+    this.totalCostDisplay.textContent = formatPrice(finalTotal);
+    this.quickPriceDisplay.textContent = formatPrice(finalTotal);
+
+    // Services breakdown
+    this.servicesBreakdown.innerHTML = servicesItems.length
+      ? servicesItems.map(item => `
           <div class="service-item">
             <span>${item.name}</span>
             <span class="service-item-price">${formatPrice(item.cost)}</span>
           </div>
-        `)
-        .join('');
+        `).join('')
+      : '';
+
+    // Discount row
+    if (this.discountInput.value > 0) {
+      this.discountRow.style.display = 'flex';
+      this.discountAmount.textContent = `-${formatPrice(discountValue)}`;
     } else {
-      servicesBreakdown.innerHTML = '';
-    }
-
-    // Итого до скидки
-    const subtotal = baseCost + servicesCost;
-
-    // Скидка
-    const discountPercent = parseFloat(discountInput.value) || 0;
-    const discountValue = (subtotal * discountPercent) / 100;
-    const finalTotal = subtotal - discountValue;
-
-    // Обновление отображения
-    baseCostDisplay.textContent = formatPrice(baseCost);
-    totalCostDisplay.textContent = formatPrice(finalTotal);
-    quickPriceDisplay.textContent = formatPrice(finalTotal);
-
-    if (discountPercent > 0) {
-      discountRow.style.display = 'flex';
-      discountAmount.textContent = `-${formatPrice(discountValue)}`;
-    } else {
-      discountRow.style.display = 'none';
+      this.discountRow.style.display = 'none';
     }
   }
 
-  function formatPrice(price) {
-    return new Intl.NumberFormat('ru-RU', {
-      style: 'currency',
-      currency: 'RUB',
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0
-    }).format(price);
+  sendToTelegram() {
+    const area = parseFloat(this.areaInput.value) || 0;
+    const coverage = document.querySelector('input[name="coverage"]:checked');
+    const services = Array.from(document.querySelectorAll('input[name="service"]:checked'))
+      .map(cb => cb.parentElement.querySelector('.checkbox-label strong').textContent)
+      .join(', ');
+
+    const text = `Калькулятор: ${area}м² ${coverage.parentElement.querySelector('.radio-label strong').textContent} ${services ? `| ${services}` : ''}`;
+    window.location.href = `https://t.me/arrmax_pub?text=${encodeURIComponent(text)}`;
   }
 
-  // Функция для расчета периметра квадрата (4 * √площадь)
-  function updatePerimeterForSquare(area) {
-    if (edgeCheckbox.checked && area > 0) {
-      const sideLength = Math.sqrt(area);
-      const perimeter = 4 * sideLength;
-      perimeterInput.value = perimeter.toFixed(1);
-    }
+  initialize() {
+    this.updatePerimeterForSquare(parseFloat(this.areaInput.value));
+    this.updateVisualization();
+    this.calculate();
   }
+}
 
-  // Первый расчет и установка периметра
-  updatePerimeterForSquare(parseFloat(areaInput.value));
-  updateVisualization();
-  calculateTotal();
-});
+document.addEventListener('DOMContentLoaded', () => new Calculator());
