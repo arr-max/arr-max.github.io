@@ -100,6 +100,20 @@ a:hover { color: var(--color-accent-hover); }
   color: var(--color-accent-hover);
 }
 
+.nav__calc {
+  background: var(--color-accent);
+  color: white !important;
+  padding: 0.5rem 1rem;
+  border-radius: var(--radius);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.nav__calc:hover {
+  background: var(--color-accent-hover);
+  color: white !important;
+}
+
 .btn-stone {
   display: inline-flex;
   align-items: center;
