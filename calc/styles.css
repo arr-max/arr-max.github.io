@@ -561,6 +561,127 @@ button {
   width: 100%;
 }
 
+.result-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+/* ===== Sticky bottom bar ===== */
+.sticky-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(255, 255, 255, 0.96);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border-top: 1px solid var(--color-border);
+  box-shadow: 0 -4px 20px rgba(44, 40, 37, 0.08);
+  z-index: 90;
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+  padding: 0.75rem 1rem calc(0.75rem + env(safe-area-inset-bottom)) 1rem;
+}
+
+.sticky-bar.is-visible {
+  transform: translateY(0);
+}
+
+.sticky-bar__inner {
+  width: var(--container);
+  max-width: 1120px;
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.sticky-bar__price {
+  display: flex;
+  flex-direction: column;
+  line-height: 1.1;
+  min-width: 0;
+}
+
+.sticky-bar__label {
+  font-size: 0.75rem;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-weight: 600;
+}
+
+.sticky-bar__value {
+  font-size: 1.35rem;
+  font-weight: 700;
+  color: var(--color-dark);
+  white-space: nowrap;
+}
+
+.sticky-bar__actions {
+  display: flex;
+  gap: 0.5rem;
+  flex-shrink: 0;
+}
+
+.sticky-bar__btn {
+  border: 1px solid var(--color-border);
+  background: var(--color-surface);
+  color: var(--color-text);
+  border-radius: var(--radius);
+  padding: 0.65rem 1rem;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all var(--transition);
+  font-family: var(--font-sans);
+  white-space: nowrap;
+  min-height: 44px;
+}
+
+.sticky-bar__btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.sticky-bar__btn--icon {
+  padding: 0.5rem 0.75rem;
+  font-size: 1.1rem;
+}
+
+.sticky-bar__btn--primary {
+  background: var(--color-accent);
+  color: white;
+  border-color: var(--color-accent);
+}
+
+.sticky-bar__btn--primary:hover {
+  background: var(--color-accent-hover);
+  border-color: var(--color-accent-hover);
+  color: white;
+}
+
+/* Сдвиг футера, чтобы sticky-bar не перекрывал контент */
+.sticky-bar.is-visible ~ .footer,
+body:has(.sticky-bar.is-visible) .cta-section {
+  padding-bottom: 6rem;
+}
+
+@media (max-width: 480px) {
+  .sticky-bar__btn--primary {
+    padding: 0.65rem 0.85rem;
+  }
+  .sticky-bar__value {
+    font-size: 1.1rem;
+  }
+}
+
+@media print {
+  .sticky-bar { display: none; }
+}
+
 /* ===== Info Section ===== */
 .info-section {
   padding: 3rem 1rem;

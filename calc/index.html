@@ -191,14 +191,33 @@
                 Это примерный расчет. Точная стоимость зависит от особенностей вашего объекта, доступности территории и сроков работ.
               </p>
 
-              <button class="btn btn--primary btn--full" id="contactBtn">
-                Обсудить проект с Максом
-              </button>
+              <div class="result-actions">
+                <button class="btn btn--primary btn--full" id="contactBtn">
+                  Обсудить проект с Максом
+                </button>
+                <button class="btn btn--outline btn--full" id="downloadBtn" type="button">
+                  📄 Скачать расчёт
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </div>
     </section>
+
+    <!-- Sticky bottom bar -->
+    <div class="sticky-bar" id="stickyBar">
+      <div class="sticky-bar__inner">
+        <div class="sticky-bar__price">
+          <span class="sticky-bar__label">Итого</span>
+          <span class="sticky-bar__value" id="stickyPrice">125 000 ₽</span>
+        </div>
+        <div class="sticky-bar__actions">
+          <button class="sticky-bar__btn sticky-bar__btn--icon" id="stickyDownloadBtn" type="button" aria-label="Скачать расчёт">📄</button>
+          <button class="sticky-bar__btn sticky-bar__btn--primary" id="stickyContactBtn" type="button">Заказать</button>
+        </div>
+      </div>
+    </div>
 
     <section class="info-section">
       <div class="container">
