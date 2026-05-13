@@ -4,7 +4,7 @@ class TronVisualization {
     this.ctx = canvas.getContext('2d');
     this.rotationX = 0.55;
     this.rotationY = 0.45;
-    this.zoom = 1;
+    this.zoom = 2.2;
     this.isMouseDown = false;
     this.lastX = 0;
     this.lastY = 0;
@@ -28,7 +28,7 @@ class TronVisualization {
     el.addEventListener('touchstart', e => { this.isMouseDown = true;  this.lastX = e.touches[0].clientX; this.lastY = e.touches[0].clientY; e.preventDefault(); }, { passive: false });
     el.addEventListener('touchmove',  e => { if (!this.isMouseDown) return; this.drag(e.touches[0].clientX - this.lastX, e.touches[0].clientY - this.lastY); this.lastX = e.touches[0].clientX; this.lastY = e.touches[0].clientY; e.preventDefault(); }, { passive: false });
     el.addEventListener('touchend',   () => this.isMouseDown = false);
-    el.addEventListener('wheel',      e => { e.preventDefault(); this.zoom = Math.max(0.4, Math.min(2.5, this.zoom - e.deltaY * 0.001)); }, { passive: false });
+    el.addEventListener('wheel',      e => { e.preventDefault(); this.zoom = Math.max(0.8, Math.min(6, this.zoom - e.deltaY * 0.003)); }, { passive: false });
   }
 
   drag(dx, dy) {
@@ -128,8 +128,8 @@ class TronVisualization {
   // ─── Ground grid ─────────────────────────────────────────────────────────
 
   drawGrid() {
-    const size = 50;
-    const n = 4;
+    const size = 20;
+    const n = 5;
     this.ctx.strokeStyle = 'rgba(0, 255, 150, 0.12)';
     this.ctx.lineWidth = 1;
     for (let i = -n; i <= n; i++) {
@@ -145,7 +145,8 @@ class TronVisualization {
   // ─── Scene ───────────────────────────────────────────────────────────────
 
   drawScene() {
-    const half = Math.sqrt(this.area) / 2;
+    // Фиксированный визуальный размер — площадь показывается в подписи
+    const half = 12;
     const labels = [];
     let y = 0;
 
