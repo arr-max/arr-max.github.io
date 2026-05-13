@@ -1069,6 +1069,19 @@ a:hover { color: var(--color-accent-hover); }
     visibility: visible;
   }
 
+  .nav__calc {
+    background: var(--color-accent);
+    color: white !important;
+    border-radius: var(--radius);
+    margin-top: 0.5rem;
+    padding-top: 0.75rem;
+    padding-bottom: 0.75rem;
+  }
+
+  .nav__calc:hover {
+    background: var(--color-accent-hover);
+  }
+
   .nav__phone {
     margin-top: 0.5rem;
     padding-top: 0.75rem;
