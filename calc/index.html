@@ -198,6 +198,9 @@
                 <button class="btn btn--outline btn--full" id="downloadBtn" type="button">
                   📄 Скачать расчёт
                 </button>
+                <a class="btn btn--outline btn--full" id="downloadContractBtn" href="agreement.txt" download="Договор_TerraWay.txt">
+                  📋 Скачать шаблон договора
+                </a>
               </div>
             </div>
           </div>
@@ -207,13 +210,36 @@
 
     <!-- Sticky bottom bar -->
     <div class="sticky-bar" id="stickyBar">
+      <div class="sticky-sheet" id="stickySheet" hidden>
+        <button class="sticky-sheet__item" id="sheetDownloadCalc" type="button">
+          <span class="sticky-sheet__icon">📄</span>
+          <span class="sticky-sheet__text">
+            <strong>Скачать расчёт</strong>
+            <small>PDF с параметрами и итоговой стоимостью</small>
+          </span>
+        </button>
+        <a class="sticky-sheet__item" id="sheetDownloadContract" href="agreement.txt" download="Договор_TerraWay.txt">
+          <span class="sticky-sheet__icon">📋</span>
+          <span class="sticky-sheet__text">
+            <strong>Шаблон договора</strong>
+            <small>Готовый бланк с реквизитами сторон</small>
+          </span>
+        </a>
+        <a class="sticky-sheet__item" id="sheetTelegram" href="https://t.me/arrmax_pub" target="_blank" rel="noopener">
+          <span class="sticky-sheet__icon">💬</span>
+          <span class="sticky-sheet__text">
+            <strong>Написать Максу</strong>
+            <small>Telegram @arrmax_pub</small>
+          </span>
+        </a>
+      </div>
       <div class="sticky-bar__inner">
-        <div class="sticky-bar__price">
-          <span class="sticky-bar__label">Итого</span>
+        <button class="sticky-bar__price" id="stickyExpandBtn" type="button" aria-expanded="false" aria-controls="stickySheet">
+          <span class="sticky-bar__label">Итого <span class="sticky-bar__chevron" aria-hidden="true">▴</span></span>
           <span class="sticky-bar__value" id="stickyPrice">125 000 ₽</span>
-        </div>
+        </button>
         <div class="sticky-bar__actions">
-          <button class="sticky-bar__btn sticky-bar__btn--icon" id="stickyDownloadBtn" type="button" aria-label="Скачать расчёт">📄</button>
+          <button class="sticky-bar__btn sticky-bar__btn--icon" id="stickyDownloadBtn" type="button" aria-label="Скачать расчёт" title="Скачать расчёт">📄</button>
           <button class="sticky-bar__btn sticky-bar__btn--primary" id="stickyContactBtn" type="button">Заказать</button>
         </div>
       </div>

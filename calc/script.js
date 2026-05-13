@@ -33,6 +33,9 @@ class Calculator {
     this.stickyBar = document.getElementById('stickyBar');
     this.stickyContactBtn = document.getElementById('stickyContactBtn');
     this.stickyDownloadBtn = document.getElementById('stickyDownloadBtn');
+    this.stickyExpandBtn = document.getElementById('stickyExpandBtn');
+    this.stickySheet = document.getElementById('stickySheet');
+    this.sheetDownloadCalc = document.getElementById('sheetDownloadCalc');
 
     // State for download
     this.lastSnapshot = null;
@@ -66,8 +69,37 @@ class Calculator {
     this.stickyContactBtn.addEventListener('click', () => this.sendToTelegram());
     this.stickyDownloadBtn.addEventListener('click', () => this.downloadCalculation());
 
+    // Sticky sheet (popup with download options)
+    this.stickyExpandBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      this.toggleSheet();
+    });
+    this.sheetDownloadCalc.addEventListener('click', () => {
+      this.closeSheet();
+      this.downloadCalculation();
+    });
+    document.addEventListener('click', (e) => {
+      if (!this.stickyBar.contains(e.target)) this.closeSheet();
+    });
+
     // Sticky bar visibility on scroll
     window.addEventListener('scroll', () => this.updateStickyVisibility(), { passive: true });
+  }
+
+  toggleSheet() {
+    const isOpen = !this.stickySheet.hasAttribute('hidden');
+    if (isOpen) this.closeSheet();
+    else this.openSheet();
+  }
+
+  openSheet() {
+    this.stickySheet.removeAttribute('hidden');
+    this.stickyExpandBtn.setAttribute('aria-expanded', 'true');
+  }
+
+  closeSheet() {
+    this.stickySheet.setAttribute('hidden', '');
+    this.stickyExpandBtn.setAttribute('aria-expanded', 'false');
   }
 
   updateStickyVisibility() {
