@@ -178,43 +178,35 @@ class TronVisualization {
     const sideLength = Math.sqrt(this.area);
     const half = sideLength / 2;
 
-    const colors = {
-      prep: { color: 'rgba(255, 0, 150, 0.6)', height: 0.5, label: 'Подготовка' },
-      removal: { color: 'rgba(255, 100, 0, 0.6)', height: 1, label: 'Демонтаж' },
-      base: { color: 'rgba(0, 255, 150, 0.6)', height: 1.5, label: 'Покрытие' },
-      sealing: { color: 'rgba(100, 200, 255, 0.6)', height: 2, label: 'Герметизация' },
-      edge: { color: 'rgba(200, 50, 255, 0.6)', height: 2.5, label: 'Бордюр' }
-    };
-
-    const layers = [];
     let currentHeight = 0;
 
+    // Демонтаж - нижний слой (старое покрытие)
     if (this.services.removal) {
-      layers.push({ ...colors.removal, height: currentHeight });
-      currentHeight += colors.removal.height;
+      this.drawBox(half, currentHeight, currentHeight + 0.4, 'rgba(200, 100, 50, 0.5)');
+      this.drawCrackedSurface(half, currentHeight + 0.4);
+      currentHeight += 0.4;
     }
 
+    // Подготовка основания
     if (this.services.prep) {
-      layers.push({ ...colors.prep, height: currentHeight });
-      currentHeight += colors.prep.height;
+      this.drawBox(half, currentHeight, currentHeight + 0.5, 'rgba(255, 150, 0, 0.5)');
+      currentHeight += 0.5;
     }
 
-    layers.push({ ...colors.base, height: currentHeight });
-    currentHeight += colors.base.height;
+    // Основное покрытие (каменные ковры)
+    this.drawBox(half, currentHeight, currentHeight + 1, 'rgba(0, 255, 150, 0.7)');
+    currentHeight += 1;
 
+    // Герметизация швов
     if (this.services.sealing) {
-      layers.push({ ...colors.sealing, height: currentHeight });
-      currentHeight += colors.sealing.height;
+      this.drawBox(half, currentHeight, currentHeight + 0.3, 'rgba(100, 200, 255, 0.6)');
+      currentHeight += 0.3;
     }
 
+    // Бордюр
     if (this.services.edge) {
       this.drawBorder(half, currentHeight);
     }
-
-    // Draw layers as boxes
-    layers.forEach(layer => {
-      this.drawBox(half, layer.height, layer.height + 0.3, layer.color);
-    });
   }
 
   drawBox(half, startHeight, endHeight, color) {
@@ -256,6 +248,26 @@ class TronVisualization {
       this.ctx.lineWidth = 1;
       this.ctx.stroke();
     });
+  }
+
+  drawCrackedSurface(half, height) {
+    this.ctx.strokeStyle = 'rgba(100, 50, 20, 0.6)';
+    this.ctx.lineWidth = 1;
+
+    for (let i = 0; i < 8; i++) {
+      const x1 = -half + Math.random() * (half * 2);
+      const z1 = -half + Math.random() * (half * 2);
+      const x2 = x1 + (Math.random() - 0.5) * 4;
+      const z2 = z1 + (Math.random() - 0.5) * 4;
+
+      const p1 = this.project(this.rotatePoint(x1, height, z1));
+      const p2 = this.project(this.rotatePoint(x2, height, z2));
+
+      this.ctx.beginPath();
+      this.ctx.moveTo(p1.x, p1.y);
+      this.ctx.lineTo(p2.x, p2.y);
+      this.ctx.stroke();
+    }
   }
 
   drawBorder(half, height) {
