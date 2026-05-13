@@ -1,3 +1,22 @@
+// Бургер-меню
+document.addEventListener('DOMContentLoaded', function() {
+  const burger = document.querySelector('.burger');
+  const nav = document.querySelector('.nav');
+  if (burger && nav) {
+    burger.addEventListener('click', function() {
+      const isOpen = nav.classList.contains('nav--open');
+      nav.classList.toggle('nav--open', !isOpen);
+      burger.setAttribute('aria-expanded', !isOpen);
+    });
+    document.querySelectorAll('.nav a').forEach(function(link) {
+      link.addEventListener('click', function() {
+        nav.classList.remove('nav--open');
+        burger.setAttribute('aria-expanded', 'false');
+      });
+    });
+  }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
   const areaInput = document.getElementById('area');
   const areaSlider = document.getElementById('areaSlider');
