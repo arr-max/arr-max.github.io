@@ -29,13 +29,15 @@ class Calculator {
     this.discountAmount = document.getElementById('discountAmount');
     this.servicesBreakdown = document.getElementById('servicesBreakdown');
     this.contactBtn = document.getElementById('contactBtn');
-    this.downloadBtn = document.getElementById('downloadBtn');
+    this.downloadCalcPdf = document.getElementById('downloadCalcPdf');
+    this.downloadContractPdf = document.getElementById('downloadContractPdf');
     this.stickyBar = document.getElementById('stickyBar');
     this.stickyContactBtn = document.getElementById('stickyContactBtn');
     this.stickyDownloadBtn = document.getElementById('stickyDownloadBtn');
     this.stickyExpandBtn = document.getElementById('stickyExpandBtn');
     this.stickySheet = document.getElementById('stickySheet');
-    this.sheetDownloadCalc = document.getElementById('sheetDownloadCalc');
+    this.sheetDownloadCalcPdf = document.getElementById('sheetDownloadCalcPdf');
+    this.sheetDownloadContractPdf = document.getElementById('sheetDownloadContractPdf');
 
     // State for download
     this.lastSnapshot = null;
@@ -65,7 +67,8 @@ class Calculator {
     this.perimeterInput.addEventListener('input', () => this.calculate());
     this.discountInput.addEventListener('input', () => this.calculate());
     this.contactBtn.addEventListener('click', () => this.sendToTelegram());
-    this.downloadBtn.addEventListener('click', () => this.downloadCalculation());
+    this.downloadCalcPdf.addEventListener('click', () => this.downloadCalculation());
+    this.downloadContractPdf.addEventListener('click', () => this.downloadContractAsPdf());
     this.stickyContactBtn.addEventListener('click', () => this.sendToTelegram());
     this.stickyDownloadBtn.addEventListener('click', () => this.downloadCalculation());
 
@@ -74,9 +77,13 @@ class Calculator {
       e.stopPropagation();
       this.toggleSheet();
     });
-    this.sheetDownloadCalc.addEventListener('click', () => {
+    this.sheetDownloadCalcPdf.addEventListener('click', () => {
       this.closeSheet();
       this.downloadCalculation();
+    });
+    this.sheetDownloadContractPdf.addEventListener('click', () => {
+      this.closeSheet();
+      this.downloadContractAsPdf();
     });
     document.addEventListener('click', (e) => {
       if (!this.stickyBar.contains(e.target)) this.closeSheet();
@@ -225,6 +232,96 @@ class Calculator {
     } else {
       this.discountRow.style.display = 'none';
     }
+  }
+
+  async downloadContractAsPdf() {
+    let raw;
+    try {
+      const res = await fetch('agreement.txt');
+      if (!res.ok) throw new Error('Не удалось загрузить шаблон');
+      raw = await res.text();
+    } catch (err) {
+      alert('Не удалось загрузить шаблон договора. Проверьте подключение.');
+      return;
+    }
+
+    const escape = (s) => s.replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+
+    const html = `<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<title>Договор TerraWay — шаблон</title>
+<style>
+  @page { size: A4; margin: 16mm 18mm; }
+  * { box-sizing: border-box; }
+  body {
+    font-family: 'Manrope', system-ui, sans-serif;
+    color: #2c2825; margin: 0; padding: 24px; background: #fff;
+    line-height: 1.5;
+  }
+  .doc { max-width: 760px; margin: 0 auto; }
+  .header {
+    border-bottom: 2px solid #8b6914; padding-bottom: 14px; margin-bottom: 20px;
+    display: flex; justify-content: space-between; align-items: flex-start;
+  }
+  .brand h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    margin: 0 0 4px 0; font-size: 20px;
+  }
+  .brand p { margin: 0; font-size: 12px; color: #6b6560; }
+  .meta { font-size: 11px; color: #6b6560; text-align: right; }
+  pre {
+    font-family: 'Manrope', system-ui, sans-serif;
+    font-size: 11.5px; line-height: 1.55;
+    white-space: pre-wrap; word-wrap: break-word;
+    margin: 0; color: #2c2825;
+  }
+  .actions { text-align: center; margin: 18px 0; }
+  .actions button {
+    background: #8b6914; color: #fff; border: none; padding: 12px 26px;
+    border-radius: 8px; font-size: 14px; font-weight: 600; cursor: pointer;
+    font-family: inherit; margin: 0 6px;
+  }
+  .actions .secondary {
+    background: #fff; color: #8b6914; border: 1px solid #8b6914;
+  }
+  @media print { .actions, .header { display: none; } body { padding: 0; } pre { font-size: 10.5px; } }
+</style>
+</head>
+<body>
+<div class="doc">
+  <div class="header">
+    <div class="brand">
+      <h1>Команда Арр Макс · TerraWay®</h1>
+      <p>Шаблон договора подряда</p>
+    </div>
+    <div class="meta">
+      arr-max.github.io/calc<br>
+      +7 988 768 08 35 · @arrmax_pub
+    </div>
+  </div>
+
+  <pre>${escape(raw)}</pre>
+
+  <div class="actions">
+    <button onclick="window.print()">📄 Скачать PDF / Распечатать</button>
+    <button class="secondary" onclick="window.close()">Закрыть</button>
+  </div>
+</div>
+<script>setTimeout(() => window.print(), 400);</script>
+</body>
+</html>`;
+
+    const win = window.open('', '_blank');
+    if (!win) {
+      alert('Разрешите всплывающие окна, чтобы открыть шаблон в PDF.');
+      return;
+    }
+    win.document.write(html);
+    win.document.close();
   }
 
   downloadCalculation() {

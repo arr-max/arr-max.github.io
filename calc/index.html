@@ -195,12 +195,19 @@
                 <button class="btn btn--primary btn--full" id="contactBtn">
                   Обсудить проект с Максом
                 </button>
-                <button class="btn btn--outline btn--full" id="downloadBtn" type="button">
-                  📄 Скачать расчёт
-                </button>
-                <a class="btn btn--outline btn--full" id="downloadContractBtn" href="agreement.txt" download="Договор_TerraWay.txt">
-                  📋 Скачать шаблон договора
-                </a>
+                <div class="download-row">
+                  <span class="download-row__label">📄 Расчёт</span>
+                  <div class="download-row__formats">
+                    <button class="format-pill" id="downloadCalcPdf" type="button">PDF</button>
+                  </div>
+                </div>
+                <div class="download-row">
+                  <span class="download-row__label">📋 Шаблон договора</span>
+                  <div class="download-row__formats">
+                    <a class="format-pill" href="agreement.txt" download="Договор_TerraWay.txt">TXT</a>
+                    <button class="format-pill" id="downloadContractPdf" type="button">PDF</button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -211,20 +218,27 @@
     <!-- Sticky bottom bar -->
     <div class="sticky-bar" id="stickyBar">
       <div class="sticky-sheet" id="stickySheet" hidden>
-        <button class="sticky-sheet__item" id="sheetDownloadCalc" type="button">
+        <div class="sticky-sheet__item sticky-sheet__item--multi">
           <span class="sticky-sheet__icon">📄</span>
           <span class="sticky-sheet__text">
-            <strong>Скачать расчёт</strong>
-            <small>PDF с параметрами и итоговой стоимостью</small>
+            <strong>Расчёт стоимости</strong>
+            <small>Параметры и итоговая сумма</small>
           </span>
-        </button>
-        <a class="sticky-sheet__item" id="sheetDownloadContract" href="agreement.txt" download="Договор_TerraWay.txt">
+          <span class="sticky-sheet__formats">
+            <button class="format-pill" id="sheetDownloadCalcPdf" type="button">PDF</button>
+          </span>
+        </div>
+        <div class="sticky-sheet__item sticky-sheet__item--multi">
           <span class="sticky-sheet__icon">📋</span>
           <span class="sticky-sheet__text">
             <strong>Шаблон договора</strong>
-            <small>Готовый бланк с реквизитами сторон</small>
+            <small>Готовый бланк с реквизитами</small>
           </span>
-        </a>
+          <span class="sticky-sheet__formats">
+            <a class="format-pill" href="agreement.txt" download="Договор_TerraWay.txt">TXT</a>
+            <button class="format-pill" id="sheetDownloadContractPdf" type="button">PDF</button>
+          </span>
+        </div>
         <a class="sticky-sheet__item" id="sheetTelegram" href="https://t.me/arrmax_pub" target="_blank" rel="noopener">
           <span class="sticky-sheet__icon">💬</span>
           <span class="sticky-sheet__text">
