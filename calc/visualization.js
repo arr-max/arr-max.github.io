@@ -99,30 +99,66 @@ class TronVisualization {
     this.face([this.p(x0,y1,z0), this.p(x1,y1,z1), this.p(x1,y1,z1), this.p(x0,y1,z0)], colors.top,   lc, sw);
   }
 
-  // Label with leader line from 3D point to screen margin
-  label(worldX, worldY, worldZ, text, color, price) {
-    const pt = this.p(worldX, worldY, worldZ);
-    const tx = this.W - 10;
-    const ty = pt.y;
+  // Draw legend panel from collected labels array
+  drawLegend(labels) {
+    if (!labels.length) return;
+    const ctx = this.ctx;
+    const rowH = 36;
+    const padX = 14, padY = 10;
+    const dotR = 5;
+    const panelW = 190;
+    const panelH = labels.length * rowH + padY * 2;
+    const px = this.W - panelW - 12;
+    const py = this.H - panelH - 12;
 
-    this.ctx.strokeStyle = color;
-    this.ctx.lineWidth = 1;
-    this.ctx.setLineDash([4, 4]);
-    this.ctx.beginPath();
-    this.ctx.moveTo(pt.x, pt.y);
-    this.ctx.lineTo(tx - 120, ty);
-    this.ctx.stroke();
-    this.ctx.setLineDash([]);
+    // Panel background
+    ctx.save();
+    ctx.beginPath();
+    ctx.roundRect(px, py, panelW, panelH, 8);
+    ctx.fillStyle = 'rgba(10,14,22,0.82)';
+    ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,0.08)';
+    ctx.lineWidth = 1;
+    ctx.stroke();
+    ctx.restore();
 
-    this.ctx.textAlign = 'left';
-    this.ctx.font = 'bold 12px Manrope, monospace';
-    this.ctx.fillStyle = color;
-    this.ctx.fillText(text, tx - 118, ty - 3);
-    if (price) {
-      this.ctx.font = '11px Manrope, monospace';
-      this.ctx.fillStyle = 'rgba(255,255,255,0.5)';
-      this.ctx.fillText(price, tx - 118, ty + 12);
-    }
+    // Leader lines then rows
+    labels.forEach((l, i) => {
+      const rowCY = py + padY + i * rowH + rowH / 2;
+      const dotX  = px + padX + dotR;
+      const pt     = this.p(l.wx, l.wy, l.wz);
+
+      // Dashed leader line from 3D anchor to panel dot
+      ctx.save();
+      ctx.strokeStyle = l.color;
+      ctx.lineWidth = 1;
+      ctx.globalAlpha = 0.5;
+      ctx.setLineDash([4, 5]);
+      ctx.beginPath();
+      ctx.moveTo(pt.x, pt.y);
+      ctx.lineTo(dotX, rowCY);
+      ctx.stroke();
+      ctx.restore();
+
+      // Dot
+      ctx.beginPath();
+      ctx.arc(dotX, rowCY, dotR, 0, Math.PI * 2);
+      ctx.fillStyle = l.color;
+      ctx.fill();
+
+      // Name
+      ctx.font = 'bold 12px Manrope, system-ui, monospace';
+      ctx.fillStyle = '#ffffff';
+      ctx.textAlign = 'left';
+      ctx.fillText(l.text, px + padX + dotR * 2 + 8, rowCY - 4);
+
+      // Price
+      if (l.price) {
+        ctx.font = '11px Manrope, system-ui, monospace';
+        ctx.fillStyle = 'rgba(255,255,255,0.45)';
+        ctx.fillText(l.price, px + padX + dotR * 2 + 8, rowCY + 10);
+      }
+    });
   }
 
   // ─── Ground grid ─────────────────────────────────────────────────────────
@@ -176,7 +212,7 @@ class TronVisualization {
       });
       this.ctx.setLineDash([]);
 
-      labels.push({ x: half + 1, y: y + 0.6, z: half + 1, text: 'Демонтаж', color: 'rgba(255,120,60,0.9)', price: '−1 200 ₽/м²' });
+      labels.push({ wx: half + 1, wy: y + 0.6, wz: half + 1, text: 'Демонтаж', color: 'rgba(255,120,60,0.9)', price: '−1 200 ₽/м²' });
       y += 1.2;
     }
 
@@ -203,7 +239,7 @@ class TronVisualization {
         this.ctx.fill();
       }
 
-      labels.push({ x: half, y: y + 0.75, z: half, text: 'Подготовка', color: 'rgba(255,200,80,0.9)', price: '+900 ₽/м²' });
+      labels.push({ wx: half, wy: y + 0.75, wz: half, text: 'Подготовка', color: 'rgba(255,200,80,0.9)', price: '+900 ₽/м²' });
       y += 1.5;
     }
 
@@ -233,7 +269,7 @@ class TronVisualization {
 
     const coverageLabel = document.querySelector('input[name="coverage"]:checked')?.parentElement?.querySelector('strong')?.textContent || 'Покрытие';
     const coveragePrice = document.querySelector('input[name="coverage"]:checked')?.dataset?.price;
-    labels.push({ x: half, y: y + 0.9, z: half, text: `TerraWay · ${coverageLabel}`, color: 'rgba(0,255,150,0.95)', price: coveragePrice ? `${Number(coveragePrice).toLocaleString('ru-RU')} ₽/м²` : '' });
+    labels.push({ wx: half, wy: y + 0.9, wz: half, text: `TerraWay · ${coverageLabel}`, color: 'rgba(0,255,150,0.95)', price: coveragePrice ? `${Number(coveragePrice).toLocaleString('ru-RU')} ₽/м²` : '' });
     y += 1.8;
 
     // ── Герметизация (тонкий глянцевый слой) ─────────────────────────
@@ -246,7 +282,7 @@ class TronVisualization {
         back:  'rgba(70,148,200,0.5)',
       };
       this.slab(half, y, y + 0.4, sealColors, 'rgba(100,200,255,0.4)');
-      labels.push({ x: half, y: y + 0.2, z: half, text: 'Герметизация', color: 'rgba(100,200,255,0.9)', price: '+1 500 ₽/м²' });
+      labels.push({ wx: half, wy: y + 0.2, wz: half, text: 'Герметизация', color: 'rgba(100,200,255,0.9)', price: '+1 500 ₽/м²' });
       y += 0.4;
     }
 
@@ -285,11 +321,11 @@ class TronVisualization {
       // Правая сторона (+x)
       curbBox( half, H,  -half, half);
 
-      labels.push({ x: H, y: yBase + curbH * 0.5, z: half, text: 'Поребрик', color: 'rgba(210,210,230,0.95)', price: '+750 ₽/п.м' });
+      labels.push({ wx: H, wy: yBase + curbH * 0.5, wz: half, text: 'Поребрик', color: 'rgba(210,210,230,0.95)', price: '+750 ₽/п.м' });
     }
 
-    // ── Линии-выноски ─────────────────────────────────────────────────
-    labels.forEach(l => this.label(l.x, l.y, l.z, l.text, l.color, l.price));
+    // ── Легенда ───────────────────────────────────────────────────────
+    this.drawLegend(labels);
   }
 
   // ─── Render loop ──────────────────────────────────────────────────────────
