@@ -250,44 +250,42 @@ class TronVisualization {
       y += 0.4;
     }
 
-    // ── Поребрик (бордюр) — блоки по периметру ───────────────────────
+    // ── Поребрик — все 4 стороны с углами ────────────────────────────
     if (this.services.edge) {
-      const curbH = 2.8;  // высота поребрика над основанием покрытия
-      const curbW = 0.8;  // ширина поребрика
-      const yBase = this.services.removal ? 1.2 : 0;  // поребрик вбивается в основание
-      const curbColors = { front: 'rgba(160,160,170,0.88)', top: 'rgba(200,200,210,0.88)' };
+      const curbH = 3.0;
+      const curbW = 1.0;
+      const yBase = this.services.removal ? 1.2 : 0;
+      const yTop  = yBase + curbH;
+      const H = half + curbW;
 
-      // Четыре стороны поребрика
-      const sides = [
-        // front (z = +half): x идет от -half до half
-        { x0: -half - curbW, z0: half, x1: half + curbW, z1: half + curbW },
-        // back  (z = -half)
-        { x0: -half - curbW, z0: -half - curbW, x1: half + curbW, z1: -half },
-        // left  (x = -half)
-        { x0: -half - curbW, z0: -half, x1: -half, z1: half },
-        // right (x = +half)
-        { x0: half, z0: -half, x1: half + curbW, z1: half },
-      ];
+      // Рисует один ящик: top, front, right, back, left
+      const curbBox = (x0, x1, z0, z1) => {
+        const lc = 'rgba(255,255,255,0.18)';
+        const top   = 'rgba(210,210,220,0.9)';
+        const side1 = 'rgba(155,155,165,0.9)';
+        const side2 = 'rgba(135,135,145,0.9)';
+        // top
+        this.face([this.p(x0,yTop,z0),this.p(x1,yTop,z0),this.p(x1,yTop,z1),this.p(x0,yTop,z1)], top,   lc, 1);
+        // front (+z)
+        this.face([this.p(x0,yBase,z1),this.p(x1,yBase,z1),this.p(x1,yTop,z1),this.p(x0,yTop,z1)], side1, lc, 1);
+        // back (-z)
+        this.face([this.p(x0,yBase,z0),this.p(x1,yBase,z0),this.p(x1,yTop,z0),this.p(x0,yTop,z0)], side2, lc, 1);
+        // right (+x)
+        this.face([this.p(x1,yBase,z0),this.p(x1,yBase,z1),this.p(x1,yTop,z1),this.p(x1,yTop,z0)], side1, lc, 1);
+        // left (-x)
+        this.face([this.p(x0,yBase,z0),this.p(x0,yBase,z1),this.p(x0,yTop,z1),this.p(x0,yTop,z0)], side2, lc, 1);
+      };
 
-      sides.forEach(s => {
-        // top face
-        this.face([
-          this.p(s.x0, yBase + curbH, s.z0),
-          this.p(s.x1, yBase + curbH, s.z0),
-          this.p(s.x1, yBase + curbH, s.z1),
-          this.p(s.x0, yBase + curbH, s.z1),
-        ], curbColors.top, 'rgba(255,255,255,0.2)', 1);
+      // Передняя сторона (+z)
+      curbBox(-H,  H,   half, H);
+      // Задняя сторона (-z)
+      curbBox(-H,  H,  -H,  -half);
+      // Левая сторона (-x)
+      curbBox(-H, -half, -half, half);
+      // Правая сторона (+x)
+      curbBox( half, H,  -half, half);
 
-        // front face (always z-positive side)
-        this.face([
-          this.p(s.x0, yBase,         s.z1),
-          this.p(s.x1, yBase,         s.z1),
-          this.p(s.x1, yBase + curbH, s.z1),
-          this.p(s.x0, yBase + curbH, s.z1),
-        ], curbColors.front, 'rgba(255,255,255,0.2)', 1);
-      });
-
-      labels.push({ x: half + curbW, y: yBase + curbH * 0.5, z: half, text: 'Поребрик', color: 'rgba(200,200,220,0.9)', price: '+750 ₽/п.м' });
+      labels.push({ x: H, y: yBase + curbH * 0.5, z: half, text: 'Поребрик', color: 'rgba(210,210,230,0.95)', price: '+750 ₽/п.м' });
     }
 
     // ── Линии-выноски ─────────────────────────────────────────────────
