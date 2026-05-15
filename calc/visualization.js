@@ -8,7 +8,7 @@ class TronVisualization {
     this.isMouseDown = false;
     this.lastX = 0;
     this.lastY = 0;
-    this.services = { prep: false, edge: false, sealing: false, removal: false };
+    this.services = { prep: false, edge: false, sealing: false, removal: false, baseType: 'hard' };
     this.area = 100;
     this._raf = null;
 
@@ -244,6 +244,8 @@ class TronVisualization {
     }
 
     // ── Каменный ковёр ────────────────────────────────────────────────
+    // Толщина зависит от основания: твёрдое = 1.2, мягкое = 2.4 (×2 для наглядности)
+    const stoneThickness = this.services.baseType === 'soft' ? 2.4 : 1.2;
     const stoneColors = {
       top:   'rgba(185,165,130,0.9)',
       front: 'rgba(145,128,100,0.9)',
@@ -251,7 +253,7 @@ class TronVisualization {
       left:  'rgba(138,122,96,0.9)',
       back:  'rgba(130,115,90,0.9)',
     };
-    this.slab(half, y, y + 1.8, stoneColors, 'rgba(0,255,150,0.4)');
+    this.slab(half, y, y + stoneThickness, stoneColors, 'rgba(0,255,150,0.4)');
 
     // Каменная текстура сверху (сетка швов)
     this.ctx.strokeStyle = 'rgba(100,85,65,0.5)';
@@ -259,18 +261,28 @@ class TronVisualization {
     const gridN = 6;
     for (let i = -gridN; i <= gridN; i++) {
       const t = (i / gridN) * half * 0.9;
-      const a = this.p(t, y + 1.8, -half * 0.9);
-      const b = this.p(t, y + 1.8,  half * 0.9);
-      const c = this.p(-half * 0.9, y + 1.8, t);
-      const d = this.p( half * 0.9, y + 1.8, t);
+      const a = this.p(t, y + stoneThickness, -half * 0.9);
+      const b = this.p(t, y + stoneThickness,  half * 0.9);
+      const c = this.p(-half * 0.9, y + stoneThickness, t);
+      const d = this.p( half * 0.9, y + stoneThickness, t);
       this.ctx.beginPath(); this.ctx.moveTo(a.x, a.y); this.ctx.lineTo(b.x, b.y); this.ctx.stroke();
       this.ctx.beginPath(); this.ctx.moveTo(c.x, c.y); this.ctx.lineTo(d.x, d.y); this.ctx.stroke();
     }
 
     const coverageLabel = document.querySelector('input[name="coverage"]:checked')?.parentElement?.querySelector('strong')?.textContent || 'Покрытие';
     const coveragePrice = document.querySelector('input[name="coverage"]:checked')?.dataset?.price;
-    labels.push({ wx: half, wy: y + 0.9, wz: half, text: `TerraWay · ${coverageLabel}`, color: 'rgba(0,255,150,0.95)', price: coveragePrice ? `${Number(coveragePrice).toLocaleString('ru-RU')} ₽/м²` : '' });
-    y += 1.8;
+    const baseRadio = document.querySelector('input[name="base"]:checked');
+    const baseLabel = baseRadio?.parentElement?.querySelector('strong')?.textContent || '';
+    const baseThickness = baseRadio?.dataset?.thickness || '';
+    const baseMult = parseFloat(baseRadio?.dataset?.multiplier) || 1;
+    const finalPrice = coveragePrice ? Math.round(Number(coveragePrice) * baseMult) : 0;
+    labels.push({
+      wx: half, wy: y + stoneThickness / 2, wz: half,
+      text: `TerraWay · ${coverageLabel}`,
+      color: 'rgba(0,255,150,0.95)',
+      price: finalPrice ? `${finalPrice.toLocaleString('ru-RU')} ₽/м² · осн. ${baseLabel.toLowerCase()} ${baseThickness}` : ''
+    });
+    y += stoneThickness;
 
     // ── Герметизация (тонкий глянцевый слой) ─────────────────────────
     if (this.services.sealing) {

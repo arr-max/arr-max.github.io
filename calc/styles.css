@@ -261,6 +261,40 @@ button {
   margin-top: -0.5rem;
 }
 
+.form-help {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  border-left: 2px solid var(--color-border);
+  padding: 0.5rem 0 0.5rem 0.75rem;
+  margin-top: 0.25rem;
+}
+
+.form-help summary {
+  cursor: pointer;
+  color: var(--color-accent);
+  font-weight: 500;
+  list-style: none;
+  user-select: none;
+}
+
+.form-help summary::-webkit-details-marker { display: none; }
+
+.form-help summary::before {
+  content: "▸ ";
+  display: inline-block;
+  transition: transform 0.15s ease;
+  color: var(--color-accent);
+}
+
+.form-help[open] summary::before {
+  transform: rotate(90deg);
+}
+
+.form-help p {
+  margin: 0.5rem 0 0 0;
+  line-height: 1.5;
+}
+
 /* ===== Range Slider ===== */
 .form-range {
   width: 100%;

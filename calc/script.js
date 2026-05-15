@@ -59,6 +59,9 @@ class Calculator {
     document.querySelectorAll('input[name="coverage"]').forEach(radio => {
       radio.addEventListener('change', () => this.calculate());
     });
+    document.querySelectorAll('input[name="base"]').forEach(radio => {
+      radio.addEventListener('change', () => this.calculate());
+    });
     document.querySelectorAll('input[name="service"]').forEach(checkbox => {
       checkbox.addEventListener('change', () => this.calculate());
     });
@@ -138,11 +141,13 @@ class Calculator {
 
   updateVisualization() {
     const area = parseFloat(this.areaInput.value) || 0;
+    const baseType = document.querySelector('input[name="base"]:checked')?.value || 'hard';
     this.viz.updateServices({
       prep: this.prepCheckbox.checked,
       edge: this.edgeCheckbox.checked,
       sealing: this.sealingCheckbox.checked,
-      removal: this.removalCheckbox.checked
+      removal: this.removalCheckbox.checked,
+      baseType: baseType
     }, area);
   }
 
@@ -156,13 +161,19 @@ class Calculator {
     const coverageName = coverageRadio.parentElement.querySelector('.radio-label strong').textContent;
     const coveragePrice = parseFloat(coverageRadio.dataset.price) || 0;
 
-    const baseCost = area * coveragePrice;
+    const baseRadio = document.querySelector('input[name="base"]:checked');
+    const baseName = baseRadio.parentElement.querySelector('.radio-label strong').textContent;
+    const baseMultiplier = parseFloat(baseRadio.dataset.multiplier) || 1;
+    const baseThickness = baseRadio.dataset.thickness || '';
+
+    const baseCost = area * coveragePrice * baseMultiplier;
     const { cost: servicesCost, items: servicesItems } = this.calculateServices(area);
     const subtotal = baseCost + servicesCost;
     const { discount: discountValue, final: finalTotal } = this.applyDiscount(subtotal);
 
     this.lastSnapshot = {
       area, coverageName, coveragePrice,
+      baseName, baseMultiplier, baseThickness,
       baseCost, servicesItems, subtotal,
       discountPercent: parseFloat(this.discountInput.value) || 0,
       discountValue, finalTotal,
@@ -450,8 +461,9 @@ class Calculator {
   <div class="params">
     <div class="row"><span class="label">Площадь</span><span class="value">${s.area} м²</span></div>
     <div class="row"><span class="label">Тип покрытия</span><span class="value">${s.coverageName}</span></div>
+    <div class="row"><span class="label">Основание</span><span class="value">${s.baseName} (${s.baseThickness})</span></div>
     ${s.perimeter > 0 ? `<div class="row"><span class="label">Периметр</span><span class="value">${s.perimeter} п.м</span></div>` : ''}
-    <div class="row"><span class="label">Цена за м²</span><span class="value">${fmt(s.coveragePrice)}</span></div>
+    <div class="row"><span class="label">Цена за м² (с осн.)</span><span class="value">${fmt(s.coveragePrice * s.baseMultiplier)}</span></div>
   </div>
 
   <h2>Стоимость работ</h2>
