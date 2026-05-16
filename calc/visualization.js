@@ -186,6 +186,57 @@ class TronVisualization {
     const labels = [];
     let y = 0;
 
+    // ── Слой основания (под всеми слоями) ────────────────────────────
+    const isSoft = this.services.baseType === 'soft';
+    const baseDepth = isSoft ? 2.2 : 1.0;
+    if (isSoft) {
+      // Мягкое: грунт/отсев — бежево-серый слой с крапинками
+      const softColors = {
+        top:   'rgba(180,165,130,0.80)',
+        front: 'rgba(145,130,100,0.80)',
+        right: 'rgba(162,148,115,0.80)',
+        left:  'rgba(138,124,96,0.80)',
+        back:  'rgba(130,118,90,0.80)',
+      };
+      this.slab(half + 2, -baseDepth, 0, softColors, 'rgba(200,180,130,0.20)');
+      // Крапинки — отсев/гравий
+      for (let i = 0; i < 40; i++) {
+        const sx = (Math.random() - 0.5) * (half * 2.2);
+        const sz = (Math.random() - 0.5) * (half * 2.2);
+        const sp = this.p(sx, 0, sz);
+        const br = 100 + Math.random() * 60 | 0;
+        this.ctx.fillStyle = `rgba(${br},${br - 20},${br - 50},0.55)`;
+        this.ctx.beginPath();
+        this.ctx.arc(sp.x, sp.y, 1 + Math.random() * 2, 0, Math.PI * 2);
+        this.ctx.fill();
+      }
+      labels.push({ wx: -(half + 2), wy: -baseDepth / 2, wz: -(half + 2), text: 'Основание: мягкое', color: 'rgba(210,185,130,0.90)', price: 'отсев / грунт · 18–50 мм' });
+    } else {
+      // Твёрдое: бетонная плита — серый слой с сеткой
+      const hardColors = {
+        top:   'rgba(160,165,170,0.85)',
+        front: 'rgba(120,125,130,0.85)',
+        right: 'rgba(140,145,150,0.85)',
+        left:  'rgba(115,120,125,0.85)',
+        back:  'rgba(110,115,120,0.85)',
+      };
+      this.slab(half + 2, -baseDepth, 0, hardColors, 'rgba(180,190,200,0.15)');
+      // Бетонная сетка (арматура) на поверхности
+      this.ctx.strokeStyle = 'rgba(100,110,120,0.35)';
+      this.ctx.lineWidth = 0.8;
+      const gN = 4;
+      for (let i = -gN; i <= gN; i++) {
+        const t = (i / gN) * (half + 2) * 0.9;
+        const a = this.p(t, 0, -(half + 2) * 0.9);
+        const b = this.p(t, 0,  (half + 2) * 0.9);
+        const c = this.p(-(half + 2) * 0.9, 0, t);
+        const d = this.p( (half + 2) * 0.9, 0, t);
+        this.ctx.beginPath(); this.ctx.moveTo(a.x, a.y); this.ctx.lineTo(b.x, b.y); this.ctx.stroke();
+        this.ctx.beginPath(); this.ctx.moveTo(c.x, c.y); this.ctx.lineTo(d.x, d.y); this.ctx.stroke();
+      }
+      labels.push({ wx: -(half + 2), wy: -baseDepth / 2, wz: -(half + 2), text: 'Основание: твёрдое', color: 'rgba(180,185,200,0.90)', price: 'бетон / плитка · 10–30 мм' });
+    }
+
     // ── Демонтаж (старый асфальт/плитка под площадкой) ──────────────
     if (this.services.removal) {
       const remColors = {
