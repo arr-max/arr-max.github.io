@@ -253,6 +253,62 @@
     @media (max-width: 640px) {
       .cure-bar { flex-direction: column; }
     }
+
+    /* ── weather block ── */
+    .weather-controls {
+      display: flex;
+      align-items: center;
+      gap: .75rem;
+      flex-wrap: wrap;
+      margin-bottom: 1.25rem;
+    }
+    .weather-controls__sep {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+    }
+    .weather-city-select {
+      font-family: var(--font-sans);
+      font-size: .9rem;
+      padding: .45rem .75rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: var(--color-surface);
+      color: var(--color-text);
+      cursor: pointer;
+    }
+    .weather-city-label {
+      font-size: .85rem;
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+    .weather-widget-wrap { margin-top: .5rem; }
+    .weather-safe-check {
+      display: flex;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: .75rem;
+    }
+    .weather-note {
+      font-size: .78rem;
+      color: var(--color-text-muted);
+      margin: .5rem 0 0;
+      text-align: right;
+    }
+    .weather-idle {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: .5rem;
+      min-height: 140px;
+      border: 2px dashed var(--color-border);
+      border-radius: var(--radius);
+      color: var(--color-text-muted);
+      font-size: .95rem;
+    }
+    .weather-idle span { font-size: 2.5rem; }
+    .weather-idle p { margin: 0; }
+    #geoBtn.loading { opacity: .6; pointer-events: none; }
   </style>
 </head>
 <body>
@@ -597,6 +653,67 @@
           </div>
         </section>
 
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <section class="details-section" id="weather" style="margin-top:4rem; margin-bottom:2rem">
+          <h2 class="section__title" style="text-align:left; margin-bottom:.5rem">Прогноз погоды для укладки</h2>
+          <p style="max-width:640px; margin-bottom:1.5rem">Нужно окно минимум <strong>3 дня</strong>: без осадков, без тумана, температура выше +10°C. Проверьте прогноз прямо здесь — по вашему городу.</p>
+
+          <div class="weather-controls">
+            <button class="btn btn--outline btn--sm" id="geoBtn" type="button">📍 Определить мой город</button>
+            <span class="weather-controls__sep">или</span>
+            <select class="weather-city-select" id="citySelect">
+              <option value="">— выбрать город —</option>
+              <option value="55.7522,37.6156">Москва</option>
+              <option value="59.9386,30.3141">Санкт-Петербург</option>
+              <option value="56.8519,60.6122">Екатеринбург</option>
+              <option value="55.0084,82.9357">Новосибирск</option>
+              <option value="43.9048,132.8597">Владивосток</option>
+              <option value="54.7388,55.9721">Уфа</option>
+              <option value="51.5339,46.0342">Саратов</option>
+              <option value="47.2357,39.7015">Ростов-на-Дону</option>
+              <option value="45.0355,38.9753">Краснодар</option>
+              <option value="43.5992,39.7257">Сочи</option>
+              <option value="44.0165,43.0626">Ставрополь</option>
+              <option value="43.0667,44.6670">Владикавказ</option>
+              <option value="42.9849,47.5047">Махачкала</option>
+              <option value="55.7879,49.1233">Казань</option>
+              <option value="56.3269,44.0059">Нижний Новгород</option>
+              <option value="53.1959,50.1001">Самара</option>
+              <option value="57.1522,65.5272">Тюмень</option>
+              <option value="56.4977,84.9744">Томск</option>
+              <option value="53.3606,83.7636">Барнаул</option>
+              <option value="52.2978,104.2964">Иркутск</option>
+              <option value="56.0184,92.8672">Красноярск</option>
+              <option value="51.7727,55.0988">Оренбург</option>
+              <option value="58.5966,49.6583">Киров</option>
+              <option value="48.7080,44.5133">Волгоград</option>
+              <option value="54.9924,82.9561">Новосибирск</option>
+              <option value="55.9647,37.1818">Красногорск</option>
+            </select>
+            <span class="weather-city-label" id="cityLabel"></span>
+          </div>
+
+          <div class="weather-widget-wrap" id="weatherWrap" hidden>
+            <div class="weather-safe-check" id="safeCheck"></div>
+            <iframe
+              id="weatherFrame"
+              src=""
+              width="100%"
+              height="400"
+              frameborder="0"
+              scrolling="no"
+              title="Прогноз погоды Яндекс"
+              style="border-radius:8px; border:1px solid var(--color-border); display:block;"
+            ></iframe>
+            <p class="weather-note">Данные: <a href="https://yandex.ru/pogoda" target="_blank" rel="noopener">Яндекс Погода</a></p>
+          </div>
+
+          <div class="weather-idle" id="weatherIdle">
+            <span>☁️</span>
+            <p>Нажмите «Определить мой город» или выберите город из списка</p>
+          </div>
+        </section>
+
       </div>
     </section>
 
@@ -619,5 +736,63 @@
       <p class="footer__note">TerraWay® — зарегистрированная торговая марка.</p>
     </div>
   </footer>
+  <script>
+    (function () {
+      const geoBtn    = document.getElementById('geoBtn');
+      const citySelect= document.getElementById('citySelect');
+      const cityLabel = document.getElementById('cityLabel');
+      const weatherWrap = document.getElementById('weatherWrap');
+      const weatherIdle = document.getElementById('weatherIdle');
+      const frame     = document.getElementById('weatherFrame');
+
+      function showWidget(lat, lon, label) {
+        const src = `https://yandex.ru/pogoda/widget/v2?lat=${lat}&lon=${lon}&lang=ru&theme=light&limit=7&v=2`;
+        frame.src = src;
+        weatherWrap.hidden = false;
+        weatherIdle.hidden = true;
+        cityLabel.textContent = label ? `📍 ${label}` : '';
+      }
+
+      // Geolocation
+      geoBtn.addEventListener('click', () => {
+        if (!navigator.geolocation) {
+          alert('Геолокация недоступна в вашем браузере');
+          return;
+        }
+        geoBtn.classList.add('loading');
+        geoBtn.textContent = '⏳ Определяем…';
+        navigator.geolocation.getCurrentPosition(
+          pos => {
+            const lat = pos.coords.latitude.toFixed(4);
+            const lon = pos.coords.longitude.toFixed(4);
+            geoBtn.classList.remove('loading');
+            geoBtn.textContent = '📍 Определить мой город';
+            citySelect.value = '';
+            showWidget(lat, lon, 'Ваш город');
+          },
+          err => {
+            geoBtn.classList.remove('loading');
+            geoBtn.textContent = '📍 Определить мой город';
+            const msgs = {
+              1: 'Вы запретили доступ к геолокации — выберите город из списка.',
+              2: 'Не удалось определить местоположение.',
+              3: 'Время ожидания истекло.',
+            };
+            alert(msgs[err.code] || 'Ошибка геолокации.');
+          },
+          { timeout: 8000 }
+        );
+      });
+
+      // City select
+      citySelect.addEventListener('change', () => {
+        const val = citySelect.value;
+        if (!val) return;
+        const [lat, lon] = val.split(',');
+        const label = citySelect.options[citySelect.selectedIndex].text;
+        showWidget(lat, lon, label);
+      });
+    })();
+  </script>
 </body>
 </html>
