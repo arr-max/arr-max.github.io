@@ -262,10 +262,7 @@
       flex-wrap: wrap;
       margin-bottom: 1.25rem;
     }
-    .weather-controls__sep {
-      font-size: .85rem;
-      color: var(--color-text-muted);
-    }
+    .weather-controls__sep { font-size: .85rem; color: var(--color-text-muted); }
     .weather-city-select {
       font-family: var(--font-sans);
       font-size: .9rem;
@@ -276,38 +273,61 @@
       color: var(--color-text);
       cursor: pointer;
     }
-    .weather-city-label {
-      font-size: .85rem;
-      color: var(--color-accent);
-      font-weight: 600;
-    }
-    .weather-widget-wrap { margin-top: .5rem; }
-    .weather-safe-check {
+    .weather-city-label { font-size: .85rem; color: var(--color-accent); font-weight: 600; }
+    .weather-widget-wrap { margin-top: .25rem; }
+
+    /* verdict banner */
+    .weather-verdict {
       display: flex;
-      gap: .5rem;
-      flex-wrap: wrap;
+      align-items: center;
+      gap: .75rem;
+      padding: .9rem 1.25rem;
+      border-radius: var(--radius);
+      margin-bottom: 1rem;
+      font-weight: 600;
+      font-size: .95rem;
+    }
+    .weather-verdict--go   { background: #e8f5e9; color: #1b6b2f; border: 1px solid #a5d6a7; }
+    .weather-verdict--wait { background: #fff8e1; color: #7b5800; border: 1px solid #ffe082; }
+    .weather-verdict--no   { background: #fdecea; color: #8b1a1a; border: 1px solid #ef9a9a; }
+    .weather-verdict__icon { font-size: 1.4rem; }
+    .weather-verdict__sub  { font-size: .82rem; font-weight: 400; opacity: .8; margin-top: .15rem; }
+
+    /* days grid */
+    .weather-days {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+      gap: .75rem;
       margin-bottom: .75rem;
     }
-    .weather-note {
-      font-size: .78rem;
-      color: var(--color-text-muted);
-      margin: .5rem 0 0;
-      text-align: right;
-    }
-    .weather-idle {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: .5rem;
-      min-height: 140px;
-      border: 2px dashed var(--color-border);
+    .weather-day {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
       border-radius: var(--radius);
-      color: var(--color-text-muted);
-      font-size: .95rem;
+      padding: .75rem .6rem;
+      text-align: center;
+    }
+    .weather-day--go   { border-top: 3px solid #43a047; }
+    .weather-day--wait { border-top: 3px solid #ffb300; }
+    .weather-day--no   { border-top: 3px solid #e53935; }
+    .weather-day__name { font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em; color: var(--color-text-muted); }
+    .weather-day__icon { font-size: 1.6rem; margin: .3rem 0; }
+    .weather-day__temp { font-size: .85rem; font-weight: 600; color: var(--color-dark); }
+    .weather-day__rain { font-size: .75rem; color: var(--color-text-muted); margin-top: .2rem; }
+    .weather-day__badge { font-size: .68rem; font-weight: 700; margin-top: .35rem; padding: .1rem .35rem; border-radius: 3px; display: inline-block; }
+    .badge-go   { background: #e8f5e9; color: #1b6b2f; }
+    .badge-wait { background: #fff8e1; color: #7b5800; }
+    .badge-no   { background: #fdecea; color: #8b1a1a; }
+
+    .weather-note { font-size: .78rem; color: var(--color-text-muted); margin: .4rem 0 0; text-align: right; }
+    .weather-idle {
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: .5rem; min-height: 140px; border: 2px dashed var(--color-border);
+      border-radius: var(--radius); color: var(--color-text-muted); font-size: .95rem;
     }
     .weather-idle span { font-size: 2.5rem; }
     .weather-idle p { margin: 0; }
+    .weather-error { padding: .9rem 1.25rem; background: #fdecea; border-radius: var(--radius); color: #8b1a1a; font-size: .9rem; }
     #geoBtn.loading { opacity: .6; pointer-events: none; }
   </style>
 </head>
@@ -666,7 +686,6 @@
               <option value="55.7522,37.6156">Москва</option>
               <option value="59.9386,30.3141">Санкт-Петербург</option>
               <option value="56.8519,60.6122">Екатеринбург</option>
-              <option value="55.0084,82.9357">Новосибирск</option>
               <option value="43.9048,132.8597">Владивосток</option>
               <option value="54.7388,55.9721">Уфа</option>
               <option value="51.5339,46.0342">Саратов</option>
@@ -674,7 +693,6 @@
               <option value="45.0355,38.9753">Краснодар</option>
               <option value="43.5992,39.7257">Сочи</option>
               <option value="44.0165,43.0626">Ставрополь</option>
-              <option value="43.0667,44.6670">Владикавказ</option>
               <option value="42.9849,47.5047">Махачкала</option>
               <option value="55.7879,49.1233">Казань</option>
               <option value="56.3269,44.0059">Нижний Новгород</option>
@@ -685,33 +703,23 @@
               <option value="52.2978,104.2964">Иркутск</option>
               <option value="56.0184,92.8672">Красноярск</option>
               <option value="51.7727,55.0988">Оренбург</option>
-              <option value="58.5966,49.6583">Киров</option>
               <option value="48.7080,44.5133">Волгоград</option>
-              <option value="54.9924,82.9561">Новосибирск</option>
-              <option value="55.9647,37.1818">Красногорск</option>
+              <option value="55.0084,82.9357">Новосибирск</option>
             </select>
             <span class="weather-city-label" id="cityLabel"></span>
           </div>
 
           <div class="weather-widget-wrap" id="weatherWrap" hidden>
-            <div class="weather-safe-check" id="safeCheck"></div>
-            <iframe
-              id="weatherFrame"
-              src=""
-              width="100%"
-              height="400"
-              frameborder="0"
-              scrolling="no"
-              title="Прогноз погоды Яндекс"
-              style="border-radius:8px; border:1px solid var(--color-border); display:block;"
-            ></iframe>
-            <p class="weather-note">Данные: <a href="https://yandex.ru/pogoda" target="_blank" rel="noopener">Яндекс Погода</a></p>
+            <div class="weather-verdict" id="weatherVerdict"></div>
+            <div class="weather-days" id="weatherDays"></div>
+            <p class="weather-note">Данные: <a href="https://open-meteo.com" target="_blank" rel="noopener">Open-Meteo</a> (обновляется каждые 3 ч)</p>
           </div>
 
           <div class="weather-idle" id="weatherIdle">
             <span>☁️</span>
             <p>Нажмите «Определить мой город» или выберите город из списка</p>
           </div>
+          <div class="weather-error" id="weatherError" hidden></div>
         </section>
 
       </div>
@@ -738,59 +746,146 @@
   </footer>
   <script>
     (function () {
-      const geoBtn    = document.getElementById('geoBtn');
-      const citySelect= document.getElementById('citySelect');
-      const cityLabel = document.getElementById('cityLabel');
+      const geoBtn      = document.getElementById('geoBtn');
+      const citySelect  = document.getElementById('citySelect');
+      const cityLabel   = document.getElementById('cityLabel');
       const weatherWrap = document.getElementById('weatherWrap');
       const weatherIdle = document.getElementById('weatherIdle');
-      const frame     = document.getElementById('weatherFrame');
+      const weatherErr  = document.getElementById('weatherError');
+      const verdictEl   = document.getElementById('weatherVerdict');
+      const daysEl      = document.getElementById('weatherDays');
 
-      function showWidget(lat, lon, label) {
-        const src = `https://yandex.ru/pogoda/widget/v2?lat=${lat}&lon=${lon}&lang=ru&theme=light&limit=7&v=2`;
-        frame.src = src;
-        weatherWrap.hidden = false;
-        weatherIdle.hidden = true;
-        cityLabel.textContent = label ? `📍 ${label}` : '';
+      const DAY_RU = ['Вс','Пн','Вт','Ср','Чт','Пт','Сб'];
+      const MONTH_RU = ['янв','фев','мар','апр','май','июн','июл','авг','сен','окт','ноя','дек'];
+
+      // WMO code → emoji + description
+      function wmoInfo(code) {
+        if (code === 0)               return { icon: '☀️',  desc: 'Ясно' };
+        if (code <= 2)                return { icon: '🌤️', desc: 'Малооблачно' };
+        if (code === 3)               return { icon: '☁️',  desc: 'Пасмурно' };
+        if (code <= 48)               return { icon: '🌫️', desc: 'Туман' };
+        if (code <= 55)               return { icon: '🌦️', desc: 'Морось' };
+        if (code <= 65)               return { icon: '🌧️', desc: 'Дождь' };
+        if (code <= 77)               return { icon: '❄️',  desc: 'Снег' };
+        if (code <= 82)               return { icon: '🌧️', desc: 'Ливень' };
+        if (code <= 86)               return { icon: '🌨️', desc: 'Снегопад' };
+        return                               { icon: '⛈️',  desc: 'Гроза' };
       }
 
-      // Geolocation
-      geoBtn.addEventListener('click', () => {
-        if (!navigator.geolocation) {
-          alert('Геолокация недоступна в вашем браузере');
+      // Is this day safe for laying carpet?
+      function dayStatus(tmax, precip, precipProb, code) {
+        const badCode = code >= 45; // fog, rain, snow, storm
+        if (tmax < 10 || precip > 1 || precipProb > 40 || badCode)
+          return 'no';
+        if (tmax < 14 || precip > 0.2 || precipProb > 20)
+          return 'wait';
+        return 'go';
+      }
+
+      const statusLabel = { go: '✓ Укладка', wait: '~ С оговорками', no: '✗ Нельзя' };
+      const statusBadge = { go: 'badge-go', wait: 'badge-wait', no: 'badge-no' };
+      const verdictClass = { go: 'weather-verdict--go', wait: 'weather-verdict--wait', no: 'weather-verdict--no' };
+      const verdictIcon  = { go: '🟢', wait: '🟡', no: '🔴' };
+
+      async function loadWeather(lat, lon, label) {
+        weatherErr.hidden = true;
+        weatherIdle.hidden = true;
+        weatherWrap.hidden = true;
+        verdictEl.innerHTML = '<span style="color:var(--color-text-muted);font-size:.9rem">Загружаем прогноз…</span>';
+        weatherWrap.hidden = false;
+
+        const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}`
+          + `&daily=weathercode,temperature_2m_max,temperature_2m_min,precipitation_sum,precipitation_probability_max`
+          + `&timezone=auto&forecast_days=7`;
+
+        let data;
+        try {
+          const res = await fetch(url);
+          if (!res.ok) throw new Error('HTTP ' + res.status);
+          data = await res.json();
+        } catch (e) {
+          weatherWrap.hidden = true;
+          weatherErr.hidden = false;
+          weatherErr.textContent = 'Не удалось загрузить прогноз. Проверьте соединение.';
           return;
         }
+
+        const { time, weathercode, temperature_2m_max, temperature_2m_min,
+                precipitation_sum, precipitation_probability_max } = data.daily;
+
+        // Build days
+        daysEl.innerHTML = '';
+        const statuses = [];
+        time.forEach((dateStr, i) => {
+          const d = new Date(dateStr);
+          const st = dayStatus(temperature_2m_max[i], precipitation_sum[i],
+                               precipitation_probability_max[i], weathercode[i]);
+          statuses.push(st);
+          const { icon } = wmoInfo(weathercode[i]);
+          const isToday = i === 0;
+          const dayName = isToday ? 'Сегодня' : DAY_RU[d.getDay()];
+          const dayDate = `${d.getDate()} ${MONTH_RU[d.getMonth()]}`;
+
+          daysEl.innerHTML += `
+            <div class="weather-day weather-day--${st}">
+              <div class="weather-day__name">${dayName}<br><span style="font-weight:400;font-size:.68rem">${dayDate}</span></div>
+              <div class="weather-day__icon">${icon}</div>
+              <div class="weather-day__temp">${Math.round(temperature_2m_max[i])}° / ${Math.round(temperature_2m_min[i])}°</div>
+              <div class="weather-day__rain">💧 ${(precipitation_sum[i] || 0).toFixed(1)} мм · ${precipitation_probability_max[i] || 0}%</div>
+              <span class="weather-day__badge ${statusBadge[st]}">${statusLabel[st]}</span>
+            </div>`;
+        });
+
+        // Overall verdict: count good days in first 3
+        const first3 = statuses.slice(0, 3);
+        const goodDays = first3.filter(s => s === 'go').length;
+        const overall = goodDays === 3 ? 'go' : goodDays >= 1 ? 'wait' : 'no';
+        const subs = {
+          go:   'Ближайшие 3 дня подходят — можно планировать укладку.',
+          wait: 'Есть риски в ближайшие 3 дня. Следите за прогнозом перед стартом.',
+          no:   'Укладку лучше отложить — условия не соответствуют технологии.',
+        };
+
+        verdictEl.className = `weather-verdict ${verdictClass[overall]}`;
+        verdictEl.innerHTML = `
+          <span class="weather-verdict__icon">${verdictIcon[overall]}</span>
+          <div>
+            <div>${label}</div>
+            <div class="weather-verdict__sub">${subs[overall]}</div>
+          </div>`;
+      }
+
+      function startLoad(lat, lon, label) {
+        cityLabel.textContent = label ? `📍 ${label}` : '';
+        loadWeather(lat, lon, label);
+      }
+
+      geoBtn.addEventListener('click', () => {
+        if (!navigator.geolocation) { alert('Геолокация недоступна'); return; }
         geoBtn.classList.add('loading');
         geoBtn.textContent = '⏳ Определяем…';
         navigator.geolocation.getCurrentPosition(
           pos => {
-            const lat = pos.coords.latitude.toFixed(4);
-            const lon = pos.coords.longitude.toFixed(4);
             geoBtn.classList.remove('loading');
             geoBtn.textContent = '📍 Определить мой город';
             citySelect.value = '';
-            showWidget(lat, lon, 'Ваш город');
+            startLoad(pos.coords.latitude.toFixed(4), pos.coords.longitude.toFixed(4), 'Ваш город');
           },
           err => {
             geoBtn.classList.remove('loading');
             geoBtn.textContent = '📍 Определить мой город';
-            const msgs = {
-              1: 'Вы запретили доступ к геолокации — выберите город из списка.',
-              2: 'Не удалось определить местоположение.',
-              3: 'Время ожидания истекло.',
-            };
+            const msgs = { 1:'Геолокация запрещена — выберите город из списка.', 2:'Не удалось определить местоположение.', 3:'Время ожидания истекло.' };
             alert(msgs[err.code] || 'Ошибка геолокации.');
           },
           { timeout: 8000 }
         );
       });
 
-      // City select
       citySelect.addEventListener('change', () => {
         const val = citySelect.value;
         if (!val) return;
         const [lat, lon] = val.split(',');
-        const label = citySelect.options[citySelect.selectedIndex].text;
-        showWidget(lat, lon, label);
+        startLoad(lat, lon, citySelect.options[citySelect.selectedIndex].text);
       });
     })();
   </script>
