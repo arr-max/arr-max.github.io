@@ -476,6 +476,32 @@ a:hover { color: var(--color-accent-hover); }
   color: var(--color-text-muted);
 }
 
+/* ===== Details teaser ===== */
+.details-teaser {
+  background: #fdf8ec;
+  border: 1px solid var(--color-border);
+  border-left: 3px solid var(--color-accent);
+  border-radius: var(--radius);
+  padding: 1.1rem 1.5rem;
+  margin: 2rem 0;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.details-teaser p {
+  margin: 0;
+  flex: 1;
+  min-width: 200px;
+  font-size: .95rem;
+  color: var(--color-text-muted);
+}
+.btn--sm {
+  font-size: .875rem;
+  padding: .45rem 1rem;
+  white-space: nowrap;
+}
+
 /* ===== R11 block ===== */
 .r11-block {
   background: var(--color-surface);

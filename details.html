@@ -1,0 +1,622 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Детали технологии — смолы, полиуретан, причины разрушения | TerraWay</title>
+  <meta name="description" content="Почему каменные ковры разрушаются, плесневеют и трескаются. Чем отличается полиуретан от других смол. Всё о связующем в TerraWay.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── page-specific ── */
+    .details-hero {
+      padding: 7rem 0 3rem;
+      background: var(--color-dark);
+      color: #fff;
+      text-align: center;
+    }
+    .details-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 3rem);
+      font-weight: 700;
+      margin: 0 0 .75rem;
+      color: #fff;
+    }
+    .details-hero__lead {
+      font-size: 1.1rem;
+      color: rgba(255,255,255,.65);
+      margin: 0 auto;
+      max-width: 640px;
+    }
+
+    /* breadcrumb */
+    .breadcrumb {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+      margin-bottom: 2rem;
+    }
+    .breadcrumb a { color: var(--color-accent); }
+
+    /* TOC */
+    .toc {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.5rem 2rem;
+      margin-bottom: 3rem;
+    }
+    .toc__title {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--color-text-muted);
+      margin: 0 0 .75rem;
+    }
+    .toc__list {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem .75rem;
+    }
+    .toc__list a {
+      font-size: .9rem;
+      color: var(--color-accent);
+      border-bottom: 1px dashed currentColor;
+    }
+    .toc__list a:hover { color: var(--color-accent-hover); }
+
+    /* section titles */
+    .details-section { scroll-margin-top: 5rem; }
+
+    /* failure cards grid */
+    .fail-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .fail-card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .fail-card__num {
+      display: inline-block;
+      background: var(--color-accent);
+      color: #fff;
+      font-size: .75rem;
+      font-weight: 700;
+      border-radius: 4px;
+      padding: .15rem .5rem;
+      margin-bottom: .6rem;
+    }
+    .fail-card__title {
+      font-size: 1rem;
+      font-weight: 700;
+      color: var(--color-dark);
+      margin: 0 0 .5rem;
+    }
+    .fail-card__body {
+      font-size: .9rem;
+      color: var(--color-text-muted);
+      line-height: 1.55;
+      margin: 0;
+    }
+    .fail-card--critical { border-left: 3px solid #c0392b; }
+    .fail-card--warn     { border-left: 3px solid #e67e22; }
+    .fail-card--bio      { border-left: 3px solid #27ae60; }
+
+    /* key takeaway box */
+    .takeaway {
+      background: #f0f7f0;
+      border: 1px solid #b2d8b2;
+      border-radius: var(--radius);
+      padding: 1.25rem 1.5rem;
+      margin-top: 2.5rem;
+    }
+    .takeaway__label {
+      font-size: .8rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: #27ae60;
+      margin-bottom: .4rem;
+    }
+    .takeaway p { margin: 0; font-size: .95rem; }
+
+    /* rain diagram */
+    .rain-timeline {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 2rem;
+    }
+    .rain-step {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      padding: 1rem 1.25rem;
+      text-align: center;
+    }
+    .rain-step__icon { font-size: 1.8rem; margin-bottom: .4rem; }
+    .rain-step__time { font-size: .78rem; font-weight: 700; text-transform: uppercase; letter-spacing: .06em; color: var(--color-text-muted); }
+    .rain-step__status { font-size: .9rem; font-weight: 600; margin: .25rem 0; }
+    .rain-step__note { font-size: .82rem; color: var(--color-text-muted); }
+    .rain-step--bad  .rain-step__status { color: #c0392b; }
+    .rain-step--warn .rain-step__status { color: #e67e22; }
+    .rain-step--ok   .rain-step__status { color: #27ae60; }
+
+    /* resins comparison table */
+    .resin-table-wrap { overflow-x: auto; margin-top: 2rem; }
+    .resin-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .9rem;
+    }
+    .resin-table th {
+      background: var(--color-dark);
+      color: #fff;
+      font-weight: 600;
+      padding: .65rem 1rem;
+      text-align: left;
+      white-space: nowrap;
+    }
+    .resin-table td {
+      padding: .6rem 1rem;
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: top;
+    }
+    .resin-table tr:nth-child(even) td { background: var(--color-bg); }
+    .resin-table tr.resin-table__highlight td {
+      background: #fdf8ec;
+      font-weight: 600;
+    }
+    .tag-good { color: #27ae60; font-weight: 600; }
+    .tag-bad  { color: #c0392b; font-weight: 600; }
+    .tag-mid  { color: #e67e22; font-weight: 600; }
+
+    /* PU deep-dive cards */
+    .pu-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+      gap: 1.25rem;
+      margin-top: 2rem;
+    }
+    .pu-card {
+      background: var(--color-surface);
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      padding: 1.25rem 1.5rem;
+      box-shadow: var(--shadow);
+    }
+    .pu-card__icon { font-size: 1.6rem; margin-bottom: .5rem; }
+    .pu-card__title { font-size: .95rem; font-weight: 700; margin: 0 0 .4rem; color: var(--color-dark); }
+    .pu-card__body  { font-size: .875rem; color: var(--color-text-muted); margin: 0; line-height: 1.55; }
+
+    /* types of PU */
+    .pu-types {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      margin-top: 1.5rem;
+    }
+    .pu-type {
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      padding: 1.1rem 1.4rem;
+    }
+    .pu-type--best { border-color: var(--color-accent); background: #fdf8ec; }
+    .pu-type__badge {
+      display: inline-block;
+      font-size: .72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+      border-radius: 4px;
+      padding: .1rem .45rem;
+      margin-bottom: .5rem;
+      background: var(--color-bg-alt);
+      color: var(--color-text-muted);
+    }
+    .pu-type--best .pu-type__badge { background: var(--color-accent); color: #fff; }
+    .pu-type__name { font-size: .95rem; font-weight: 700; color: var(--color-dark); margin: 0 0 .35rem; }
+    .pu-type__desc { font-size: .85rem; color: var(--color-text-muted); margin: 0 0 .5rem; }
+    .pu-type__uses { font-size: .8rem; color: var(--color-text-muted); font-style: italic; margin: 0; }
+
+    /* curing timeline */
+    .cure-bar {
+      margin-top: 1.5rem;
+      display: flex;
+      gap: 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+    }
+    .cure-seg {
+      padding: .85rem .75rem;
+      flex: 1;
+      min-width: 90px;
+    }
+    .cure-seg__h { font-size: .75rem; font-weight: 700; }
+    .cure-seg__t { font-size: .78rem; margin-top: .2rem; opacity: .85; }
+    .cure-seg--a { background: #fdecea; color: #c0392b; }
+    .cure-seg--b { background: #fef3e2; color: #e67e22; }
+    .cure-seg--c { background: #e8f5e9; color: #27ae60; }
+    .cure-seg--d { background: #e3f2fd; color: #1565c0; }
+
+    @media (max-width: 640px) {
+      .cure-bar { flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="./" class="logo">Арр Макс</a>
+      <nav class="nav">
+        <a href="./#terraway">О TerraWay</a>
+        <a href="./#services">Услуги</a>
+        <a href="calc/">Калькулятор</a>
+        <a href="./#contact">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="details-hero">
+      <div class="container">
+        <h1 class="details-hero__title">Детали технологии TerraWay</h1>
+        <p class="details-hero__lead">Почему ковры разрушаются, что такое смола, чем полиуретан лучше всего остального — и как это влияет на качество укладки</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="breadcrumb"><a href="./">Главная</a> → Детали технологии</p>
+
+        <nav class="toc" aria-label="Содержание">
+          <p class="toc__title">Содержание</p>
+          <ul class="toc__list">
+            <li><a href="#failures">Почему ковры разрушаются</a></li>
+            <li><a href="#rain">Ливень и полимеризация</a></li>
+            <li><a href="#resins">Виды смол</a></li>
+            <li><a href="#polyurethane">Полиуретан: подробно</a></li>
+            <li><a href="#pu-types">Виды полиуретана</a></li>
+            <li><a href="#curing">Время отверждения</a></li>
+          </ul>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <section class="details-section" id="failures">
+          <h2 class="section__title" style="text-align:left; margin-bottom:.5rem">Почему каменные ковры разрушаются</h2>
+          <p class="section__lead" style="text-align:left; margin-bottom:0">80% отказов — ошибки при укладке или экономия на материале. Вот полный список причин.</p>
+
+          <div class="fail-grid">
+
+            <div class="fail-card fail-card--critical">
+              <span class="fail-card__num">01 · Критично</span>
+              <h3 class="fail-card__title">Неправильное соотношение камня и смолы</h3>
+              <p class="fail-card__body">Мало смолы — ковёр рассыпается при нагрузке. Много — поверхность залипает, теряет дренаж. Норма: 12–16% смолы от массы камня строго по спецификации.</p>
+            </div>
+
+            <div class="fail-card fail-card--critical">
+              <span class="fail-card__num">02 · Критично</span>
+              <h3 class="fail-card__title">Плохое основание</h3>
+              <p class="fail-card__body">Ковёр не компенсирует дефекты подосновы. Гнущаяся или неровная база даёт трещины. Нужен твёрдый и ровный субстрат с уклоном 1–2% для водоотвода.</p>
+            </div>
+
+            <div class="fail-card fail-card--critical">
+              <span class="fail-card__num">03 · Критично</span>
+              <h3 class="fail-card__title">Грязные или влажные камни</h3>
+              <p class="fail-card__body">Пыль, глина и влага на поверхности камня блокируют адгезию смолы. Ковёр, уложенный из влажного материала, расслаивается уже в первый сезон.</p>
+            </div>
+
+            <div class="fail-card fail-card--critical">
+              <span class="fail-card__num">04 · Критично</span>
+              <h3 class="fail-card__title">Дешёвая или несертифицированная смола</h3>
+              <p class="fail-card__body">Эпоксид и дешёвый ПУ деградируют под УФ: желтеют, трескаются. Для улицы — только алифатический полиуретан с УФ-стабилизатором. Экономия на связующем — главная причина ранних разрушений.</p>
+            </div>
+
+            <div class="fail-card fail-card--warn">
+              <span class="fail-card__num">05 · Важно</span>
+              <h3 class="fail-card__title">Укладка при низкой температуре</h3>
+              <p class="fail-card__body">Ниже +10°C полиуретан не полимеризуется нормально. Ковёр кажется готовым, но не набрал прочности и крошится. Рабочий диапазон: +10…+30°C.</p>
+            </div>
+
+            <div class="fail-card fail-card--warn">
+              <span class="fail-card__num">06 · Важно</span>
+              <h3 class="fail-card__title">Укладка в дождь или на влажное основание</h3>
+              <p class="fail-card__body">Смола реагирует с влагой: появляются пузыри CO₂, вместо плотной склейки — пористая пена. После дождя основание должно сохнуть 24–48 часов.</p>
+            </div>
+
+            <div class="fail-card fail-card--warn">
+              <span class="fail-card__num">07 · Важно</span>
+              <h3 class="fail-card__title">Морозное пучение</h3>
+              <p class="fail-card__body">Вода в основании при замерзании расширяется на ~9%. Повторяющийся цикл зима/весна рвёт связи между камнями. Правильный дренаж (отсев ≥ 15 см) — ключевая профилактика.</p>
+            </div>
+
+            <div class="fail-card fail-card--warn">
+              <span class="fail-card__num">08 · Важно</span>
+              <h3 class="fail-card__title">Нарушение герметизации швов</h3>
+              <p class="fail-card__body">На стыках с бордюром и стенами нужна эластичная герметизация. Жёсткий шов трескается при температурных деформациях, вода проникает под ковёр и отрывает пласт.</p>
+            </div>
+
+            <div class="fail-card fail-card--warn">
+              <span class="fail-card__num">09 · Важно</span>
+              <h3 class="fail-card__title">Механические повреждения</h3>
+              <p class="fail-card__body">Шипованные шины, острые предметы, стойки зонтов. Ковёр держит до 400 кг/м² равномерно, но не точечный удар. После пробоины начинается расслоение по краям.</p>
+            </div>
+
+            <div class="fail-card fail-card--bio">
+              <span class="fail-card__num">10 · Эксплуатация</span>
+              <h3 class="fail-card__title">Плесень, мох, водоросли</h3>
+              <p class="fail-card__body">Пыль и листья в порах + тень + постоянная влажность = среда для биозагрязнения. Профилактика: промывка под давлением, антисептическая пропитка раз в 2–3 года.</p>
+            </div>
+
+          </div>
+
+          <div class="takeaway">
+            <p class="takeaway__label">Итог</p>
+            <p>80% отказов — ошибки при укладке (нарушение температуры, влажности, пропорций смолы) или экономия на материале. Соблюдение технологии TerraWay и сертифицированное связующее гарантируют срок службы <strong>15–25 лет</strong> без ремонта.</p>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <section class="details-section section--spacer" id="rain" style="margin-top:4rem">
+          <h2 class="section__title" style="text-align:left; margin-bottom:.5rem">Что происходит при ливне?</h2>
+          <p style="margin-bottom:0; max-width:640px">Всё зависит от того, на каком этапе застал дождь. Готовый ковёр — полностью водопроницаем и воду любит. Незаконченный — боится.</p>
+
+          <div class="rain-timeline">
+            <div class="rain-step rain-step--bad">
+              <div class="rain-step__icon">⛈️</div>
+              <div class="rain-step__time">0–4 ч после укладки</div>
+              <div class="rain-step__status">Катастрофа</div>
+              <div class="rain-step__note">Смола жидкая, реагирует с влагой, вспенивается. Участок под выброс.</div>
+            </div>
+            <div class="rain-step rain-step--warn">
+              <div class="rain-step__icon">🌧️</div>
+              <div class="rain-step__time">4–12 ч</div>
+              <div class="rain-step__status">Опасно</div>
+              <div class="rain-step__note">Гелеобразная стадия. Дождь деформирует поверхность, портит фактуру.</div>
+            </div>
+            <div class="rain-step rain-step--warn">
+              <div class="rain-step__icon">🌦️</div>
+              <div class="rain-step__time">12–48 ч</div>
+              <div class="rain-step__status">Нежелательно</div>
+              <div class="rain-step__note">Смола твердеет, но не набрала прочность. Нагрузки и влага нежелательны.</div>
+            </div>
+            <div class="rain-step rain-step--ok">
+              <div class="rain-step__icon">🌧️✅</div>
+              <div class="rain-step__time">48 ч+</div>
+              <div class="rain-step__status">Безопасно</div>
+              <div class="rain-step__note">Смола полностью отверждена. Вода уходит сквозь ковёр — луж нет.</div>
+            </div>
+            <div class="rain-step rain-step--ok">
+              <div class="rain-step__icon">💧</div>
+              <div class="rain-step__time">Готовое покрытие</div>
+              <div class="rain-step__status">Преимущество</div>
+              <div class="rain-step__note">До 1800 л/м²·ч водопроницаемость. Дождь — союзник, не враг.</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <section class="details-section" id="resins" style="margin-top:4rem">
+          <h2 class="section__title" style="text-align:left; margin-bottom:.5rem">Смолы: что это и какие бывают</h2>
+          <p style="max-width:680px; margin-bottom:0">
+            <strong>Смола</strong> — это широкое слово для любых полимерных связующих. Полиуретан — один из видов смолы, как яблоко — один из фруктов. Для каменного ковра критично выбрать правильный тип: уличные условия жестокие.
+          </p>
+
+          <div class="resin-table-wrap">
+            <table class="resin-table">
+              <thead>
+                <tr>
+                  <th>Тип смолы</th>
+                  <th>Гибкость</th>
+                  <th>УФ-стойкость</th>
+                  <th>Адгезия к камню</th>
+                  <th>Морозостойкость</th>
+                  <th>Цена</th>
+                  <th>Для улицы</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="resin-table__highlight">
+                  <td>Полиуретан алифатический (ПУ)</td>
+                  <td><span class="tag-good">Высокая</span></td>
+                  <td><span class="tag-good">Отличная</span></td>
+                  <td><span class="tag-good">Отличная</span></td>
+                  <td><span class="tag-good">Да</span></td>
+                  <td><span class="tag-mid">Высокая</span></td>
+                  <td><span class="tag-good">✓ Рекомендован</span></td>
+                </tr>
+                <tr>
+                  <td>Полиуретан ароматический</td>
+                  <td><span class="tag-good">Высокая</span></td>
+                  <td><span class="tag-bad">Желтеет</span></td>
+                  <td><span class="tag-good">Хорошая</span></td>
+                  <td><span class="tag-good">Да</span></td>
+                  <td><span class="tag-mid">Средняя</span></td>
+                  <td><span class="tag-mid">⚠ Только интерьер</span></td>
+                </tr>
+                <tr>
+                  <td>Эпоксидная</td>
+                  <td><span class="tag-bad">Низкая</span></td>
+                  <td><span class="tag-bad">Деградирует</span></td>
+                  <td><span class="tag-good">Очень высокая</span></td>
+                  <td><span class="tag-bad">Хрупкая на морозе</span></td>
+                  <td><span class="tag-mid">Средняя</span></td>
+                  <td><span class="tag-bad">✗ Не подходит</span></td>
+                </tr>
+                <tr>
+                  <td>Акриловая</td>
+                  <td><span class="tag-mid">Средняя</span></td>
+                  <td><span class="tag-mid">Удовл.</span></td>
+                  <td><span class="tag-bad">Слабая</span></td>
+                  <td><span class="tag-mid">Удовл.</span></td>
+                  <td><span class="tag-good">Низкая</span></td>
+                  <td><span class="tag-bad">✗ Не держит камень</span></td>
+                </tr>
+                <tr>
+                  <td>Полиэфирная</td>
+                  <td><span class="tag-bad">Низкая</span></td>
+                  <td><span class="tag-bad">Плохая</span></td>
+                  <td><span class="tag-mid">Средняя</span></td>
+                  <td><span class="tag-bad">Трескается</span></td>
+                  <td><span class="tag-good">Низкая</span></td>
+                  <td><span class="tag-bad">✗ Хрупкость и запах</span></td>
+                </tr>
+                <tr>
+                  <td>Натуральная (живица, шеллак)</td>
+                  <td><span class="tag-mid">Средняя</span></td>
+                  <td><span class="tag-bad">Плохая</span></td>
+                  <td><span class="tag-bad">Слабая</span></td>
+                  <td><span class="tag-bad">Нет</span></td>
+                  <td><span class="tag-mid">Разная</span></td>
+                  <td><span class="tag-bad">✗ Только народные смеси</span></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <section class="details-section" id="polyurethane" style="margin-top:4rem">
+          <h2 class="section__title" style="text-align:left; margin-bottom:.5rem">Полиуретан: почему именно он</h2>
+          <p style="max-width:680px; margin-bottom:0">
+            Полиуретан (ПУ) — класс полимеров на основе уретановых связей. Открыт в 1937 г. Отто Байером. Сегодня это один из самых универсальных материалов: пена, клей, лак, герметик, спортивные покрытия — всё это ПУ. Для каменного ковра важны три его свойства.
+          </p>
+
+          <div class="pu-grid">
+            <div class="pu-card">
+              <div class="pu-card__icon">🔗</div>
+              <h3 class="pu-card__title">Химическая адгезия к минералам</h3>
+              <p class="pu-card__body">ПУ образует ковалентные связи с поверхностью камня. Не просто обволакивает — буквально вцепляется в минеральную структуру. Это обеспечивает сцепление, которое не разрушит ни вода, ни мороз.</p>
+            </div>
+            <div class="pu-card">
+              <div class="pu-card__icon">🌡️</div>
+              <h3 class="pu-card__title">Эластичность в диапазоне −40…+80°C</h3>
+              <p class="pu-card__body">Ковёр расширяется и сжимается вместе с основанием при сезонных перепадах. ПУ не трескается при этом — в отличие от эпоксидки, которая при −20°C уже хрупкая как стекло.</p>
+            </div>
+            <div class="pu-card">
+              <div class="pu-card__icon">☀️</div>
+              <h3 class="pu-card__title">УФ-стойкость (алифатический)</h3>
+              <p class="pu-card__body">Ароматические ПУ желтеют на солнце. Алифатические — нет: двойные связи в молекуле другого типа, устойчивы к фотоокислению. Именно алифатический ПУ применяется в TerraWay.</p>
+            </div>
+            <div class="pu-card">
+              <div class="pu-card__icon">💧</div>
+              <h3 class="pu-card__title">Водостойкость после отверждения</h3>
+              <p class="pu-card__body">Готовый ПУ химически инертен к воде. Никакого набухания, никакого вымывания. До отверждения — реагирует с влагой (поэтому дождь в процессе укладки опасен).</p>
+            </div>
+            <div class="pu-card">
+              <div class="pu-card__icon">🌿</div>
+              <h3 class="pu-card__title">Паропроницаемость</h3>
+              <p class="pu-card__body">Тонкий слой ПУ не запечатывает поры между камнями. Ковёр «дышит» — водяной пар выходит снизу вверх. Это предотвращает отрыв пласта от основания при перепадах давления.</p>
+            </div>
+            <div class="pu-card">
+              <div class="pu-card__icon">🧪</div>
+              <h3 class="pu-card__title">Класс безопасности LAGA Z0</h3>
+              <p class="pu-card__body">Отверждённый ПУ не вымывает в почву токсичных веществ. Класс LAGA Z0 — допустим у деревьев, водоёмов, на детских площадках. Безопасен для растений и животных.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <section class="details-section" id="pu-types" style="margin-top:4rem">
+          <h2 class="section__title" style="text-align:left; margin-bottom:.5rem">Виды полиуретана</h2>
+          <p style="max-width:680px; margin-bottom:.5rem">Полиуретан — не одно вещество, а целое семейство. Внутри него огромная разница по свойствам.</p>
+
+          <div class="pu-types">
+            <div class="pu-type pu-type--best">
+              <span class="pu-type__badge">✓ Для TerraWay</span>
+              <h3 class="pu-type__name">Алифатический ПУ (двухкомп.)</h3>
+              <p class="pu-type__desc">Два компонента A+B смешиваются перед укладкой. Не желтеет, гибкий, водостоек, отличная адгезия. УФ-стабилизаторы в составе.</p>
+              <p class="pu-type__uses">Каменные ковры, спортивные покрытия, кровельные мембраны.</p>
+            </div>
+            <div class="pu-type">
+              <span class="pu-type__badge">Интерьер</span>
+              <h3 class="pu-type__name">Ароматический ПУ</h3>
+              <p class="pu-type__desc">Дешевле алифатического. Желтеет на солнце через 1–2 сезона. Иначе хорошие механические свойства.</p>
+              <p class="pu-type__uses">Промышленные полы, подвалы, закрытые пространства без УФ.</p>
+            </div>
+            <div class="pu-type">
+              <span class="pu-type__badge">Однокомп.</span>
+              <h3 class="pu-type__name">Влагоотверждаемый ПУ (1К)</h3>
+              <p class="pu-type__desc">Реагирует с влагой воздуха. Удобен в герметиках и пенах. Для каменного ковра не подходит — нестабильная реакция при разной влажности.</p>
+              <p class="pu-type__uses">Монтажная пена, герметики для швов.</p>
+            </div>
+            <div class="pu-type">
+              <span class="pu-type__badge">Жёсткий</span>
+              <h3 class="pu-type__name">Жёсткий ПУ (пенополиуретан)</h3>
+              <p class="pu-type__desc">Пористая структура, теплоизоляция. Вовсе не для покрытий — не несёт нагрузку, разрушается от воды.</p>
+              <p class="pu-type__uses">Утеплитель стен и кровель, упаковка.</p>
+            </div>
+            <div class="pu-type">
+              <span class="pu-type__badge">Эластомер</span>
+              <h3 class="pu-type__name">ПУ-эластомер (литьевой)</h3>
+              <p class="pu-type__desc">Очень гибкий, как резина. Используется для покрытий беговых дорожек и детских площадок. Слишком мягкий для каменного ковра — камни «утонут».</p>
+              <p class="pu-type__uses">Покрытие стадионов, резиновые детали машин.</p>
+            </div>
+          </div>
+        </section>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <section class="details-section" id="curing" style="margin-top:4rem; margin-bottom:1rem">
+          <h2 class="section__title" style="text-align:left; margin-bottom:.5rem">Как отверждается ПУ: временны́е окна</h2>
+          <p style="max-width:680px; margin-bottom:.5rem">Двухкомпонентный ПУ проходит несколько стадий после смешивания. Важно знать, что можно делать на каждой из них.</p>
+
+          <div class="cure-bar">
+            <div class="cure-seg cure-seg--a">
+              <div class="cure-seg__h">0–4 ч</div>
+              <div class="cure-seg__t">Жидкая стадия. Можно корректировать. Влага и дождь — критичны. Работы только при +10°C+.</div>
+            </div>
+            <div class="cure-seg cure-seg--b">
+              <div class="cure-seg__h">4–24 ч</div>
+              <div class="cure-seg__t">Гелеобразная → твердение. Не наступать, не мочить. Нарезка швов — в конце этого периода.</div>
+            </div>
+            <div class="cure-seg cure-seg--c">
+              <div class="cure-seg__h">24–48 ч</div>
+              <div class="cure-seg__t">Можно ходить пешком. Нагрузку не давать. Лёгкий дождь уже не страшен.</div>
+            </div>
+            <div class="cure-seg cure-seg--d">
+              <div class="cure-seg__h">7 суток</div>
+              <div class="cure-seg__t">Полное отверждение. Открытие для транспорта и полноценной эксплуатации.</div>
+            </div>
+          </div>
+
+          <div class="takeaway" style="margin-top:2rem">
+            <p class="takeaway__label">Практический вывод</p>
+            <p>Перед укладкой смотрите прогноз на <strong>3 дня вперёд</strong>. Дождь, туман или температура ниже +10°C — работы переносятся. Это не перестраховка, а технология.</p>
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <section class="section section--dark">
+      <div class="container" style="text-align:center">
+        <h2 class="section__title" style="color:#fff">Остались вопросы?</h2>
+        <p style="color:rgba(255,255,255,.65); margin-bottom:2rem">Напишите Максу — разберём вашу ситуацию конкретно: тип основания, климат, нагрузку.</p>
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap">
+          <a href="tel:+79887680835" class="btn btn--primary">Позвонить Максу</a>
+          <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn btn--outline">Telegram</a>
+          <a href="calc/" class="btn btn--outline">Калькулятор стоимости</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">© Команда Арр Макс. Строительные работы и каменные ковры TerraWay. <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener">Telegram</a></p>
+      <p class="footer__note">TerraWay® — зарегистрированная торговая марка.</p>
+    </div>
+  </footer>
+</body>
+</html>
