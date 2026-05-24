@@ -166,7 +166,11 @@
       var hasTech = techValue && techValue !== '—' && techValue !== '-';
       if (technologyItem) technologyItem.style.display = hasTech ? '' : 'none';
       if (metaTechnology) metaTechnology.textContent = hasTech ? translateCaseValue(techValue, 'technology', lang) : '';
-      if (metaMaterial) metaMaterial.textContent = translateCaseValue(c.material, 'material', lang);
+      var materialItem = cardEl.querySelector('.case-card__meta--material');
+      var matValue = c.material;
+      var hasMat = matValue && matValue !== '—' && matValue !== '-';
+      if (materialItem) materialItem.style.display = hasMat ? '' : 'none';
+      if (metaMaterial) metaMaterial.textContent = hasMat ? translateCaseValue(matValue, 'material', lang) : '';
       if (metaLocation) metaLocation.textContent = translateCaseValue(c.location, 'location', lang);
       if (metaDuration) metaDuration.textContent = translateCaseValue(c.duration, 'duration', lang);
       if (metaCost) metaCost.textContent = translateCaseValue(c.cost, 'cost', lang);
