@@ -1,0 +1,1119 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Чек-лист идеальной укладки — каменный ковёр как плато | TerraWay</title>
+  <meta name="description" content="Шесть фаз правильной укладки каменного ковра: диагностика, договор, основание, композиция, полимеризация, сдача. С указанием СНиПов, временных окон, погодных условий и коммуникации.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* ── editorial hero ── */
+    .succ-hero {
+      padding: 7rem 0 4rem;
+      background: var(--color-dark);
+      color: #fff;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    .succ-hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 20% 30%, rgba(139,105,20,.18), transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(139,105,20,.12), transparent 50%);
+      pointer-events: none;
+    }
+    .succ-hero__kicker {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 400;
+      font-size: .95rem;
+      color: var(--color-accent);
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      margin: 0 0 1rem;
+      position: relative;
+    }
+    .succ-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 700;
+      margin: 0 0 1rem;
+      color: #fff;
+      letter-spacing: -.01em;
+      line-height: 1.15;
+      position: relative;
+    }
+    .succ-hero__lead {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,.7);
+      max-width: 620px;
+      margin: 0 auto;
+      line-height: 1.7;
+      position: relative;
+    }
+
+    /* ── manifesto / epigraph ── */
+    .manifesto {
+      max-width: 720px;
+      margin: 3rem auto 4rem;
+      padding: 2.5rem 2rem;
+      border-top: 1px solid var(--color-border);
+      border-bottom: 1px solid var(--color-border);
+      text-align: center;
+    }
+    .manifesto p {
+      font-family: var(--font-display);
+      font-size: 1.15rem;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.7;
+      color: var(--color-text);
+      margin: 0 0 1rem;
+    }
+    .manifesto p:last-child { margin-bottom: 0; }
+    .manifesto cite {
+      display: block;
+      font-family: var(--font-sans);
+      font-size: .78rem;
+      font-style: normal;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-top: 1rem;
+    }
+
+    /* ── breadcrumb & toc ── */
+    .breadcrumb { font-size: .85rem; color: var(--color-text-muted); margin-bottom: 2rem; }
+    .breadcrumb a { color: var(--color-accent); }
+
+    .toc {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      margin-bottom: 4rem;
+    }
+    .toc__title {
+      font-size: .78rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: .14em;
+      color: var(--color-text-muted);
+      margin: 0 0 1rem;
+    }
+    .toc__list {
+      margin: 0; padding: 0; list-style: none;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: .6rem 1.5rem;
+    }
+    .toc__list li {
+      display: flex; align-items: baseline; gap: .65rem;
+      font-size: .92rem;
+    }
+    .toc__num {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      color: var(--color-accent);
+      min-width: 1.5rem;
+    }
+    .toc__list a {
+      color: var(--color-text);
+      border-bottom: 1px dotted transparent;
+      transition: border-color var(--transition);
+    }
+    .toc__list a:hover {
+      color: var(--color-accent-hover);
+      border-color: currentColor;
+    }
+
+    /* ── phase ── */
+    .phase {
+      margin-bottom: 5rem;
+      scroll-margin-top: 5rem;
+    }
+    .phase__header {
+      display: flex;
+      align-items: flex-start;
+      gap: 1.5rem;
+      padding-bottom: 1.25rem;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 2rem;
+    }
+    .phase__roman {
+      font-family: var(--font-display);
+      font-size: clamp(2.6rem, 5vw, 3.6rem);
+      font-weight: 700;
+      color: var(--color-accent);
+      line-height: 1;
+      flex-shrink: 0;
+      margin-top: -.1em;
+    }
+    .phase__title-wrap { flex: 1; }
+    .phase__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.4rem, 3vw, 1.9rem);
+      font-weight: 700;
+      color: var(--color-dark);
+      margin: 0 0 .35rem;
+      letter-spacing: -.01em;
+    }
+    .phase__kicker {
+      font-size: .8rem;
+      font-weight: 600;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+    }
+    .phase__epigraph {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: var(--color-text-muted);
+      padding-left: 1.25rem;
+      border-left: 2px solid var(--color-accent);
+      margin: 0 0 2rem;
+    }
+    .phase__epigraph cite {
+      display: block;
+      font-family: var(--font-sans);
+      font-style: normal;
+      font-size: .76rem;
+      font-weight: 600;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      margin-top: .5rem;
+    }
+
+    /* ── checklist ── */
+    .checklist { list-style: none; padding: 0; margin: 0 0 1.5rem; }
+    .checklist__item {
+      display: flex;
+      align-items: flex-start;
+      gap: .85rem;
+      padding: .7rem 0;
+      border-bottom: 1px dashed var(--color-border);
+    }
+    .checklist__item:last-child { border-bottom: 0; }
+    .checklist__check {
+      width: 1.15rem;
+      height: 1.15rem;
+      margin-top: .25rem;
+      accent-color: var(--color-accent);
+      flex-shrink: 0;
+      cursor: pointer;
+    }
+    .checklist__body { flex: 1; }
+    .checklist__text {
+      font-size: .95rem;
+      line-height: 1.55;
+      color: var(--color-text);
+      transition: color .2s, text-decoration-color .2s;
+    }
+    .checklist__item input:checked ~ .checklist__body .checklist__text {
+      color: var(--color-text-muted);
+      text-decoration: line-through;
+      text-decoration-color: var(--color-text-muted);
+      text-decoration-thickness: 1px;
+    }
+    .checklist__note {
+      display: block;
+      font-size: .82rem;
+      color: var(--color-text-muted);
+      margin-top: .25rem;
+      line-height: 1.5;
+    }
+    .checklist__refs {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .35rem;
+      margin-top: .5rem;
+    }
+    .ref-badge {
+      display: inline-flex;
+      align-items: center;
+      font-size: .7rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      padding: .2rem .55rem;
+      background: var(--color-bg-alt);
+      color: var(--color-text);
+      border-radius: 3px;
+      border: 1px solid var(--color-border);
+      transition: background var(--transition), color var(--transition);
+    }
+    a.ref-badge:hover { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+    .ref-badge--critical { background: #fdecea; color: #8b1a1a; border-color: #f5b6b0; }
+    .ref-badge--time     { background: #e3f2fd; color: #1565c0; border-color: #b3d8f5; }
+    .ref-badge--weather  { background: #f1f8e9; color: #4a7c1e; border-color: #c5e1a5; }
+    .ref-badge--comm     { background: #fff3e0; color: #a35a00; border-color: #ffd8a8; }
+
+    /* ── sub-blocks within phase ── */
+    .phase__subgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 1rem;
+      margin-top: 1.75rem;
+    }
+    .phase__sub {
+      padding: 1rem 1.25rem;
+      border-radius: var(--radius);
+      border: 1px solid var(--color-border);
+      background: var(--color-bg);
+    }
+    .phase__sub--time     { background: #f5faff; border-color: #d6e9f7; }
+    .phase__sub--weather  { background: #f6fbef; border-color: #d6ecbd; }
+    .phase__sub--comm     { background: #fff8ef; border-color: #ffd9a8; }
+    .phase__sub__h {
+      display: flex; align-items: center; gap: .5rem;
+      font-size: .78rem; font-weight: 700;
+      text-transform: uppercase; letter-spacing: .08em;
+      color: var(--color-text-muted);
+      margin-bottom: .55rem;
+    }
+    .phase__sub p, .phase__sub ul {
+      font-size: .87rem; line-height: 1.55;
+      color: var(--color-text);
+      margin: 0;
+    }
+    .phase__sub ul { padding-left: 1.1rem; }
+    .phase__sub li { margin-bottom: .25rem; }
+
+    /* ── progress meter ── */
+    .progress-bar {
+      position: sticky; top: 4rem; z-index: 50;
+      background: rgba(255,255,255,.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--color-border);
+      padding: .65rem 0;
+      margin-bottom: 2rem;
+    }
+    .progress-bar__inner {
+      display: flex; align-items: center; gap: 1rem;
+      max-width: var(--container);
+      margin: 0 auto;
+      padding: 0 1rem;
+      font-size: .85rem;
+      color: var(--color-text-muted);
+    }
+    .progress-bar__track {
+      flex: 1; height: 6px;
+      background: var(--color-border);
+      border-radius: 3px; overflow: hidden;
+    }
+    .progress-bar__fill {
+      height: 100%; width: 0%;
+      background: linear-gradient(90deg, var(--color-accent), #c89b3a);
+      transition: width .3s;
+    }
+    .progress-bar__num { font-weight: 700; color: var(--color-dark); white-space: nowrap; }
+    .progress-bar__reset {
+      font-size: .75rem;
+      color: var(--color-text-muted);
+      background: none; border: 1px solid var(--color-border);
+      padding: .25rem .65rem;
+      border-radius: 4px;
+      cursor: pointer;
+      font-family: inherit;
+    }
+    .progress-bar__reset:hover { background: var(--color-bg-alt); color: var(--color-dark); }
+
+    /* ── footer cta ── */
+    .closing {
+      max-width: 720px;
+      margin: 4rem auto 2rem;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      border-top: 1px solid var(--color-border);
+    }
+    .closing p {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 1.05rem;
+      line-height: 1.7;
+      color: var(--color-text);
+      max-width: 540px;
+      margin: 0 auto 1.5rem;
+    }
+
+    /* ── snip appendix table ── */
+    .snip-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: .88rem;
+      margin-top: 1rem;
+    }
+    .snip-table th, .snip-table td {
+      padding: .65rem .9rem;
+      text-align: left;
+      border-bottom: 1px solid var(--color-border);
+      vertical-align: top;
+    }
+    .snip-table th {
+      background: var(--color-dark);
+      color: #fff;
+      font-weight: 600;
+      font-size: .78rem;
+      letter-spacing: .04em;
+    }
+    .snip-table tr:nth-child(even) td { background: var(--color-bg); }
+    .snip-table code {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: .82rem;
+      color: var(--color-accent);
+      font-weight: 600;
+    }
+
+    @media print {
+      .progress-bar, .breadcrumb, .toc, .succ-hero { display: none; }
+      .phase { page-break-inside: avoid; }
+      body { background: #fff; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="./" class="logo">Арр Макс</a>
+      <nav class="nav">
+        <a href="./#terraway">О TerraWay</a>
+        <a href="norm_details.html">Технология</a>
+        <a href="calc/">Калькулятор</a>
+        <a href="./#contact">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="succ-hero">
+      <div class="container">
+        <p class="succ-hero__kicker">Манифест мастерства · TerraWay</p>
+        <h1 class="succ-hero__title">Чек-лист<br>идеальной укладки</h1>
+        <p class="succ-hero__lead">Шесть фаз, в которых разрозненные камни становятся ковром. Дисциплина каждого шага — единственное, что отделяет долговечное покрытие от случайной поверхности.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="breadcrumb"><a href="./">Главная</a> → <a href="norm_details.html">Технология</a> → Чек-лист укладки</p>
+
+        <!-- ── manifesto ── -->
+        <div class="manifesto">
+          <p>«Каменный ковёр — это плато. Множественность камней, удерживаемых не сплетением нитей, но взаимным давлением и связующим. Качество поверхности — это запись о дисциплине шести фаз, что ей предшествовали».</p>
+          <cite>Внутренний устав мастерской</cite>
+        </div>
+
+        <!-- ── progress bar (sticky) ── -->
+        <div class="progress-bar" id="progressBar">
+          <div class="progress-bar__inner">
+            <span>Прогресс чек-листа</span>
+            <div class="progress-bar__track"><div class="progress-bar__fill" id="progressFill"></div></div>
+            <span class="progress-bar__num"><span id="progressDone">0</span> / <span id="progressTotal">0</span></span>
+            <button class="progress-bar__reset" type="button" id="resetBtn">Сбросить</button>
+          </div>
+        </div>
+
+        <!-- ── TOC ── -->
+        <nav class="toc" aria-label="Содержание">
+          <p class="toc__title">Шесть фаз</p>
+          <ul class="toc__list">
+            <li><span class="toc__num">I</span><a href="#phase-1">Диагностика участка</a></li>
+            <li><span class="toc__num">II</span><a href="#phase-2">Договор и проект</a></li>
+            <li><span class="toc__num">III</span><a href="#phase-3">Подготовка основания</a></li>
+            <li><span class="toc__num">IV</span><a href="#phase-4">Композиция ковра</a></li>
+            <li><span class="toc__num">V</span><a href="#phase-5">Полимеризация и охрана</a></li>
+            <li><span class="toc__num">VI</span><a href="#phase-6">Сдача и эксплуатация</a></li>
+          </ul>
+        </nav>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <article class="phase" id="phase-1">
+          <header class="phase__header">
+            <span class="phase__roman">I</span>
+            <div class="phase__title-wrap">
+              <p class="phase__kicker">Фаза первая · Диагностика</p>
+              <h2 class="phase__title">Прежде чем измерить — посмотреть</h2>
+            </div>
+          </header>
+
+          <blockquote class="phase__epigraph">
+            «Дисциплина начинается с распределения индивидов в пространстве. Каждому — место, и каждое место — для одного».
+            <cite>М. Фуко, «Надзирать и наказывать»</cite>
+          </blockquote>
+
+          <ul class="checklist" data-phase="1">
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c1-1">
+              <div class="checklist__body">
+                <label for="c1-1" class="checklist__text"><strong>Выезд на объект до подписания договора.</strong> Никогда — расчёт по фото или со слов.</label>
+                <span class="checklist__note">Полный обход территории, фотофиксация с привязкой к сторонам света, общий план в масштабе.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--comm">↔ С заказчиком на месте</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c1-2">
+              <div class="checklist__body">
+                <label for="c1-2" class="checklist__text"><strong>Замер геометрии участка.</strong> Длина, ширина, диагонали, периметр, площадь, уклоны.</label>
+                <span class="checklist__note">Уклон 1–2% от здания к водоприёмникам — обязательное условие. Отклонение более 5 мм на 2 м исключает качественную укладку без выравнивания.</span>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/456054205" target="_blank" rel="noopener">СП 82.13330.2016 · Благоустройство территорий</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c1-3">
+              <div class="checklist__body">
+                <label for="c1-3" class="checklist__text"><strong>Диагностика основания.</strong> Тип (бетон / асфальт / отсев / грунт), прочность, трещины, влажность, ровность.</label>
+                <span class="checklist__note">Шурфление в 2–3 точках на участках более 30 м². Прочность бетонного основания — не менее B15.</span>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/456069588" target="_blank" rel="noopener">СП 45.13330.2017 · Основания</a>
+                  <span class="ref-badge">ГОСТ 18105-2018 · Прочность бетона</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c1-4">
+              <div class="checklist__body">
+                <label for="c1-4" class="checklist__text"><strong>Выявление коммуникаций.</strong> Дренаж, ливнёвка, дождеприёмники, поливочный водопровод, кабели.</label>
+                <span class="checklist__note">Где не очевидно — спросить владельца, поднять старые схемы. Скрытая труба под ковром — это будущая яма ремонта.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c1-5">
+              <div class="checklist__body">
+                <label for="c1-5" class="checklist__text"><strong>Расчёт водоотведения.</strong> Куда и как уходит вода с поверхности и из-под покрытия.</label>
+                <span class="checklist__note">Каменный ковёр пропускает до 1800 л/м²·ч — но эта вода должна куда-то деться. Без дренажа основание превращается в болото.</span>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/456056452" target="_blank" rel="noopener">СП 32.13330.2018 · Канализация</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c1-6">
+              <div class="checklist__body">
+                <label for="c1-6" class="checklist__text"><strong>Опрос заказчика о сценариях эксплуатации.</strong> Кто и что ходит/ездит, какие нагрузки, дети, животные, химические реагенты.</label>
+                <span class="checklist__note">Заезд тяжёлой машины раз в месяц — это уже не «пешеходная зона». От ответов меняется толщина и фракция.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--comm">↔ С заказчиком</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <div class="phase__subgrid">
+            <div class="phase__sub phase__sub--comm">
+              <p class="phase__sub__h">↔ Связь с заказчиком</p>
+              <p>На выезде — формирование ожиданий. Сказать словами, что покрытие будет показывать матовость, шероховатость, индивидуальный рисунок. Глянцевая «фотография» в каталоге — не наша реальность.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <article class="phase" id="phase-2">
+          <header class="phase__header">
+            <span class="phase__roman">II</span>
+            <div class="phase__title-wrap">
+              <p class="phase__kicker">Фаза вторая · Договор</p>
+              <h2 class="phase__title">Запись о ковре до ковра</h2>
+            </div>
+          </header>
+
+          <blockquote class="phase__epigraph">
+            «Договор — это пророчество, которое стороны обещают исполнить вместе».
+            <cite>Записная книжка мастера</cite>
+          </blockquote>
+
+          <ul class="checklist" data-phase="2">
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c2-1">
+              <div class="checklist__body">
+                <label for="c2-1" class="checklist__text"><strong>Письменный договор подряда.</strong> С приложениями: смета, схема, спецификация материалов, сроки, гарантия.</label>
+                <span class="checklist__note">Шаблон договора — на странице калькулятора. Не работать без подписанного документа.</span>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="calc/agreement.txt" target="_blank">Шаблон договора TXT</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c2-2">
+              <div class="checklist__body">
+                <label for="c2-2" class="checklist__text"><strong>Схема объекта в масштабе.</strong> С привязкой к существующим объектам, уклонами, дренажными решениями, поребриком.</label>
+                <span class="checklist__note">Подписывается обеими сторонами. Все изменения — только письменным допсоглашением.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c2-3">
+              <div class="checklist__body">
+                <label for="c2-3" class="checklist__text"><strong>Зафиксирована цветовая раскладка.</strong> Конкретный образец фракции и связующего, подписанный заказчиком.</label>
+                <span class="checklist__note">Камень из природного материала — партия от партии чуть-чуть отличается. Подписанный образец — единственный аргумент против «не такого цвета».</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--critical">⚠ Критично для гарантии</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c2-4">
+              <div class="checklist__body">
+                <label for="c2-4" class="checklist__text"><strong>График работ с погодным окном.</strong> Не «с такого-то по такое-то», а «при первом окне ≥ 3 суток сухой погоды +10 °C».</label>
+                <span class="checklist__note">Заказчик должен понимать: даты — ориентировочные. Технология подчиняется климату, не календарю.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--time">⏱ Окно укладки ≥ 72 ч</span>
+                  <span class="ref-badge ref-badge--weather">☁ Без осадков</span>
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/573659358" target="_blank" rel="noopener">СП 131.13330.2020 · Климатология</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c2-5">
+              <div class="checklist__body">
+                <label for="c2-5" class="checklist__text"><strong>Условия оплаты прописаны.</strong> Аванс (материалы), промежуточные этапы (основание), окончательный расчёт по акту приёмки.</label>
+                <span class="checklist__note">Окончательный платёж — только после завершения 48-часовой выдержки и подписания акта.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c2-6">
+              <div class="checklist__body">
+                <label for="c2-6" class="checklist__text"><strong>Гарантийные обязательства и их границы.</strong> Что входит, что не входит (механические повреждения, химические воздействия, нарушение эксплуатации).</label>
+                <span class="checklist__note">Гарантия минимум 12 месяцев, при соблюдении технологии — 5+ лет.</span>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/9027703" target="_blank" rel="noopener">ГК РФ ст. 722–725</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c2-7">
+              <div class="checklist__body">
+                <label for="c2-7" class="checklist__text"><strong>Назначены ответственные с обеих сторон.</strong> ФИО, телефоны, мессенджеры. Один канал, не три.</label>
+                <span class="checklist__note">Telegram-чат или WhatsApp-группа на проект. Все решения — в письменном виде, фото — с подписью.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--comm">↔ Один канал связи</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <article class="phase" id="phase-3">
+          <header class="phase__header">
+            <span class="phase__roman">III</span>
+            <div class="phase__title-wrap">
+              <p class="phase__kicker">Фаза третья · Основание</p>
+              <h2 class="phase__title">Размеченное пространство</h2>
+            </div>
+          </header>
+
+          <blockquote class="phase__epigraph">
+            «Гладкое и рифлёное — два режима пространства. Хорошее основание делается в рифлёном: всё измерено, разделено, повторено. Ковёр позже скользнёт по нему гладкостью».
+            <cite>Ж. Делёз, Ф. Гваттари, «Тысяча плато» (парафраз)</cite>
+          </blockquote>
+
+          <ul class="checklist" data-phase="3">
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c3-1">
+              <div class="checklist__body">
+                <label for="c3-1" class="checklist__text"><strong>Демонтаж старого покрытия и отвал мусора.</strong> С вывозом по СНиП — не в соседский лес.</label>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/901860627" target="_blank" rel="noopener">СанПиН 2.1.7.1322-03 · Отходы</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c3-2">
+              <div class="checklist__body">
+                <label for="c3-2" class="checklist__text"><strong>Земляные работы и корыто.</strong> Глубина в соответствии с расчётной толщиной всех слоёв пирога.</label>
+                <span class="checklist__note">Дно корыта уплотняется виброплитой до Ку ≥ 0,95. Под мягкое основание — минимум 15 см щебня фр. 20–40 мм + 5 см отсева.</span>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/871001237" target="_blank" rel="noopener">СП 78.13330.2012 · Дороги</a>
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/9054183" target="_blank" rel="noopener">ГОСТ 8267-93 · Щебень</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c3-3">
+              <div class="checklist__body">
+                <label for="c3-3" class="checklist__text"><strong>Геотекстиль 150–200 г/м² под щебеночную подушку.</strong> Препятствует смешению фракций и подсосу грунта.</label>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c3-4">
+              <div class="checklist__body">
+                <label for="c3-4" class="checklist__text"><strong>Послойная отсыпка и уплотнение.</strong> Слои не более 10 см, каждый — виброплитой не менее 4 проходов.</label>
+                <span class="checklist__note">Контроль ровности правилом 2 м — отклонение не более 5 мм. Уклон — не отступать от проекта.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--critical">⚠ Допуск ≤ 5 мм / 2 м</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c3-5">
+              <div class="checklist__body">
+                <label for="c3-5" class="checklist__text"><strong>Установка поребрика / бордюра.</strong> На бетонную обойму, по натянутому шнуру и нивелиру.</label>
+                <span class="checklist__note">Без жёсткого периметра ковёр расползётся по краям через 1–2 сезона морозного пучения.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge">ГОСТ 6665-91 · Бортовые камни</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c3-6">
+              <div class="checklist__body">
+                <label for="c3-6" class="checklist__text"><strong>Грунтование основания.</strong> Эпоксидный или ПУ-праймер по подготовленной поверхности — улучшает адгезию ковра.</label>
+                <span class="checklist__note">Расход ~0,3–0,5 кг/м². Выдержка перед укладкой ковра — по технической карте материала (обычно 4–24 ч).</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c3-7">
+              <div class="checklist__body">
+                <label for="c3-7" class="checklist__text"><strong>Промежуточная приёмка основания заказчиком.</strong> С фотофиксацией и записью в журнал работ.</label>
+                <span class="checklist__note">Это последний момент, когда можно изменить геометрию без потери ковра.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--comm">↔ Промежуточный акт</span>
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/554403082" target="_blank" rel="noopener">СП 48.13330.2019 · Организация строительства</a>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+          <div class="phase__subgrid">
+            <div class="phase__sub phase__sub--time">
+              <p class="phase__sub__h">⏱ Сроки</p>
+              <ul>
+                <li>Уплотнение слоя: до достижения Ку ≥ 0,95</li>
+                <li>Выдержка после грунта: 4–24 ч</li>
+                <li>Бетон обоймы поребрика: набор прочности 7 суток</li>
+              </ul>
+            </div>
+            <div class="phase__sub phase__sub--weather">
+              <p class="phase__sub__h">☁ Погода</p>
+              <ul>
+                <li>Земляные работы — не в дождь</li>
+                <li>Уплотнение — допускается влажный грунт (для глины — даже желательно)</li>
+                <li>Грунт-праймер — сухая поверхность, T ≥ +10 °C</li>
+              </ul>
+            </div>
+          </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <article class="phase" id="phase-4">
+          <header class="phase__header">
+            <span class="phase__roman">IV</span>
+            <div class="phase__title-wrap">
+              <p class="phase__kicker">Фаза четвёртая · Композиция</p>
+              <h2 class="phase__title">Камни становятся ковром</h2>
+            </div>
+          </header>
+
+          <blockquote class="phase__epigraph">
+            «Ковёр — не сшитое полотно, но плато: каждая точка соединена с каждой через единое связующее, и любая входит в композицию одинаково необходимо».
+            <cite>По мотивам «Тысячи плато»</cite>
+          </blockquote>
+
+          <ul class="checklist" data-phase="4">
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-1">
+              <div class="checklist__body">
+                <label for="c4-1" class="checklist__text"><strong>Камень промыт, просушен, отсортирован.</strong> Без пыли, без глины, без влаги.</label>
+                <span class="checklist__note">Хранение под укрытием. Влажный камень — пузыри CO₂ в смоле и потеря прочности на 40%.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--critical">⚠ Влажность камня &lt; 0,5%</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-2">
+              <div class="checklist__body">
+                <label for="c4-2" class="checklist__text"><strong>Температура воздуха и основания +10…+30 °C.</strong> Точка росы — минимум на 3 °C ниже температуры поверхности.</label>
+                <span class="checklist__note">При +5 °C полимеризация замедляется в 4 раза. При +35 °C смола схватывается раньше, чем мастер успевает разровнять.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--weather">☁ +10…+30 °C</span>
+                  <span class="ref-badge ref-badge--weather">Точка росы Δ ≥ 3 °C</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-3">
+              <div class="checklist__body">
+                <label for="c4-3" class="checklist__text"><strong>Прогноз на 72 часа подтверждён.</strong> Открыт виджет погоды на странице «Технология», все три дня — зелёные.</label>
+                <div class="checklist__refs">
+                  <a class="ref-badge ref-badge--weather" href="norm_details.html#weather">Виджет прогноза →</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-4">
+              <div class="checklist__body">
+                <label for="c4-4" class="checklist__text"><strong>Смешивание точно по пропорциям.</strong> 12–16% связующего по массе камня. Весы — не на глаз.</label>
+                <span class="checklist__note">Принудительный смеситель 80–150 л. Время перемешивания — 2–4 минуты до полного обволакивания каждой гранулы.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-5">
+              <div class="checklist__body">
+                <label for="c4-5" class="checklist__text"><strong>Жизнеспособность смеси не превышается.</strong> 25–40 мин при +20 °C — после этого смесь идёт в отвал.</label>
+                <span class="checklist__note">Никогда не разбавлять «подсевшую» смесь свежим связующим — это убивает обе порции.</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--time">⏱ pot life 25–40 мин</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-6">
+              <div class="checklist__body">
+                <label for="c4-6" class="checklist__text"><strong>Распределение и затирка.</strong> Тёркой из нержавейки или пластика с тефлоновой пропиткой.</label>
+                <span class="checklist__note">Тёрка периодически смачивается денатуратом, чтобы смола не липла. Толщина слоя выдерживается по проекту — 10–30 мм на твёрдом, 18–50 мм на мягком.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-7">
+              <div class="checklist__body">
+                <label for="c4-7" class="checklist__text"><strong>Работа единой картой.</strong> Перерыв на середине участка более 30 мин — это шов, видный навсегда.</label>
+                <span class="checklist__note">Большие площади разбиваются на захватки по технологическим швам, спланированным заранее.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c4-8">
+              <div class="checklist__body">
+                <label for="c4-8" class="checklist__text"><strong>Закрытие краёв и примыканий.</strong> К поребрику, стенам, лоткам — эластичным герметиком после полимеризации.</label>
+              </div>
+            </li>
+          </ul>
+
+          <div class="phase__subgrid">
+            <div class="phase__sub phase__sub--time">
+              <p class="phase__sub__h">⏱ Сроки фазы</p>
+              <ul>
+                <li>Одна замешка: ~30 мин до выработки</li>
+                <li>Производительность: 25–40 м²/час бригадой 2 чел.</li>
+                <li>Захватка не более 30–50 м² за один замес</li>
+              </ul>
+            </div>
+            <div class="phase__sub phase__sub--weather">
+              <p class="phase__sub__h">☁ Стоп-факторы</p>
+              <ul>
+                <li>Дождь любой интенсивности — стоп</li>
+                <li>Туман / влажность &gt; 85% — стоп</li>
+                <li>Ветер с пылью — закрыть участок плёнкой</li>
+                <li>Прямое солнце на свежей смоле — затенить</li>
+              </ul>
+            </div>
+            <div class="phase__sub phase__sub--comm">
+              <p class="phase__sub__h">↔ С бригадой</p>
+              <p>Утренний планёрка: кто месит, кто разравнивает, кто следит за временем замеса. Один человек — один процесс, без переключений.</p>
+            </div>
+          </div>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <article class="phase" id="phase-5">
+          <header class="phase__header">
+            <span class="phase__roman">V</span>
+            <div class="phase__title-wrap">
+              <p class="phase__kicker">Фаза пятая · Полимеризация</p>
+              <h2 class="phase__title">Ковёр учится самому себе</h2>
+            </div>
+          </header>
+
+          <blockquote class="phase__epigraph">
+            «Самое уязвимое — недавно созданное. Власть мастера в эти часы — отвернуться, но не оставить».
+            <cite>Профессиональная поговорка</cite>
+          </blockquote>
+
+          <ul class="checklist" data-phase="5">
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c5-1">
+              <div class="checklist__body">
+                <label for="c5-1" class="checklist__text"><strong>Ограждение участка после укладки.</strong> Сигнальная лента, стойки, при необходимости — навес.</label>
+                <span class="checklist__note">Особенно — если на объекте есть собаки, дети, любопытные соседи.</span>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/901794520" target="_blank" rel="noopener">СНиП 12-03-2001 · Безопасность</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c5-2">
+              <div class="checklist__body">
+                <label for="c5-2" class="checklist__text"><strong>0–4 ч после укладки — критичная зона.</strong> Никаких контактов: воды, ветра с пылью, людей.</label>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--time">⏱ 0–4 ч</span>
+                  <span class="ref-badge ref-badge--critical">⚠ Без воды</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c5-3">
+              <div class="checklist__body">
+                <label for="c5-3" class="checklist__text"><strong>4–24 ч — гелеобразная стадия.</strong> Можно осторожно подойти для контроля, не наступать на покрытие.</label>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--time">⏱ 4–24 ч</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c5-4">
+              <div class="checklist__body">
+                <label for="c5-4" class="checklist__text"><strong>24–48 ч — пешеходное открытие.</strong> Можно ходить, но без точечных нагрузок (каблуков-шпилек, шипованных подошв).</label>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--time">⏱ 24–48 ч</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c5-5">
+              <div class="checklist__body">
+                <label for="c5-5" class="checklist__text"><strong>7 суток — полное отверждение.</strong> Открытие для транспорта, мебели, эксплуатации.</label>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--time">⏱ 7 суток</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c5-6">
+              <div class="checklist__body">
+                <label for="c5-6" class="checklist__text"><strong>Контроль внезапного дождя.</strong> Запас плёнки 6×8 м и анкеров для прижатия — в багажнике.</label>
+                <span class="checklist__note">Дождь в первые 4 часа — не катастрофа только если плёнка натянута за 5 минут от первой капли.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c5-7">
+              <div class="checklist__body">
+                <label for="c5-7" class="checklist__text"><strong>Уведомление заказчика о режиме выдержки.</strong> Письменно, с конкретными датами «нельзя ходить до …, нельзя ставить машину до …».</label>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--comm">↔ Памятка заказчику</span>
+                </div>
+              </div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <article class="phase" id="phase-6">
+          <header class="phase__header">
+            <span class="phase__roman">VI</span>
+            <div class="phase__title-wrap">
+              <p class="phase__kicker">Фаза шестая · Сдача</p>
+              <h2 class="phase__title">Ковёр входит в мир</h2>
+            </div>
+          </header>
+
+          <blockquote class="phase__epigraph">
+            «Объект завершён не в момент укладки, а в момент, когда другой принимает его и продолжает его историю».
+            <cite>Записная книжка</cite>
+          </blockquote>
+
+          <ul class="checklist" data-phase="6">
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c6-1">
+              <div class="checklist__body">
+                <label for="c6-1" class="checklist__text"><strong>Финальная уборка территории.</strong> Мусор, инструмент, плёнки, остатки — вывезены.</label>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c6-2">
+              <div class="checklist__body">
+                <label for="c6-2" class="checklist__text"><strong>Совместный обход с заказчиком.</strong> Каждый угол, каждое примыкание — глазами заказчика.</label>
+                <span class="checklist__note">Все замечания фиксируются на месте — на схеме. Не «я потом посмотрю».</span>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--comm">↔ Совместный осмотр</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c6-3">
+              <div class="checklist__body">
+                <label for="c6-3" class="checklist__text"><strong>Подписан акт сдачи-приёмки.</strong> С перечнем выполненных работ, площадью, использованными материалами.</label>
+                <div class="checklist__refs">
+                  <a class="ref-badge" href="https://docs.cntd.ru/document/871001100" target="_blank" rel="noopener">СП 71.13330.2017 · Отделочные покрытия</a>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c6-4">
+              <div class="checklist__body">
+                <label for="c6-4" class="checklist__text"><strong>Передан гарантийный талон и инструкция по эксплуатации.</strong> Что можно и что нельзя, как мыть, чем посыпать зимой.</label>
+                <span class="checklist__note">Запрещены: соль (NaCl) — разъедает связующее, реагенты на основе хлора, металлические щётки.</span>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c6-5">
+              <div class="checklist__body">
+                <label for="c6-5" class="checklist__text"><strong>Назначен срок сервисного выезда через 12 мес.</strong> Профилактика, контроль, рекомендации по обновлению поверхностного связующего раз в 5–7 лет.</label>
+                <div class="checklist__refs">
+                  <span class="ref-badge ref-badge--time">⏱ +12 мес. сервис</span>
+                </div>
+              </div>
+            </li>
+            <li class="checklist__item">
+              <input type="checkbox" class="checklist__check" id="c6-6">
+              <div class="checklist__body">
+                <label for="c6-6" class="checklist__text"><strong>Фотографии для портфолио.</strong> С разных ракурсов, при дневном свете, до/после, с соблюдением privacy заказчика.</label>
+                <span class="checklist__note">Письменное согласие на публикацию — обязательно. Без согласия — только в личном архиве для самоконтроля качества.</span>
+              </div>
+            </li>
+          </ul>
+        </article>
+
+        <!-- ═══════════════════════════════════════════════════════════ -->
+        <article class="phase" id="snip-appendix">
+          <header class="phase__header">
+            <span class="phase__roman">✦</span>
+            <div class="phase__title-wrap">
+              <p class="phase__kicker">Приложение</p>
+              <h2 class="phase__title">Свод применимых норм</h2>
+            </div>
+          </header>
+
+          <p style="max-width:680px; color:var(--color-text-muted); margin-bottom:1rem">Каменный ковёр TerraWay сам по себе не имеет российского ГОСТа — это патентованная технология. Но каждая фаза работ подчиняется действующим строительным нормам. Ссылки ведут на официальные источники cntd.ru.</p>
+
+          <div class="resin-table-wrap">
+            <table class="snip-table">
+              <thead>
+                <tr>
+                  <th>Документ</th>
+                  <th>О чём</th>
+                  <th>Применяется к фазе</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/456054205" target="_blank" rel="noopener"><code>СП 82.13330.2016</code></a></td>
+                  <td>Благоустройство территорий. Общие требования к мощёным поверхностям, уклонам, водоотведению.</td>
+                  <td>I, III</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/456069588" target="_blank" rel="noopener"><code>СП 45.13330.2017</code></a></td>
+                  <td>Основания зданий и сооружений. Уплотнение грунтов, контроль Ку.</td>
+                  <td>I, III</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/871001237" target="_blank" rel="noopener"><code>СП 78.13330.2012</code></a></td>
+                  <td>Автомобильные дороги. Конструкция дорожных одежд, щебеночные основания.</td>
+                  <td>III</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/554403082" target="_blank" rel="noopener"><code>СП 48.13330.2019</code></a></td>
+                  <td>Организация строительства. Журналы работ, промежуточные акты.</td>
+                  <td>II, III, VI</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/871001100" target="_blank" rel="noopener"><code>СП 71.13330.2017</code></a></td>
+                  <td>Изоляционные и отделочные покрытия. Приёмка отделки, допуски ровности.</td>
+                  <td>IV, VI</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/573659358" target="_blank" rel="noopener"><code>СП 131.13330.2020</code></a></td>
+                  <td>Строительная климатология. Температурные и влажностные нормативы.</td>
+                  <td>II, IV, V</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/9054183" target="_blank" rel="noopener"><code>ГОСТ 8267-93</code></a></td>
+                  <td>Щебень и гравий из плотных горных пород. Фракции, прочность, морозостойкость.</td>
+                  <td>III, IV</td>
+                </tr>
+                <tr>
+                  <td><code>ГОСТ 6665-91</code></td>
+                  <td>Камни бортовые из горных пород. Установка поребрика.</td>
+                  <td>III</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/901794520" target="_blank" rel="noopener"><code>СНиП 12-03-2001</code></a></td>
+                  <td>Безопасность труда в строительстве. Ограждения, средства индивидуальной защиты.</td>
+                  <td>III, IV, V</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/901829466" target="_blank" rel="noopener"><code>СНиП 12-04-2002</code></a></td>
+                  <td>Безопасность труда в строительстве. Производство работ.</td>
+                  <td>III, IV</td>
+                </tr>
+                <tr>
+                  <td><a href="https://docs.cntd.ru/document/9027703" target="_blank" rel="noopener"><code>ГК РФ ст. 702–739</code></a></td>
+                  <td>Договор подряда. Права и обязанности сторон, приёмка, гарантии.</td>
+                  <td>II, VI</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+        <!-- ── closing manifesto ── -->
+        <div class="closing">
+          <p>Ковёр не лжёт. Через пять, десять, двадцать лет вы вернётесь на объект — и поверхность, не сказав ни слова, расскажет всё о том, как был соблюдён каждый шаг этого списка.</p>
+          <div style="display:flex; gap:.75rem; justify-content:center; flex-wrap:wrap">
+            <button class="btn btn--outline btn--sm" type="button" onclick="window.print()">🖨 Распечатать чек-лист</button>
+            <a class="btn btn--outline btn--sm" href="norm_details.html">← К технологии</a>
+            <a class="btn btn--primary btn--sm" href="calc/">Калькулятор стоимости →</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark">
+      <div class="container" style="text-align:center">
+        <h2 class="section__title" style="color:#fff">Доверяете нам — потому что доверяем процессу</h2>
+        <p style="color:rgba(255,255,255,.65); margin-bottom:2rem">Этот чек-лист — наш внутренний стандарт. Можете требовать его соблюдения на каждом этапе.</p>
+        <div style="display:flex; gap:1rem; justify-content:center; flex-wrap:wrap">
+          <a href="tel:+79887680835" class="btn btn--primary">Позвонить Максу</a>
+          <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn btn--outline">Telegram</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">© Команда Арр Макс. Строительные работы и каменные ковры TerraWay. <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener">Telegram</a></p>
+      <p class="footer__note">TerraWay® — зарегистрированная торговая марка.</p>
+    </div>
+  </footer>
+
+  <script>
+    (function () {
+      const KEY = 'arrmax_success_checklist_v1';
+      const checks = document.querySelectorAll('.checklist__check');
+      const fill   = document.getElementById('progressFill');
+      const done   = document.getElementById('progressDone');
+      const total  = document.getElementById('progressTotal');
+      const reset  = document.getElementById('resetBtn');
+
+      total.textContent = checks.length;
+
+      function load() {
+        try {
+          const saved = JSON.parse(localStorage.getItem(KEY) || '{}');
+          checks.forEach(c => { if (saved[c.id]) c.checked = true; });
+        } catch {}
+      }
+      function save() {
+        const state = {};
+        checks.forEach(c => { if (c.checked) state[c.id] = 1; });
+        localStorage.setItem(KEY, JSON.stringify(state));
+      }
+      function tick() {
+        const n = [...checks].filter(c => c.checked).length;
+        done.textContent = n;
+        fill.style.width = (n / checks.length * 100) + '%';
+      }
+
+      load(); tick();
+      checks.forEach(c => c.addEventListener('change', () => { save(); tick(); }));
+      reset.addEventListener('click', () => {
+        if (!confirm('Сбросить прогресс чек-листа?')) return;
+        localStorage.removeItem(KEY);
+        checks.forEach(c => c.checked = false);
+        tick();
+      });
+    })();
+  </script>
+</body>
+</html>
