@@ -147,6 +147,7 @@
 
       var titleEl = cardEl.querySelector('.case-card__title');
       var metaArea = cardEl.querySelector('.case-card__meta--area .case-card__meta-value');
+      var metaTechnology = cardEl.querySelector('.case-card__meta--technology .case-card__meta-value');
       var metaMaterial = cardEl.querySelector('.case-card__meta--material .case-card__meta-value');
       var metaLocation = cardEl.querySelector('.case-card__meta--location .case-card__meta-value');
       var metaDuration = cardEl.querySelector('.case-card__meta--duration .case-card__meta-value');
@@ -160,6 +161,11 @@
       }
 
       if (metaArea) metaArea.textContent = translateCaseValue(c.area, 'area', lang);
+      var technologyItem = cardEl.querySelector('.case-card__meta--technology');
+      var techValue = c.technology;
+      var hasTech = techValue && techValue !== '—' && techValue !== '-';
+      if (technologyItem) technologyItem.style.display = hasTech ? '' : 'none';
+      if (metaTechnology) metaTechnology.textContent = hasTech ? translateCaseValue(techValue, 'technology', lang) : '';
       if (metaMaterial) metaMaterial.textContent = translateCaseValue(c.material, 'material', lang);
       if (metaLocation) metaLocation.textContent = translateCaseValue(c.location, 'location', lang);
       if (metaDuration) metaDuration.textContent = translateCaseValue(c.duration, 'duration', lang);
@@ -230,7 +236,7 @@
         return r.json();
       })
       .then(function (data) {
-        cases = Array.isArray(data) ? data : [];
+        cases = Array.isArray(data) ? data.filter(function (c) { return !c.hidden; }) : [];
         cardEl.classList.remove('case-card--loading');
         cardEl.removeAttribute('data-load-error');
         if (!cases.length) {
