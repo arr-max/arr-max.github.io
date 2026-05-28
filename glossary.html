@@ -1,0 +1,717 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Глоссарий — все сокращения и термины | TerraWay</title>
+  <meta name="description" content="Все сокращения, нормативы и термины, используемые в проекте: ПУ, СНиП, ГОСТ, R11, LAGA Z0 и другие. С поиском и категориями.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <style>
+    /* hero */
+    .gl-hero {
+      padding: 6rem 0 2.5rem;
+      background: var(--color-dark);
+      color: #fff;
+      text-align: center;
+    }
+    .gl-hero__title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      margin: 0 0 .5rem;
+      color: #fff;
+    }
+    .gl-hero__lead {
+      font-size: 1rem;
+      color: rgba(255,255,255,.65);
+      max-width: 540px;
+      margin: 0 auto;
+    }
+    .breadcrumb { font-size: .85rem; color: var(--color-text-muted); margin: 2rem 0 1rem; }
+    .breadcrumb a { color: var(--color-accent); }
+
+    /* sticky search bar */
+    .gl-search-bar {
+      position: sticky;
+      top: 4rem;
+      z-index: 50;
+      background: rgba(245, 242, 238, 0.95);
+      backdrop-filter: blur(8px);
+      padding: 1rem 0;
+      border-bottom: 1px solid var(--color-border);
+      margin-bottom: 1.5rem;
+    }
+    .gl-search-input-wrap {
+      position: relative;
+      max-width: 560px;
+      margin: 0 auto;
+    }
+    .gl-search-input {
+      width: 100%;
+      font-family: var(--font-sans);
+      font-size: 1rem;
+      padding: .7rem 2.6rem .7rem 1rem;
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius);
+      background: #fff;
+      color: var(--color-text);
+      outline: none;
+      transition: border-color .15s, box-shadow .15s;
+    }
+    .gl-search-input:focus {
+      border-color: var(--color-accent);
+      box-shadow: 0 0 0 3px rgba(139,105,20,.12);
+    }
+    .gl-search-icon {
+      position: absolute;
+      right: .85rem; top: 50%;
+      transform: translateY(-50%);
+      pointer-events: none;
+      color: var(--color-text-muted);
+      font-size: 1.1rem;
+    }
+    .gl-search-meta {
+      max-width: 560px;
+      margin: .5rem auto 0;
+      font-size: .8rem;
+      color: var(--color-text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .gl-fuzzy-toggle {
+      display: inline-flex; align-items: center; gap: .35rem;
+      font-family: inherit;
+      font-size: .8rem;
+      background: none; border: 1px solid var(--color-border);
+      padding: .25rem .6rem; border-radius: 4px;
+      color: var(--color-text-muted); cursor: pointer;
+    }
+    .gl-fuzzy-toggle.active { background: var(--color-accent); color: #fff; border-color: var(--color-accent); }
+
+    /* category chips */
+    .gl-cats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: .4rem;
+      margin: 0 0 2rem;
+      padding: 0;
+      list-style: none;
+      justify-content: center;
+    }
+    .gl-cat-chip {
+      font-family: inherit;
+      font-size: .78rem;
+      font-weight: 600;
+      padding: .3rem .75rem;
+      border: 1px solid var(--color-border);
+      background: var(--color-surface);
+      color: var(--color-text);
+      border-radius: 999px;
+      cursor: pointer;
+      transition: all .15s;
+    }
+    .gl-cat-chip:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .gl-cat-chip.active {
+      background: var(--color-dark); color: #fff; border-color: var(--color-dark);
+    }
+    .gl-cat-count {
+      font-size: .68rem;
+      opacity: .6;
+      margin-left: .3rem;
+    }
+
+    /* grid */
+    .gl-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: .85rem;
+      margin: 0 0 3rem;
+    }
+    .gl-card {
+      background: var(--color-surface);
+      border: 1px solid var(--color-border);
+      border-left: 3px solid var(--color-accent);
+      border-radius: var(--radius);
+      padding: 1rem 1.15rem 1.1rem;
+      transition: transform .15s, box-shadow .15s;
+    }
+    .gl-card:hover {
+      transform: translateY(-2px);
+      box-shadow: var(--shadow);
+    }
+    .gl-card__head {
+      display: flex;
+      align-items: baseline;
+      gap: .5rem;
+      flex-wrap: wrap;
+      margin-bottom: .3rem;
+    }
+    .gl-card__short {
+      font-family: ui-monospace, 'SF Mono', Menlo, monospace;
+      font-size: 1.05rem;
+      font-weight: 700;
+      color: var(--color-accent);
+      letter-spacing: -0.01em;
+    }
+    .gl-card__full {
+      font-size: .85rem;
+      color: var(--color-dark);
+      font-weight: 600;
+    }
+    .gl-card__desc {
+      font-size: .85rem;
+      color: var(--color-text-muted);
+      line-height: 1.5;
+      margin: 0;
+    }
+    .gl-card__meta {
+      margin-top: .55rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: .3rem;
+    }
+    .gl-card__cat {
+      font-size: .68rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      color: var(--color-text-muted);
+      background: var(--color-bg-alt);
+      padding: .15rem .45rem;
+      border-radius: 3px;
+    }
+    .gl-card__link {
+      font-size: .72rem;
+      color: var(--color-accent);
+      border-bottom: 1px dotted currentColor;
+    }
+    .gl-card__link:hover { color: var(--color-accent-hover); }
+
+    /* highlight matched substring */
+    .gl-hit {
+      background: #fdf3c4;
+      padding: 0 1px;
+      border-radius: 2px;
+    }
+    .gl-card--fuzzy {
+      border-left-color: #c4923f;
+    }
+    .gl-card__similarity {
+      font-size: .65rem;
+      font-style: italic;
+      color: var(--color-text-muted);
+      margin-left: auto;
+    }
+
+    /* empty */
+    .gl-empty {
+      text-align: center;
+      padding: 3rem 1rem;
+      color: var(--color-text-muted);
+    }
+    .gl-empty__icon { font-size: 2.5rem; }
+    .gl-empty__sug { font-size: .9rem; margin-top: .5rem; }
+    .gl-empty__sug strong { color: var(--color-accent); cursor: pointer; border-bottom: 1px dotted currentColor; }
+
+    @media (max-width: 640px) {
+      .gl-search-bar { top: 3.5rem; padding: .75rem 0; }
+    }
+  </style>
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="./" class="logo">Арр Макс</a>
+      <nav class="nav">
+        <a href="./#terraway">О TerraWay</a>
+        <a href="norm_details.html">Технология</a>
+        <a href="success.html">Чек-лист</a>
+        <a href="calc/">Калькулятор</a>
+        <a href="./#contact">Контакты</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="gl-hero">
+      <div class="container">
+        <h1 class="gl-hero__title">Глоссарий</h1>
+        <p class="gl-hero__lead">Все сокращения, нормативы и термины, которые встречаются в наших документах, договорах и материалах</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <p class="breadcrumb"><a href="./">Главная</a> → Глоссарий</p>
+
+        <div class="gl-search-bar">
+          <div class="container" style="padding:0">
+            <div class="gl-search-input-wrap">
+              <input
+                type="text"
+                id="glSearch"
+                class="gl-search-input"
+                placeholder="Поиск термина или сокращения…"
+                autocomplete="off"
+                spellcheck="false"
+              >
+              <span class="gl-search-icon">🔍</span>
+            </div>
+            <div class="gl-search-meta">
+              <span id="glCount"></span>
+              <button class="gl-fuzzy-toggle active" id="glFuzzyToggle" type="button" title="Включает поиск по приближению (расстояние Левенштейна)">
+                <span>≈</span> Нечёткий поиск
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <ul class="gl-cats" id="glCats"></ul>
+
+        <div class="gl-grid" id="glGrid"></div>
+
+        <div class="gl-empty" id="glEmpty" hidden>
+          <div class="gl-empty__icon">🤔</div>
+          <p>Ничего не нашлось.</p>
+          <p class="gl-empty__sug" id="glSug"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section--dark">
+      <div class="container" style="text-align:center">
+        <h2 class="section__title" style="color:#fff">Чего-то не хватает?</h2>
+        <p style="color:rgba(255,255,255,.65); margin-bottom:1.5rem">Если встретили незнакомое сокращение в наших документах — напишите, добавим.</p>
+        <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn btn--outline">Написать в Telegram</a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">© Команда Арр Макс. Строительные работы и каменные ковры TerraWay. <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener">Telegram</a></p>
+    </div>
+  </footer>
+
+  <script>
+    // ───────────────────────────────────────────────────────────────────
+    //  GLOSSARY DATA
+    // ───────────────────────────────────────────────────────────────────
+    const CATEGORIES = {
+      tech:   'Технология и материалы',
+      norm:   'Нормативные документы',
+      sp:     'Конкретные СП / ГОСТ',
+      std:    'Стандарты и классы',
+      unit:   'Единицы измерения',
+      legal:  'Реквизиты / юридическое',
+      biz:    'Бизнес и маркетинг',
+      chem:   'Химия и физика',
+      tool:   'Связь и инструменты',
+    };
+
+    const TERMS = [
+      // ─── Технология и материалы ─────────────────────────────────────
+      { s: 'TerraWay®',      f: 'Швейцарская технология каменного ковра',
+        d: 'Запатентованная технология бесшовного водопроницаемого покрытия из натурального камня, связанного полиуретаном. 30+ лет в эксплуатации.', c: 'tech',
+        link: { href: 'norm_details.html', text: 'технология' } },
+      { s: 'ПУ',             f: 'Полиуретан',
+        d: 'Класс полимеров на основе уретановых связей. Основной тип связующего в каменном ковре. Эластичен, водостоек, устойчив к УФ (алифатический).', c: 'tech' },
+      { s: '1К',             f: 'Однокомпонентный (полиуретан)',
+        d: 'ПУ, отверждающийся реакцией с влагой воздуха. Используется в герметиках и пенах. Для каменного ковра не подходит.', c: 'tech' },
+      { s: '2К',             f: 'Двухкомпонентный (полиуретан)',
+        d: 'Смешивается из компонентов A+B перед укладкой. Стабильное отверждение независимо от влажности. Применяется в TerraWay.', c: 'tech' },
+      { s: 'Алифатический ПУ', f: 'УФ-стойкий полиуретан',
+        d: 'Тип ПУ с устойчивостью к ультрафиолету. Не желтеет на солнце. Применяется для наружных работ. Дороже ароматического.', c: 'tech' },
+      { s: 'Ароматический ПУ', f: 'Полиуретан с ароматическими группами',
+        d: 'Дешёвый ПУ, желтеет на УФ через 1–2 сезона. Только для интерьеров и закрытых пространств.', c: 'tech' },
+      { s: 'ПУ-эластомер',   f: 'Литьевой полиуретан',
+        d: 'Гибкий ПУ, как резина. Применяется для покрытий стадионов и беговых дорожек.', c: 'tech' },
+      { s: 'Эпоксид',        f: 'Эпоксидная смола',
+        d: 'Жёсткое связующее. Высокая адгезия, но хрупкая на морозе и желтеет на УФ. Не подходит для уличного каменного ковра.', c: 'tech' },
+      { s: 'Праймер',        f: 'Грунт для адгезии',
+        d: 'Полиуретановый или эпоксидный состав, наносится на основание перед укладкой ковра. Улучшает сцепление.', c: 'tech' },
+      { s: 'Фракция',        f: 'Размер каменной крошки',
+        d: 'Диапазон размеров частиц камня в мм. Для TerraWay стандарт — 3–5 мм. Премиум — спецсмеси разных фракций.', c: 'tech' },
+      { s: 'Поребрик',       f: 'Бордюрный камень',
+        d: 'Жёсткое каменное обрамление по периметру покрытия. Без него ковёр расползается через 1–2 сезона морозного пучения.', c: 'tech' },
+      { s: 'Отмостка',       f: 'Защитная полоса вокруг дома',
+        d: 'Полоса покрытия по периметру фасада, защищающая фундамент от воды. Уклон 1–2% от стены.', c: 'tech' },
+      { s: 'Геотекстиль',    f: 'Нетканое полотно (150–200 г/м²)',
+        d: 'Прокладка под щебеночную подушку. Препятствует смешению фракций и подсосу грунта.', c: 'tech' },
+      { s: 'Каменный ковёр', f: 'Бесшовное покрытие из камня и связующего',
+        d: 'Композит из натуральной каменной крошки и полимерного связующего. Уложенный вручную имеет вид монолитной поверхности.', c: 'tech' },
+      { s: 'Мытый бетон',    f: 'Технология с обнажённой галькой',
+        d: 'Поверхность бетона смывается до укладки полностью, обнажая камни. Альтернатива TerraWay для въездов и площадок.', c: 'tech' },
+      { s: 'Школьный камень', f: 'Мелкая каменная крошка',
+        d: 'Камень фракции 2–4 мм, часто используется в каменном ковре. Назван по типичному использованию в школьных площадках.', c: 'tech' },
+      { s: 'Шурфление',      f: 'Контрольные ямы для диагностики',
+        d: 'Выкапывание небольших ям (2–3 шт. на участке от 30 м²) для проверки структуры основания на глубине.', c: 'tech' },
+      { s: 'Виброплита',     f: 'Инструмент уплотнения',
+        d: 'Машина для уплотнения щебня/грунта вибрацией. Минимум 4 прохода для достижения нормативного Ку.', c: 'tech' },
+      { s: 'pot life',       f: 'Время жизнеспособности смеси',
+        d: 'Период от смешивания до начала отверждения. Для ПУ 2К при +20 °C — 25–40 минут. После этого смесь в отвал.', c: 'tech' },
+
+      // ─── Нормативные документы (общие) ───────────────────────────────
+      { s: 'СНиП',           f: 'Строительные нормы и правила',
+        d: 'Нормативные документы СССР/РФ, регламентирующие строительство. Большинство переизданы как СП.', c: 'norm' },
+      { s: 'СП',             f: 'Свод правил',
+        d: 'Актуализированная редакция СНиПов. Содержит обязательные и рекомендуемые требования.', c: 'norm' },
+      { s: 'ГОСТ',           f: 'Государственный стандарт',
+        d: 'Межгосударственный или национальный стандарт. Определяет требования к продукции и методам испытаний.', c: 'norm' },
+      { s: 'ОСТ',            f: 'Отраслевой стандарт',
+        d: 'Стандарт отрасли промышленности. Применяется реже ГОСТ.', c: 'norm' },
+      { s: 'ТУ',             f: 'Технические условия',
+        d: 'Документ производителя на конкретную продукцию. Заменяет ГОСТ для уникальных изделий.', c: 'norm' },
+      { s: 'СанПиН',         f: 'Санитарные правила и нормы',
+        d: 'Документы Роспотребнадзора. Регулируют санитарно-эпидемиологические требования.', c: 'norm' },
+      { s: 'ТР ТС',          f: 'Технический регламент Таможенного союза',
+        d: 'Документ ЕАЭС, устанавливающий обязательные требования к безопасности продукции.', c: 'norm' },
+      { s: 'ГК РФ',          f: 'Гражданский кодекс Российской Федерации',
+        d: 'Кодифицированный закон РФ. Главы 37–38 регулируют договор подряда и его виды.', c: 'norm',
+        link: { href: 'https://docs.cntd.ru/document/9027703', text: 'cntd.ru' } },
+      { s: 'ФЗ',             f: 'Федеральный закон',
+        d: 'Нормативный акт РФ. Например, 152-ФЗ «О персональных данных», 44-ФЗ о госзакупках.', c: 'norm' },
+
+      // ─── Конкретные СП / ГОСТ ─────────────────────────────────────────
+      { s: 'СП 82.13330.2016', f: 'Благоустройство территорий',
+        d: 'Основной СП по мощёным поверхностям. Требования к уклонам, водоотведению, ровности.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/456054205', text: 'открыть' } },
+      { s: 'СП 45.13330.2017', f: 'Основания зданий и сооружений',
+        d: 'Уплотнение грунтов, контроль коэффициента уплотнения Ку. Применяется на этапе подготовки основания.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/456069588', text: 'открыть' } },
+      { s: 'СП 78.13330.2012', f: 'Автомобильные дороги',
+        d: 'Конструкция дорожных одежд, требования к щебеночным подушкам.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/871001237', text: 'открыть' } },
+      { s: 'СП 48.13330.2019', f: 'Организация строительства',
+        d: 'Журналы работ, промежуточные акты, документооборот на стройплощадке.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/554403082', text: 'открыть' } },
+      { s: 'СП 71.13330.2017', f: 'Изоляционные и отделочные покрытия',
+        d: 'Приёмка отделки, допуски ровности, нормы оценки качества.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/871001100', text: 'открыть' } },
+      { s: 'СП 131.13330.2020', f: 'Строительная климатология',
+        d: 'Температурные и влажностные нормативы для производства работ.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/573659358', text: 'открыть' } },
+      { s: 'СП 32.13330.2018', f: 'Канализация. Наружные сети',
+        d: 'Расчёт водоотведения и ливневой канализации.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/456056452', text: 'открыть' } },
+      { s: 'ГОСТ 8267-93',    f: 'Щебень и гравий из плотных горных пород',
+        d: 'Фракции, прочность, морозостойкость. Применим к основанию и наполнителю.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/9054183', text: 'открыть' } },
+      { s: 'ГОСТ 6665-91',    f: 'Камни бортовые из горных пород',
+        d: 'Бортовые (поребриковые) камни — размеры, методы испытаний.', c: 'sp' },
+      { s: 'ГОСТ 18105-2018', f: 'Контроль прочности бетона',
+        d: 'Методы определения класса прочности бетона на сжатие.', c: 'sp' },
+      { s: 'СНиП 12-03-2001', f: 'Безопасность труда в строительстве. Часть 1',
+        d: 'Общие требования безопасности, ограждения, средства индивидуальной защиты.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/901794520', text: 'открыть' } },
+      { s: 'СНиП 12-04-2002', f: 'Безопасность труда в строительстве. Часть 2',
+        d: 'Производство работ — конкретные требования по видам работ.', c: 'sp',
+        link: { href: 'https://docs.cntd.ru/document/901829466', text: 'открыть' } },
+
+      // ─── Стандарты и классы ───────────────────────────────────────────
+      { s: 'DIN 51130',      f: 'Немецкий стандарт противоскольжения',
+        d: 'Метод испытания скользкости методом наклонной плоскости. Классы от R9 (низкая) до R13 (наивысшая).', c: 'std' },
+      { s: 'R11',            f: 'Класс высокого сцепления (High Grip)',
+        d: 'Класс противоскольжения по DIN 51130: безопасный угол наклона 19–27°. Применим у бассейнов, на парковках, для доступной среды.', c: 'std' },
+      { s: 'LAGA',           f: 'Laenderarbeitsgemeinschaft Abfall',
+        d: 'Немецкий комитет, выпустивший классификацию отходов и материалов по экологической безопасности.', c: 'std' },
+      { s: 'LAGA Z0',        f: 'Высший экологический класс LAGA',
+        d: 'Класс экологической безопасности материала: можно укладывать без ограничений у деревьев, водоёмов, на детских площадках.', c: 'std' },
+      { s: 'B15',            f: 'Класс прочности бетона на сжатие',
+        d: 'Минимальная прочность 15 МПа (≈195 кг/см²). Минимальное требование к бетонному основанию под каменный ковёр.', c: 'std' },
+      { s: 'Ку',             f: 'Коэффициент уплотнения грунта',
+        d: 'Отношение плотности уплотнённого грунта к максимально достижимой. Норма для оснований ≥0,95.', c: 'std' },
+      { s: 'Точка росы',     f: 'Температура конденсации водяного пара',
+        d: 'При укладке ПУ должна быть на 3 °C и более ниже температуры поверхности, иначе на поверхности образуется конденсат.', c: 'std' },
+
+      // ─── Единицы измерения ────────────────────────────────────────────
+      { s: 'м²',             f: 'Квадратный метр',
+        d: 'Единица площади. Цены на ковёр — за квадратный метр.', c: 'unit' },
+      { s: 'п.м',            f: 'Погонный метр',
+        d: 'Единица длины. Применяется для расчёта поребрика и бордюра.', c: 'unit' },
+      { s: 'л/м²·ч',         f: 'Литров на квадратный метр в час',
+        d: 'Единица водопроницаемости. У TerraWay — до 1800 л/м²·ч.', c: 'unit' },
+      { s: 'Н/мм²',          f: 'Ньютон на квадратный миллиметр',
+        d: 'Единица прочности на сжатие. Эквивалентна МПа. TerraWay имеет ≥10 Н/мм².', c: 'unit' },
+      { s: 'МПа',            f: 'Мегапаскаль',
+        d: 'Единица давления/прочности. 1 МПа = 1 Н/мм² ≈ 10 кгс/см².', c: 'unit' },
+      { s: 'Δ',              f: 'Дельта (греч. буква)',
+        d: 'Обозначает разность величин. Например, «точка росы Δ ≥ 3 °C» — разница между температурой поверхности и точкой росы не меньше 3 °C.', c: 'unit' },
+
+      // ─── Реквизиты / юридическое ──────────────────────────────────────
+      { s: 'ИНН',            f: 'Идентификационный номер налогоплательщика',
+        d: '10 цифр у юрлиц, 12 у физлиц/ИП. Обязателен в любом договоре.', c: 'legal' },
+      { s: 'ОГРН',           f: 'Основной государственный регистрационный номер',
+        d: '13-значный номер юрлица в ЕГРЮЛ. Подтверждает регистрацию компании.', c: 'legal' },
+      { s: 'ОГРНИП',         f: 'ОГРН индивидуального предпринимателя',
+        d: '15-значный номер ИП в ЕГРИП.', c: 'legal' },
+      { s: 'КПП',            f: 'Код причины постановки на учёт',
+        d: '9-значный код для юрлиц. У ИП и физлиц не указывается.', c: 'legal' },
+      { s: 'БИК',            f: 'Банковский идентификационный код',
+        d: '9-значный код банка для платежей по России.', c: 'legal' },
+      { s: 'НДС',            f: 'Налог на добавленную стоимость',
+        d: 'Косвенный налог. Стандартная ставка 20%. УСН и самозанятые не применяют.', c: 'legal' },
+      { s: 'ИП',             f: 'Индивидуальный предприниматель',
+        d: 'Физическое лицо, зарегистрированное как предприниматель без образования юрлица.', c: 'legal' },
+      { s: 'ЮЛ',             f: 'Юридическое лицо',
+        d: 'Организация, имеющая обособленное имущество и отвечающая по обязательствам. ООО, АО, НКО и др.', c: 'legal' },
+      { s: 'ФЛ',             f: 'Физическое лицо',
+        d: 'Гражданин, частное лицо. В B2C продажах — основной заказчик.', c: 'legal' },
+      { s: 'ФИО',            f: 'Фамилия, имя, отчество',
+        d: 'Полные данные физического лица. В договорах указывается полностью без сокращений.', c: 'legal' },
+      { s: 'М.П.',           f: 'Место печати',
+        d: 'Отметка в документе на месте, где ставится оттиск печати организации.', c: 'legal' },
+      { s: 'ОКВЭД',          f: 'Общероссийский классификатор видов экономической деятельности',
+        d: 'Коды видов деятельности. Каждое юрлицо/ИП имеет один основной и несколько дополнительных. Используется для B2B-поиска контрагентов.', c: 'legal' },
+      { s: 'ТЗ',             f: 'Техническое задание',
+        d: 'Документ с описанием задачи: что, где, в каком объёме, в какие сроки.', c: 'legal' },
+      { s: 'ОВЗ',            f: 'Ограниченные возможности здоровья',
+        d: 'Категория людей. «Доступная среда» — проектирование пространств, удобных для людей с ОВЗ.', c: 'legal' },
+
+      // ─── Бизнес и маркетинг ───────────────────────────────────────────
+      { s: 'КП',             f: 'Коммерческое предложение',
+        d: 'Документ для потенциального клиента: что предлагаем, по какой цене, что отличает нас. Бывает короткий (1 стр), стандартный (3 стр) и развёрнутый (6+).', c: 'biz' },
+      { s: 'КП (посёлок)',   f: 'Коттеджный посёлок',
+        d: 'Тип жилого комплекса с индивидуальными домами. ВНИМАНИЕ: одно и то же сокращение с «коммерческое предложение», смысл определяется контекстом.', c: 'biz' },
+      { s: 'CRM',            f: 'Customer Relationship Management',
+        d: 'Система управления клиентами и сделками. Помогает не терять лиды, отслеживать этапы воронки.', c: 'biz' },
+      { s: 'B2B',            f: 'Business-to-Business',
+        d: 'Продажи юридическим лицам. Цикл сделки длиннее, чек больше, важны кейсы и сертификаты.', c: 'biz' },
+      { s: 'B2C',            f: 'Business-to-Consumer',
+        d: 'Продажи частным лицам. Эмоциональнее, быстрее, важна визуальная часть.', c: 'biz' },
+      { s: 'УК',             f: 'Управляющая компания',
+        d: 'Организация, управляющая многоквартирным домом или комплексом. Заказчик работ по благоустройству.', c: 'biz' },
+      { s: 'ЖК',             f: 'Жилой комплекс',
+        d: 'Группа домов от одного застройщика. Бизнес/премиум-сегмент — целевой клиент для TerraWay.', c: 'biz' },
+      { s: 'LED',            f: 'Light Emitting Diode',
+        d: 'Светодиод. Применяется для подсветки границ и швов ковра в премиум-проектах.', c: 'biz' },
+      { s: 'Лид',            f: 'Потенциальный клиент',
+        d: 'Человек или компания, проявившая интерес — оставила заявку, позвонила, ответила на рассылку.', c: 'biz' },
+
+      // ─── Химия и физика ───────────────────────────────────────────────
+      { s: 'NCO',            f: 'Изоцианатная группа',
+        d: 'Активная группа в молекуле ПУ. Реагирует с водой, спиртами, аминами. Отвечает за отверждение.', c: 'chem' },
+      { s: 'CO₂',            f: 'Углекислый газ',
+        d: 'Выделяется при реакции свободных NCO-групп с водой. При попадании воды в свежий ПУ — пузыри в смоле.', c: 'chem' },
+      { s: 'УФ',             f: 'Ультрафиолет',
+        d: 'Часть спектра солнечного света 100–400 нм. Разрушает ароматические ПУ и эпоксид. Алифатические ПУ — стойки.', c: 'chem' },
+      { s: 'UV',             f: 'Ultra-Violet (англ. УФ)',
+        d: 'Английская аббревиатура ультрафиолета. Используется на упаковке материалов: UV-stable = УФ-стойкий.', c: 'chem' },
+      { s: 'pH',             f: 'Показатель кислотности',
+        d: 'Шкала 0–14. Камень нейтральный (~7), реагенты с хлором кислые/щелочные — могут разрушать ПУ.', c: 'chem' },
+      { s: 'NaCl',           f: 'Хлорид натрия (соль)',
+        d: 'Зимний реагент. Разрушает связующее каменного ковра. Использовать запрещено.', c: 'chem' },
+
+      // ─── Связь и инструменты ──────────────────────────────────────────
+      { s: 'MAX',            f: 'Российский мессенджер',
+        d: 'Мессенджер VK. Альтернатива Telegram для общения с клиентами и в рабочих чатах.', c: 'tool' },
+      { s: 'Telegram',       f: 'Мессенджер',
+        d: 'Основной канал связи с клиентами и партнёрами. У команды — @arrmax_pub.', c: 'tool' },
+      { s: 'WhatsApp',       f: 'Мессенджер',
+        d: 'Альтернативный канал связи. В России работает с ограничениями.', c: 'tool' },
+      { s: '2GIS',           f: 'Картографический сервис',
+        d: 'Карты + база компаний с рубрикатором и контактами. Используется для B2B-поиска ландшафтных бюро, бассейновых компаний.', c: 'tool' },
+      { s: 'СПАРК',          f: 'Сервис проверки контрагентов',
+        d: 'База Интерфакс с финансовой и регистрационной информацией о юрлицах. Используется для проверки крупных заказчиков перед заключением договора.', c: 'tool' },
+      { s: 'Контур.Компас',  f: 'B2B база контактов СКБ Контур',
+        d: 'Поиск компаний по фильтрам (ОКВЭД, регион, выручка) с email и телефонами. Бесплатный пробный период.', c: 'tool' },
+      { s: 'LinkedIn',       f: 'Профессиональная соцсеть',
+        d: 'Используется для поиска частных архитекторов и руководителей бюро. В России работает с ограничениями.', c: 'tool' },
+      { s: 'cntd.ru',        f: 'Электронный фонд нормативных документов',
+        d: 'Официальный источник СНиПов, СП, ГОСТов в открытом доступе. На него ссылаются все наши документы.', c: 'tool',
+        link: { href: 'https://docs.cntd.ru', text: 'cntd.ru' } },
+    ];
+
+    // ───────────────────────────────────────────────────────────────────
+    //  LEVENSHTEIN DISTANCE
+    // ───────────────────────────────────────────────────────────────────
+    function levenshtein(a, b) {
+      a = a.toLowerCase(); b = b.toLowerCase();
+      const m = a.length, n = b.length;
+      if (!m) return n; if (!n) return m;
+      let prev = new Array(n + 1);
+      let curr = new Array(n + 1);
+      for (let j = 0; j <= n; j++) prev[j] = j;
+      for (let i = 1; i <= m; i++) {
+        curr[0] = i;
+        for (let j = 1; j <= n; j++) {
+          const cost = a[i-1] === b[j-1] ? 0 : 1;
+          curr[j] = Math.min(curr[j-1] + 1, prev[j] + 1, prev[j-1] + cost);
+        }
+        [prev, curr] = [curr, prev];
+      }
+      return prev[n];
+    }
+
+    function scoreTerm(term, q) {
+      if (!q) return 1;
+      const ql = q.toLowerCase();
+      const fields = [term.s, term.f, term.d].filter(Boolean);
+
+      // 1. exact substring → 1.0
+      for (const f of fields) {
+        if (f.toLowerCase().includes(ql)) return 1.0;
+      }
+
+      // 2. Levenshtein on short / full only (description too long & noisy)
+      const compact = [term.s, term.f];
+      let best = 0;
+      for (const f of compact) {
+        // Try query against the full field
+        const fl = f.toLowerCase();
+        const dist = levenshtein(ql, fl);
+        const sim = 1 - dist / Math.max(ql.length, fl.length);
+        if (sim > best) best = sim;
+
+        // Try query against each word of the field
+        for (const word of fl.split(/[\s.\-/_,()]+/).filter(Boolean)) {
+          const d = levenshtein(ql, word);
+          const s = 1 - d / Math.max(ql.length, word.length);
+          if (s > best) best = s;
+        }
+      }
+      return best;
+    }
+
+    function escapeHtml(s) {
+      return s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+    }
+
+    function highlight(text, q) {
+      if (!q) return escapeHtml(text);
+      const idx = text.toLowerCase().indexOf(q.toLowerCase());
+      if (idx === -1) return escapeHtml(text);
+      const before = escapeHtml(text.slice(0, idx));
+      const hit    = escapeHtml(text.slice(idx, idx + q.length));
+      const after  = escapeHtml(text.slice(idx + q.length));
+      return `${before}<span class="gl-hit">${hit}</span>${after}`;
+    }
+
+    // ───────────────────────────────────────────────────────────────────
+    //  RENDER
+    // ───────────────────────────────────────────────────────────────────
+    const $grid  = document.getElementById('glGrid');
+    const $empty = document.getElementById('glEmpty');
+    const $sug   = document.getElementById('glSug');
+    const $count = document.getElementById('glCount');
+    const $cats  = document.getElementById('glCats');
+    const $input = document.getElementById('glSearch');
+    const $fuzzy = document.getElementById('glFuzzyToggle');
+
+    let activeCat = 'all';
+    let fuzzyOn = true;
+    let lastQuery = '';
+
+    function renderCats() {
+      const counts = { all: TERMS.length };
+      TERMS.forEach(t => counts[t.c] = (counts[t.c] || 0) + 1);
+
+      let html = `<li><button type="button" class="gl-cat-chip${activeCat==='all'?' active':''}" data-cat="all">Все <span class="gl-cat-count">${counts.all}</span></button></li>`;
+      for (const [k, name] of Object.entries(CATEGORIES)) {
+        html += `<li><button type="button" class="gl-cat-chip${activeCat===k?' active':''}" data-cat="${k}">${name} <span class="gl-cat-count">${counts[k]||0}</span></button></li>`;
+      }
+      $cats.innerHTML = html;
+      $cats.querySelectorAll('.gl-cat-chip').forEach(b => {
+        b.addEventListener('click', () => {
+          activeCat = b.dataset.cat;
+          renderCats();
+          render();
+        });
+      });
+    }
+
+    function render() {
+      const q = lastQuery.trim();
+
+      // 1. filter by category
+      let pool = activeCat === 'all' ? TERMS : TERMS.filter(t => t.c === activeCat);
+
+      // 2. score / sort
+      let results;
+      if (!q) {
+        results = pool.map(t => ({ t, score: 1, kind: 'all' }));
+      } else {
+        const scored = pool.map(t => ({ t, score: scoreTerm(t, q) }));
+        // exact-match threshold = 1.0 always shown
+        // fuzzy threshold depends on toggle
+        const threshold = fuzzyOn ? 0.55 : 1.0;
+        results = scored
+          .filter(r => r.score >= threshold)
+          .map(r => ({ ...r, kind: r.score >= 1 ? 'exact' : 'fuzzy' }))
+          .sort((a, b) => b.score - a.score);
+      }
+
+      // 3. render
+      if (results.length === 0) {
+        $grid.innerHTML = '';
+        $empty.hidden = false;
+        $count.textContent = '';
+
+        // Suggest closest match (regardless of threshold)
+        if (q) {
+          const allScored = TERMS.map(t => ({ t, score: scoreTerm(t, q) })).sort((a, b) => b.score - a.score);
+          const top = allScored[0];
+          if (top && top.score > 0.3) {
+            $sug.innerHTML = `Возможно, вы искали <strong data-pick="${escapeHtml(top.t.s)}">${escapeHtml(top.t.s)}</strong>?`;
+            const btn = $sug.querySelector('strong');
+            if (btn) btn.addEventListener('click', () => {
+              $input.value = top.t.s;
+              lastQuery = top.t.s;
+              render();
+            });
+          } else {
+            $sug.textContent = '';
+          }
+        } else {
+          $sug.textContent = '';
+        }
+        return;
+      }
+
+      $empty.hidden = true;
+      $count.textContent = `Найдено: ${results.length}${q ? ` по запросу «${q}»` : ''}`;
+
+      $grid.innerHTML = results.map(r => {
+        const t = r.t;
+        const catLabel = CATEGORIES[t.c] || t.c;
+        const sim = r.kind === 'fuzzy' ? `<span class="gl-card__similarity">~${Math.round(r.score*100)}%</span>` : '';
+        const linkHtml = t.link
+          ? `<a class="gl-card__link" href="${escapeHtml(t.link.href)}" target="_blank" rel="noopener">${escapeHtml(t.link.text)} ↗</a>`
+          : '';
+        return `
+          <div class="gl-card${r.kind === 'fuzzy' ? ' gl-card--fuzzy' : ''}">
+            <div class="gl-card__head">
+              <span class="gl-card__short">${highlight(t.s, q)}</span>
+              <span class="gl-card__full">${highlight(t.f, q)}</span>
+              ${sim}
+            </div>
+            <p class="gl-card__desc">${highlight(t.d, q)}</p>
+            <div class="gl-card__meta">
+              <span class="gl-card__cat">${escapeHtml(catLabel)}</span>
+              ${linkHtml}
+            </div>
+          </div>`;
+      }).join('');
+    }
+
+    $input.addEventListener('input', () => {
+      lastQuery = $input.value;
+      render();
+    });
+
+    $fuzzy.addEventListener('click', () => {
+      fuzzyOn = !fuzzyOn;
+      $fuzzy.classList.toggle('active', fuzzyOn);
+      render();
+    });
+
+    // initial render
+    renderCats();
+    render();
+  </script>
+</body>
+</html>
