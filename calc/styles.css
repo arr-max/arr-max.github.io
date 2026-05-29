@@ -171,6 +171,101 @@ button {
   pointer-events: none;
 }
 
+/* ─── Animation playback ───────────────────────────────────────────── */
+.viz-play-btn {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.9rem;
+  background: rgba(15, 20, 28, 0.78);
+  border: 1px solid rgba(0, 255, 150, 0.35);
+  border-radius: 6px;
+  color: rgba(0, 255, 150, 0.85);
+  font-family: 'Manrope', system-ui, sans-serif;
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  transition: background 0.15s, border-color 0.15s, transform 0.1s;
+}
+.viz-play-btn:hover {
+  background: rgba(0, 255, 150, 0.18);
+  border-color: rgba(0, 255, 150, 0.6);
+}
+.viz-play-btn:active { transform: scale(0.97); }
+.viz-play-btn[hidden] { display: none; }
+.viz-play-btn__icon { font-size: 0.85rem; }
+
+.viz-anim-overlay {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  right: 1rem;
+  padding: 0.85rem 1rem 0.9rem;
+  background: rgba(10, 14, 22, 0.85);
+  border: 1px solid rgba(0, 255, 150, 0.35);
+  border-radius: 8px;
+  color: #fff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  font-family: 'Manrope', system-ui, sans-serif;
+  pointer-events: auto;
+}
+.viz-anim-overlay__head {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 0.25rem;
+}
+.viz-anim-overlay__phase { color: rgba(0, 255, 150, 0.85); }
+.viz-anim-overlay__step  { color: rgba(255, 255, 255, 0.45); }
+.viz-anim-overlay__title {
+  font-size: 1.05rem;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.viz-anim-overlay__desc {
+  font-size: 0.82rem;
+  color: rgba(255, 255, 255, 0.65);
+  margin-top: 0.15rem;
+  line-height: 1.4;
+}
+.viz-anim-overlay__bar {
+  height: 4px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 2px;
+  margin-top: 0.65rem;
+  overflow: hidden;
+}
+.viz-anim-overlay__fill {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg, rgba(0, 255, 150, 0.85), rgba(0, 255, 150, 0.45));
+  transition: width 0.1s linear;
+}
+.viz-anim-overlay__skip {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.6rem;
+  background: none;
+  border: 0;
+  color: rgba(255, 255, 255, 0.5);
+  font-family: inherit;
+  font-size: 0.72rem;
+  cursor: pointer;
+  padding: 0.15rem 0.35rem;
+}
+.viz-anim-overlay__skip:hover { color: rgba(0, 255, 150, 0.9); }
+.viz-anim-overlay[hidden] { display: none; }
+
 .calculator__inner {
   display: grid;
   grid-template-columns: 1fr 1fr;

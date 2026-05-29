@@ -1,3 +1,83 @@
+// ─── Animation pipeline definition ─────────────────────────────────
+const ANIM_STEPS = [
+  {
+    phase: 'I. Подготовка основания', stepLabel: '1 / 5',
+    title: 'Геотекстиль',
+    desc: '150–200 г/м² — препятствует подсосу грунта и смешению фракций',
+    duration: 1700,
+    thickness: 0.4,
+    texture: 'woven',
+    colors: {
+      top:   'rgba(225,220,205,0.88)',
+      front: 'rgba(200,195,180,0.88)',
+      right: 'rgba(212,207,192,0.88)',
+      left:  'rgba(195,190,175,0.88)',
+      back:  'rgba(185,180,168,0.88)',
+    },
+  },
+  {
+    phase: 'I. Подготовка основания', stepLabel: '2 / 5',
+    title: 'Песок 10–15 см',
+    desc: 'Мелкая фракция — выравнивание, амортизация, дренаж',
+    duration: 2000,
+    thickness: 1.5,
+    texture: 'sand',
+    colors: {
+      top:   'rgba(218,200,150,0.92)',
+      front: 'rgba(192,175,128,0.92)',
+      right: 'rgba(206,188,140,0.92)',
+      left:  'rgba(186,170,125,0.92)',
+      back:  'rgba(176,160,118,0.92)',
+    },
+  },
+  {
+    phase: 'I. Подготовка основания', stepLabel: '3 / 5',
+    title: 'Щебень подходящих фракций',
+    desc: 'Подбирается под ваш грунт — 5–20 мм / 20–40 мм',
+    duration: 2000,
+    thickness: 2.0,
+    texture: 'gravel',
+    colors: {
+      top:   'rgba(155,150,145,0.92)',
+      front: 'rgba(125,120,115,0.92)',
+      right: 'rgba(142,137,132,0.92)',
+      left:  'rgba(118,113,108,0.92)',
+      back:  'rgba(108,103,98,0.92)',
+    },
+  },
+  {
+    phase: 'II. Укладка покрытия', stepLabel: '4 / 5',
+    title: 'Нанесение праймера',
+    desc: 'Полиуретановый грунт — связывает основание с ковром',
+    duration: 1500,
+    thickness: 0.25,
+    texture: 'gloss',
+    colors: {
+      top:   'rgba(195,170,95,0.75)',
+      front: 'rgba(165,142,78,0.7)',
+      right: 'rgba(180,156,88,0.7)',
+      left:  'rgba(155,134,72,0.7)',
+      back:  'rgba(145,124,68,0.7)',
+    },
+  },
+  {
+    phase: 'II. Укладка покрытия', stepLabel: '5 / 5',
+    title: 'Укладка каменного ковра',
+    desc: 'Камень фракции 3–5 мм + двухкомпонентный полиуретан',
+    duration: 2300,
+    thickness: 1.2,
+    texture: 'carpet',
+    colors: {
+      top:   'rgba(185,165,130,0.95)',
+      front: 'rgba(145,128,100,0.95)',
+      right: 'rgba(165,147,115,0.95)',
+      left:  'rgba(138,122,96,0.95)',
+      back:  'rgba(130,115,90,0.95)',
+    },
+  },
+];
+const ANIM_FINAL_HOLD = 1500;
+
 class TronVisualization {
   constructor(canvas) {
     this.canvas = canvas;
@@ -11,6 +91,7 @@ class TronVisualization {
     this.services = { prep: false, edge: false, sealing: false, removal: false, baseType: 'hard' };
     this.area = 100;
     this._raf = null;
+    this.anim = { playing: false, step: 0, stepStart: 0, holdUntil: 0, onUpdate: null, onEnd: null };
 
     // ─── Physical lighting setup ───
     // Light direction in CAMERA space (after rotation).
@@ -460,6 +541,157 @@ class TronVisualization {
     this.drawLegend(labels);
   }
 
+  // ─── Animation pipeline ───────────────────────────────────────────────
+
+  startAnimation(callbacks = {}) {
+    this.anim.playing  = true;
+    this.anim.step     = 0;
+    this.anim.stepStart = performance.now();
+    this.anim.holdUntil = 0;
+    this.anim.onUpdate = callbacks.onUpdate || null;
+    this.anim.onEnd    = callbacks.onEnd    || null;
+    if (this.anim.onUpdate) this.anim.onUpdate(ANIM_STEPS[0], 0, 0);
+  }
+
+  stopAnimation() {
+    this.anim.playing = false;
+    this.anim.step = 0;
+    this.anim.holdUntil = 0;
+    if (this.anim.onEnd) this.anim.onEnd();
+  }
+
+  // Smooth ease-out for layer growth
+  _easeOut(t) { return 1 - Math.pow(1 - Math.max(0, Math.min(1, t)), 2.2); }
+
+  // Advance animation state; returns true if still playing
+  _tickAnimation(now) {
+    if (this.anim.holdUntil > 0) {
+      if (now >= this.anim.holdUntil) { this.stopAnimation(); return false; }
+      return true;
+    }
+    const step = ANIM_STEPS[this.anim.step];
+    const elapsed = now - this.anim.stepStart;
+    const progress = Math.min(1, elapsed / step.duration);
+    if (this.anim.onUpdate) this.anim.onUpdate(step, this.anim.step, progress);
+    if (elapsed >= step.duration) {
+      this.anim.step++;
+      if (this.anim.step >= ANIM_STEPS.length) {
+        // Final hold so user sees the completed stack
+        this.anim.holdUntil = now + ANIM_FINAL_HOLD;
+        if (this.anim.onUpdate) this.anim.onUpdate(step, ANIM_STEPS.length - 1, 1);
+      } else {
+        this.anim.stepStart = now;
+      }
+    }
+    return true;
+  }
+
+  drawAnimation() {
+    const half = 12;
+    let y = 0;
+    const now = performance.now();
+
+    for (let i = 0; i < ANIM_STEPS.length; i++) {
+      const step = ANIM_STEPS[i];
+      let h;
+      if (i < this.anim.step || this.anim.holdUntil > 0) {
+        h = step.thickness;
+      } else if (i === this.anim.step) {
+        const t = Math.min(1, (now - this.anim.stepStart) / step.duration);
+        h = step.thickness * this._easeOut(t);
+      } else {
+        break;
+      }
+      if (h < 0.02) continue;
+      this.slab(half, y, y + h, step.colors, 'rgba(255,255,255,0.08)');
+      this._drawAnimTexture(step, half, y + h);
+      y += h;
+    }
+  }
+
+  _drawAnimTexture(step, half, ySurface) {
+    const ctx = this.ctx;
+    switch (step.texture) {
+      case 'woven': {
+        ctx.strokeStyle = 'rgba(120,110,90,0.55)';
+        ctx.lineWidth = 0.6;
+        const n = 8;
+        for (let i = -n; i <= n; i++) {
+          const t = (i / n) * half * 0.85;
+          const a = this.p(t, ySurface, -half * 0.85);
+          const b = this.p(t, ySurface,  half * 0.85);
+          const c = this.p(-half * 0.85, ySurface, t);
+          const d = this.p( half * 0.85, ySurface, t);
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(c.x, c.y); ctx.lineTo(d.x, d.y); ctx.stroke();
+        }
+        break;
+      }
+      case 'sand': {
+        for (let i = 0; i < 80; i++) {
+          const sx = (Math.random() - 0.5) * (half * 1.7);
+          const sz = (Math.random() - 0.5) * (half * 1.7);
+          const sp = this.p(sx, ySurface, sz);
+          ctx.fillStyle = `rgba(${200 + Math.random()*40|0},${180 + Math.random()*30|0},${120 + Math.random()*40|0},0.55)`;
+          ctx.beginPath();
+          ctx.arc(sp.x, sp.y, 0.6 + Math.random() * 0.8, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        break;
+      }
+      case 'gravel': {
+        for (let i = 0; i < 55; i++) {
+          const sx = (Math.random() - 0.5) * (half * 1.7);
+          const sz = (Math.random() - 0.5) * (half * 1.7);
+          const sp = this.p(sx, ySurface, sz);
+          const br = 110 + Math.random() * 70 | 0;
+          ctx.fillStyle = `rgba(${br},${br - 5},${br - 10},0.7)`;
+          ctx.beginPath();
+          ctx.arc(sp.x, sp.y, 1.5 + Math.random() * 2.5, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        break;
+      }
+      case 'gloss': {
+        // Glossy highlight on primer surface
+        const ctr = this.p(0, ySurface, 0);
+        const grad = ctx.createRadialGradient(ctr.x, ctr.y, 1, ctr.x, ctr.y, 90);
+        grad.addColorStop(0, 'rgba(255,240,200,0.35)');
+        grad.addColorStop(1, 'rgba(255,240,200,0)');
+        ctx.fillStyle = grad;
+        ctx.beginPath();
+        ctx.arc(ctr.x, ctr.y, 90, 0, Math.PI * 2);
+        ctx.fill();
+        break;
+      }
+      case 'carpet': {
+        // Grid of joint seams + stone speckle
+        ctx.strokeStyle = 'rgba(100,85,65,0.45)';
+        ctx.lineWidth = 1;
+        const gridN = 6;
+        for (let i = -gridN; i <= gridN; i++) {
+          const t = (i / gridN) * half * 0.9;
+          const a = this.p(t, ySurface, -half * 0.9);
+          const b = this.p(t, ySurface,  half * 0.9);
+          const c = this.p(-half * 0.9, ySurface, t);
+          const d = this.p( half * 0.9, ySurface, t);
+          ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
+          ctx.beginPath(); ctx.moveTo(c.x, c.y); ctx.lineTo(d.x, d.y); ctx.stroke();
+        }
+        for (let i = 0; i < 60; i++) {
+          const sx = (Math.random() - 0.5) * (half * 1.7);
+          const sz = (Math.random() - 0.5) * (half * 1.7);
+          const sp = this.p(sx, ySurface, sz);
+          ctx.fillStyle = `rgba(${150 + Math.random()*60|0},${130 + Math.random()*40|0},${95 + Math.random()*35|0},0.65)`;
+          ctx.beginPath();
+          ctx.arc(sp.x, sp.y, 0.8 + Math.random() * 1.4, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        break;
+      }
+    }
+  }
+
   // ─── Render loop ──────────────────────────────────────────────────────────
 
   animate() {
@@ -475,7 +707,13 @@ class TronVisualization {
 
     this.sw = Math.min(1, this.W / 600);
     this.drawGrid();
-    this.drawScene();
+
+    if (this.anim.playing) {
+      this._tickAnimation(performance.now());
+      this.drawAnimation();
+    } else {
+      this.drawScene();
+    }
 
     this._raf = requestAnimationFrame(() => this.animate());
   }

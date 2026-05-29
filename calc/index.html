@@ -35,6 +35,20 @@
         <div class="viz-container">
           <canvas id="canvas3d"></canvas>
           <div class="viz-hint">Вращайте мышью • Масштаб колесом</div>
+          <button type="button" class="viz-play-btn" id="vizPlayBtn" title="Показать процесс укладки">
+            <span class="viz-play-btn__icon">▶</span>
+            <span class="viz-play-btn__label">Анимация укладки</span>
+          </button>
+          <div class="viz-anim-overlay" id="vizAnimOverlay" hidden>
+            <div class="viz-anim-overlay__head">
+              <span class="viz-anim-overlay__phase" id="vizAnimPhase"></span>
+              <span class="viz-anim-overlay__step" id="vizAnimStep"></span>
+            </div>
+            <div class="viz-anim-overlay__title" id="vizAnimTitle"></div>
+            <div class="viz-anim-overlay__desc" id="vizAnimDesc"></div>
+            <div class="viz-anim-overlay__bar"><div class="viz-anim-overlay__fill" id="vizAnimFill"></div></div>
+            <button type="button" class="viz-anim-overlay__skip" id="vizAnimSkip">Пропустить</button>
+          </div>
         </div>
       </div>
       <div class="container calculator__inner">

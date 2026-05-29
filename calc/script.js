@@ -47,6 +47,40 @@ class Calculator {
     const canvas3d = document.getElementById('canvas3d');
     this.viz = new TronVisualization(canvas3d);
     window.addEventListener('resize', () => this.viz.resize());
+    this.setupAnimationPlayback();
+  }
+
+  setupAnimationPlayback() {
+    const playBtn   = document.getElementById('vizPlayBtn');
+    const overlay   = document.getElementById('vizAnimOverlay');
+    const phaseEl   = document.getElementById('vizAnimPhase');
+    const stepEl    = document.getElementById('vizAnimStep');
+    const titleEl   = document.getElementById('vizAnimTitle');
+    const descEl    = document.getElementById('vizAnimDesc');
+    const fillEl    = document.getElementById('vizAnimFill');
+    const skipBtn   = document.getElementById('vizAnimSkip');
+    if (!playBtn || !overlay) return;
+
+    const onUpdate = (step, idx, progress) => {
+      phaseEl.textContent = step.phase;
+      stepEl.textContent  = step.stepLabel;
+      titleEl.textContent = step.title;
+      descEl.textContent  = step.desc;
+      fillEl.style.width  = `${Math.round(progress * 100)}%`;
+    };
+    const onEnd = () => {
+      overlay.hidden = true;
+      playBtn.hidden = false;
+    };
+
+    playBtn.addEventListener('click', () => {
+      playBtn.hidden = true;
+      overlay.hidden = false;
+      this.viz.startAnimation({ onUpdate, onEnd });
+    });
+    skipBtn.addEventListener('click', () => {
+      this.viz.stopAnimation();
+    });
   }
 
   attachEventListeners() {
