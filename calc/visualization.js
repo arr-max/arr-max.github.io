@@ -4,13 +4,27 @@ class TronVisualization {
     this.ctx = canvas.getContext('2d');
     this.rotationX = 0.55;
     this.rotationY = 0.45;
-    this.zoom = 2.2;
+    this.zoom = 1.5;
     this.isMouseDown = false;
     this.lastX = 0;
     this.lastY = 0;
     this.services = { prep: false, edge: false, sealing: false, removal: false, baseType: 'hard' };
     this.area = 100;
     this._raf = null;
+
+    // ─── Physical lighting setup ───
+    // Light direction in CAMERA space (after rotation).
+    // Points from "above-right-front of camera" toward scene.
+    // The user-visible rotation actually rotates SCENE relative to camera,
+    // so camera-space light gives a consistent "sun follows camera" look
+    // that adapts as you orbit. Direction = "to sun" from surface.
+    this.LIGHT = (() => {
+      let x = 0.40, y = -0.85, z = -0.55;
+      const len = Math.sqrt(x*x + y*y + z*z);
+      return { x: x/len, y: y/len, z: z/len };
+    })();
+    this.AMBIENT = 0.42;
+    this.DIFFUSE = 0.58;
 
     this.resize();
     this.setupEvents();
@@ -28,7 +42,7 @@ class TronVisualization {
     el.addEventListener('touchstart', e => { this.isMouseDown = true;  this.lastX = e.touches[0].clientX; this.lastY = e.touches[0].clientY; e.preventDefault(); }, { passive: false });
     el.addEventListener('touchmove',  e => { if (!this.isMouseDown) return; this.drag(e.touches[0].clientX - this.lastX, e.touches[0].clientY - this.lastY); this.lastX = e.touches[0].clientX; this.lastY = e.touches[0].clientY; e.preventDefault(); }, { passive: false });
     el.addEventListener('touchend',   () => this.isMouseDown = false);
-    el.addEventListener('wheel',      e => { e.preventDefault(); this.zoom = Math.max(0.8, Math.min(6, this.zoom - e.deltaY * 0.003)); }, { passive: false });
+    el.addEventListener('wheel',      e => { e.preventDefault(); this.zoom = Math.max(0.6, Math.min(4, this.zoom - e.deltaY * 0.003)); }, { passive: false });
   }
 
   drag(dx, dy) {
@@ -50,8 +64,14 @@ class TronVisualization {
   }
 
   project(pt) {
-    const fov = 280 * this.zoom;
-    const d = fov / (fov * 0.04 + pt.z + 30);
+    // True perspective projection with 35mm-equivalent feel.
+    // focal length in pixels ≈ canvas_width / (2 * tan(FOV/2))
+    // For 35mm on 36mm sensor: hFOV ≈ 54°, so focal_px ≈ W*0.98.
+    // Larger camDist relative to scene size → less perspective distortion,
+    // resulting in a more axonometric architectural look.
+    const focal   = this.W * 1.05;     // ~35mm full-frame equivalent
+    const camDist = 80;                // far back → mild perspective
+    const d = (focal / (camDist + pt.z)) * (this.zoom * 0.55);
     return {
       x: this.W / 2 + pt.x * d,
       y: this.H / 2 + pt.y * d,
@@ -60,6 +80,50 @@ class TronVisualization {
   }
 
   p(x, y, z) { return this.project(this.rotate(x, y, z)); }
+
+  // ─── Lighting helpers ────────────────────────────────────────────────
+
+  // Cross product → normalized normal (in camera/rotated space)
+  faceNormal(v1, v2, v3) {
+    const e1x = v2.x - v1.x, e1y = v2.y - v1.y, e1z = v2.z - v1.z;
+    const e2x = v3.x - v1.x, e2y = v3.y - v1.y, e2z = v3.z - v1.z;
+    let nx = e1y * e2z - e1z * e2y;
+    let ny = e1z * e2x - e1x * e2z;
+    let nz = e1x * e2y - e1y * e2x;
+    const len = Math.sqrt(nx*nx + ny*ny + nz*nz) || 1;
+    return { x: nx/len, y: ny/len, z: nz/len };
+  }
+
+  // Compute intensity given an outward normal (in camera space)
+  litIntensity(normal) {
+    // Flip normal toward camera so we light the visible side.
+    // Camera at -Z infinity (looking +Z), so faces toward camera have z<=0.
+    const n = normal.z > 0
+      ? { x: -normal.x, y: -normal.y, z: -normal.z }
+      : normal;
+    const dot = n.x * this.LIGHT.x + n.y * this.LIGHT.y + n.z * this.LIGHT.z;
+    return this.AMBIENT + this.DIFFUSE * Math.max(0, dot);
+  }
+
+  // Multiply rgba RGB channels by intensity, clamp 0..255
+  applyLight(rgba, k) {
+    const m = rgba.match(/rgba?\(\s*([\d.]+)\s*,\s*([\d.]+)\s*,\s*([\d.]+)(?:\s*,\s*([\d.]+))?\s*\)/);
+    if (!m) return rgba;
+    const r = Math.min(255, Math.max(0, Math.round(parseFloat(m[1]) * k)));
+    const g = Math.min(255, Math.max(0, Math.round(parseFloat(m[2]) * k)));
+    const b = Math.min(255, Math.max(0, Math.round(parseFloat(m[3]) * k)));
+    const a = m[4] !== undefined ? m[4] : '1';
+    return `rgba(${r},${g},${b},${a})`;
+  }
+
+  // Draw a lit face from already-rotated camera-space verts.
+  litFace(rotVerts, color, lineColor, sw = 1) {
+    const n = this.faceNormal(rotVerts[0], rotVerts[1], rotVerts[2]);
+    const intensity = this.litIntensity(n);
+    const lit = this.applyLight(color, intensity);
+    const screenPts = rotVerts.map(v => this.project(v));
+    this.face(screenPts, lit, lineColor, sw);
+  }
 
   // ─── Draw helpers ─────────────────────────────────────────────────────────
 
@@ -75,19 +139,20 @@ class TronVisualization {
 
   // Draw a flat slab from y=y0 to y=y1, full width half
   slab(half, y0, y1, colors, lineColor = 'rgba(255,255,255,0.15)') {
-    const { top, front, right, left } = colors;
     const { sw } = this;
+    // Pre-rotate 8 corner verts once
+    const r = (x, y, z) => this.rotate(x, y, z);
+    const v000 = r(-half, y0, -half), v100 = r(half, y0, -half);
+    const v110 = r(half,  y0,  half), v010 = r(-half, y0,  half);
+    const v001 = r(-half, y1, -half), v101 = r(half, y1, -half);
+    const v111 = r(half,  y1,  half), v011 = r(-half, y1,  half);
 
-    // back faces first
-    this.face([this.p(-half,y0,-half), this.p(half,y0,-half), this.p(half,y1,-half), this.p(-half,y1,-half)], colors.back, lineColor, sw);
-    // left
-    this.face([this.p(-half,y0,-half), this.p(-half,y0,half), this.p(-half,y1,half), this.p(-half,y1,-half)], left, lineColor, sw);
-    // right
-    this.face([this.p(half,y0,-half), this.p(half,y0,half), this.p(half,y1,half), this.p(half,y1,-half)], right, lineColor, sw);
-    // front
-    this.face([this.p(-half,y0,half), this.p(half,y0,half), this.p(half,y1,half), this.p(-half,y1,half)], front, lineColor, sw);
-    // top
-    this.face([this.p(-half,y1,-half), this.p(half,y1,-half), this.p(half,y1,half), this.p(-half,y1,half)], top, lineColor, sw);
+    // back (z=-half), left, right, front, top — lit per face
+    this.litFace([v000, v100, v101, v001], colors.back,  lineColor, sw);
+    this.litFace([v000, v010, v011, v001], colors.left,  lineColor, sw);
+    this.litFace([v100, v110, v111, v101], colors.right, lineColor, sw);
+    this.litFace([v010, v110, v111, v011], colors.front, lineColor, sw);
+    this.litFace([v001, v101, v111, v011], colors.top,   lineColor, sw);
   }
 
   // Draw one curb block on one side
@@ -357,22 +422,26 @@ class TronVisualization {
       const yTop  = yBase + curbH;
       const H = half + curbW;
 
-      // Рисует один ящик: top, front, right, back, left
+      // Рисует один ящик: top, front, right, back, left — с физическим освещением
       const curbBox = (x0, x1, z0, z1) => {
         const lc = 'rgba(255,255,255,0.18)';
         const top   = 'rgba(210,210,220,0.9)';
-        const side1 = 'rgba(155,155,165,0.9)';
-        const side2 = 'rgba(135,135,145,0.9)';
+        const side  = 'rgba(165,165,175,0.9)';
+        const r = (x, y, z) => this.rotate(x, y, z);
+        const v0bb = r(x0,yBase,z0), v1bb = r(x1,yBase,z0);
+        const v1bf = r(x1,yBase,z1), v0bf = r(x0,yBase,z1);
+        const v0tb = r(x0,yTop, z0), v1tb = r(x1,yTop, z0);
+        const v1tf = r(x1,yTop, z1), v0tf = r(x0,yTop, z1);
         // top
-        this.face([this.p(x0,yTop,z0),this.p(x1,yTop,z0),this.p(x1,yTop,z1),this.p(x0,yTop,z1)], top,   lc, 1);
+        this.litFace([v0tb, v1tb, v1tf, v0tf], top,  lc, 1);
         // front (+z)
-        this.face([this.p(x0,yBase,z1),this.p(x1,yBase,z1),this.p(x1,yTop,z1),this.p(x0,yTop,z1)], side1, lc, 1);
+        this.litFace([v0bf, v1bf, v1tf, v0tf], side, lc, 1);
         // back (-z)
-        this.face([this.p(x0,yBase,z0),this.p(x1,yBase,z0),this.p(x1,yTop,z0),this.p(x0,yTop,z0)], side2, lc, 1);
+        this.litFace([v0bb, v1bb, v1tb, v0tb], side, lc, 1);
         // right (+x)
-        this.face([this.p(x1,yBase,z0),this.p(x1,yBase,z1),this.p(x1,yTop,z1),this.p(x1,yTop,z0)], side1, lc, 1);
+        this.litFace([v1bb, v1bf, v1tf, v1tb], side, lc, 1);
         // left (-x)
-        this.face([this.p(x0,yBase,z0),this.p(x0,yBase,z1),this.p(x0,yTop,z1),this.p(x0,yTop,z0)], side2, lc, 1);
+        this.litFace([v0bb, v0bf, v0tf, v0tb], side, lc, 1);
       };
 
       // Передняя сторона (+z)
