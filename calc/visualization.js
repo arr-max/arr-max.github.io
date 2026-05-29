@@ -62,21 +62,21 @@ const ANIM_STEPS = [
   },
   {
     phase: 'II. Укладка покрытия', stepLabel: '5 / 5',
-    title: 'Укладка каменного ковра',
-    desc: 'Камень фракции 3–5 мм + двухкомпонентный полиуретан',
-    duration: 2300,
-    thickness: 1.2,
+    title: 'Каменный ковёр готов',
+    desc: 'Камень фракции 3–5 мм + двухкомпонентный полиуретан · TerraWay®',
+    duration: 3200,
+    thickness: 1.4,
     texture: 'carpet',
     colors: {
-      top:   'rgba(185,165,130,0.95)',
-      front: 'rgba(145,128,100,0.95)',
-      right: 'rgba(165,147,115,0.95)',
-      left:  'rgba(138,122,96,0.95)',
-      back:  'rgba(130,115,90,0.95)',
+      top:   'rgba(195,172,135,0.98)',
+      front: 'rgba(152,134,104,0.98)',
+      right: 'rgba(172,152,118,0.98)',
+      left:  'rgba(145,128,100,0.98)',
+      back:  'rgba(135,118,93,0.98)',
     },
   },
 ];
-const ANIM_FINAL_HOLD = 1500;
+const ANIM_FINAL_HOLD = 4500;
 
 class TronVisualization {
   constructor(canvas) {
@@ -91,7 +91,7 @@ class TronVisualization {
     this.services = { prep: false, edge: false, sealing: false, removal: false, baseType: 'hard' };
     this.area = 100;
     this._raf = null;
-    this.anim = { playing: false, step: 0, stepStart: 0, holdUntil: 0, onUpdate: null, onEnd: null };
+    this.anim = { playing: false, step: 0, stepStart: 0, holdUntil: 0, onUpdate: null, onEnd: null, cache: {} };
 
     // ─── Physical lighting setup ───
     // Light direction in CAMERA space (after rotation).
@@ -550,7 +550,42 @@ class TronVisualization {
     this.anim.holdUntil = 0;
     this.anim.onUpdate = callbacks.onUpdate || null;
     this.anim.onEnd    = callbacks.onEnd    || null;
+    this.anim.cache    = {}; // fresh randomized textures per playback
     if (this.anim.onUpdate) this.anim.onUpdate(ANIM_STEPS[0], 0, 0);
+  }
+
+  _getTextureCache(stepIdx, step, half) {
+    if (this.anim.cache[stepIdx]) return this.anim.cache[stepIdx];
+    const out = { dots: [] };
+    const rand = () => Math.random();
+    switch (step.texture) {
+      case 'sand':
+        for (let i = 0; i < 90; i++) out.dots.push({
+          sx: (rand() - 0.5) * (half * 1.7),
+          sz: (rand() - 0.5) * (half * 1.7),
+          r:  0.6 + rand() * 0.9,
+          col: `rgba(${200 + rand()*40|0},${180 + rand()*30|0},${120 + rand()*40|0},0.55)`,
+        });
+        break;
+      case 'gravel':
+        for (let i = 0; i < 60; i++) out.dots.push({
+          sx: (rand() - 0.5) * (half * 1.7),
+          sz: (rand() - 0.5) * (half * 1.7),
+          r:  1.6 + rand() * 2.6,
+          col: (() => { const br = 110 + rand() * 70 | 0; return `rgba(${br},${br - 5},${br - 10},0.72)`; })(),
+        });
+        break;
+      case 'carpet':
+        for (let i = 0; i < 90; i++) out.dots.push({
+          sx: (rand() - 0.5) * (half * 1.75),
+          sz: (rand() - 0.5) * (half * 1.75),
+          r:  0.9 + rand() * 1.5,
+          col: `rgba(${155 + rand()*70|0},${135 + rand()*45|0},${100 + rand()*35|0},0.7)`,
+        });
+        break;
+    }
+    this.anim.cache[stepIdx] = out;
+    return out;
   }
 
   stopAnimation() {
@@ -590,11 +625,13 @@ class TronVisualization {
     const half = 12;
     let y = 0;
     const now = performance.now();
+    const isFinal = this.anim.holdUntil > 0;
+    let carpetY = null;
 
     for (let i = 0; i < ANIM_STEPS.length; i++) {
       const step = ANIM_STEPS[i];
       let h;
-      if (i < this.anim.step || this.anim.holdUntil > 0) {
+      if (i < this.anim.step || isFinal) {
         h = step.thickness;
       } else if (i === this.anim.step) {
         const t = Math.min(1, (now - this.anim.stepStart) / step.duration);
@@ -604,12 +641,41 @@ class TronVisualization {
       }
       if (h < 0.02) continue;
       this.slab(half, y, y + h, step.colors, 'rgba(255,255,255,0.08)');
-      this._drawAnimTexture(step, half, y + h);
+      this._drawAnimTexture(step, i, half, y + h);
       y += h;
+      if (step.texture === 'carpet' && h >= step.thickness * 0.85) carpetY = y;
     }
+
+    // Final highlight on carpet — soft glow + "ГОТОВО" stamp during hold
+    if (isFinal && carpetY !== null) this._drawCarpetFinish(half, carpetY, now);
   }
 
-  _drawAnimTexture(step, half, ySurface) {
+  _drawCarpetFinish(half, ySurface, now) {
+    const ctx = this.ctx;
+    // Pulsing glow circle on top of the finished carpet
+    const pulse = 0.5 + 0.5 * Math.sin(now / 380);
+    const ctr = this.p(0, ySurface, 0);
+    const radius = 130 + 8 * pulse;
+    const grad = ctx.createRadialGradient(ctr.x, ctr.y, 5, ctr.x, ctr.y, radius);
+    grad.addColorStop(0,   `rgba(0,255,150,${0.18 + 0.10 * pulse})`);
+    grad.addColorStop(0.6, 'rgba(0,255,150,0.04)');
+    grad.addColorStop(1,   'rgba(0,255,150,0)');
+    ctx.save();
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(ctr.x, ctr.y, radius, 0, Math.PI * 2);
+    ctx.fill();
+
+    // "Готово" stamp
+    ctx.font = 'bold 13px Manrope, system-ui, monospace';
+    ctx.fillStyle = `rgba(0,255,150,${0.7 + 0.25 * pulse})`;
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.fillText('✓ КАМЕННЫЙ КОВЁР УЛОЖЕН', ctr.x, ctr.y);
+    ctx.restore();
+  }
+
+  _drawAnimTexture(step, stepIdx, half, ySurface) {
     const ctx = this.ctx;
     switch (step.texture) {
       case 'woven': {
@@ -627,27 +693,14 @@ class TronVisualization {
         }
         break;
       }
-      case 'sand': {
-        for (let i = 0; i < 80; i++) {
-          const sx = (Math.random() - 0.5) * (half * 1.7);
-          const sz = (Math.random() - 0.5) * (half * 1.7);
-          const sp = this.p(sx, ySurface, sz);
-          ctx.fillStyle = `rgba(${200 + Math.random()*40|0},${180 + Math.random()*30|0},${120 + Math.random()*40|0},0.55)`;
-          ctx.beginPath();
-          ctx.arc(sp.x, sp.y, 0.6 + Math.random() * 0.8, 0, Math.PI * 2);
-          ctx.fill();
-        }
-        break;
-      }
+      case 'sand':
       case 'gravel': {
-        for (let i = 0; i < 55; i++) {
-          const sx = (Math.random() - 0.5) * (half * 1.7);
-          const sz = (Math.random() - 0.5) * (half * 1.7);
-          const sp = this.p(sx, ySurface, sz);
-          const br = 110 + Math.random() * 70 | 0;
-          ctx.fillStyle = `rgba(${br},${br - 5},${br - 10},0.7)`;
+        const cache = this._getTextureCache(stepIdx, step, half);
+        for (const d of cache.dots) {
+          const sp = this.p(d.sx, ySurface, d.sz);
+          ctx.fillStyle = d.col;
           ctx.beginPath();
-          ctx.arc(sp.x, sp.y, 1.5 + Math.random() * 2.5, 0, Math.PI * 2);
+          ctx.arc(sp.x, sp.y, d.r, 0, Math.PI * 2);
           ctx.fill();
         }
         break;
@@ -656,7 +709,7 @@ class TronVisualization {
         // Glossy highlight on primer surface
         const ctr = this.p(0, ySurface, 0);
         const grad = ctx.createRadialGradient(ctr.x, ctr.y, 1, ctr.x, ctr.y, 90);
-        grad.addColorStop(0, 'rgba(255,240,200,0.35)');
+        grad.addColorStop(0, 'rgba(255,240,200,0.38)');
         grad.addColorStop(1, 'rgba(255,240,200,0)');
         ctx.fillStyle = grad;
         ctx.beginPath();
@@ -665,8 +718,8 @@ class TronVisualization {
         break;
       }
       case 'carpet': {
-        // Grid of joint seams + stone speckle
-        ctx.strokeStyle = 'rgba(100,85,65,0.45)';
+        // Grid of joint seams (deterministic)
+        ctx.strokeStyle = 'rgba(100,85,65,0.5)';
         ctx.lineWidth = 1;
         const gridN = 6;
         for (let i = -gridN; i <= gridN; i++) {
@@ -678,13 +731,13 @@ class TronVisualization {
           ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke();
           ctx.beginPath(); ctx.moveTo(c.x, c.y); ctx.lineTo(d.x, d.y); ctx.stroke();
         }
-        for (let i = 0; i < 60; i++) {
-          const sx = (Math.random() - 0.5) * (half * 1.7);
-          const sz = (Math.random() - 0.5) * (half * 1.7);
-          const sp = this.p(sx, ySurface, sz);
-          ctx.fillStyle = `rgba(${150 + Math.random()*60|0},${130 + Math.random()*40|0},${95 + Math.random()*35|0},0.65)`;
+        // Stones — cached for stable look
+        const cache = this._getTextureCache(stepIdx, step, half);
+        for (const d of cache.dots) {
+          const sp = this.p(d.sx, ySurface, d.sz);
+          ctx.fillStyle = d.col;
           ctx.beginPath();
-          ctx.arc(sp.x, sp.y, 0.8 + Math.random() * 1.4, 0, Math.PI * 2);
+          ctx.arc(sp.x, sp.y, d.r, 0, Math.PI * 2);
           ctx.fill();
         }
         break;
