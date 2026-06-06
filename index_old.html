@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Строительные работы — Каменные ковры TerraWay</title>
+  <meta name="description" content="Строительные работы и укладка каменных ковров по технологии TerraWay. Экологичное водопроницаемое покрытие для дорожек, парковок и территорий.">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect fill='%231a1a1a' width='32' height='32'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='%23fff' font-family='system-ui'>A</text></svg>" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="header">
+    <div class="container header__inner">
+      <a href="#" class="logo" data-i18n="logo">Команда Арр Макс</a>
+      <nav class="nav">
+        <a href="#terraway" data-i18n="navTerraway">TerraWay</a>
+        <a href="#cases" data-i18n="navCases">Кейсы</a>
+        <a href="#benefits" data-i18n="navBenefits">Преимущества</a>
+        <a href="#wellbeing" data-i18n="navWellbeing">Тело</a>
+        <a href="#services" data-i18n="navServices">Услуги</a>
+        <a href="norm_details.html" data-i18n="navDetails">Детали</a>
+        <a href="success.html" data-i18n="navSuccess">Чек-лист</a>
+        <a href="calc/" class="nav__calc" data-i18n="navCalc">Калькулятор</a>
+        <a href="#contact" data-i18n="navContact">Контакты</a>
+        <a href="tel:+79887680835" class="nav__phone" data-i18n="navPhone">Макс +7 988 768 08 35</a>
+      </nav>
+      <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn-stone btn-stone--typewriter" aria-live="polite"><span class="header__typewriter-text"></span><span class="header__typewriter-cursor" aria-hidden="true"></span></a>
+      <div class="lang-switch" role="group" aria-label="Язык / Language">
+        <button type="button" class="lang-switch__btn" data-lang="ru" title="Русский"><span class="lang-switch__flag" aria-hidden="true"><svg viewBox="0 0 24 16" width="24" height="16"><rect fill="#fff" height="5.33" y="0" width="24"/><rect fill="#0039a6" height="5.33" y="5.33" width="24"/><rect fill="#d52b1e" height="5.34" y="10.67" width="24"/></svg></span></button>
+        <button type="button" class="lang-switch__btn" data-lang="en" title="English"><span class="lang-switch__flag" aria-hidden="true"><svg viewBox="0 0 24 16" width="24" height="16"><rect fill="#fff" width="24" height="16"/><path fill="#C8102E" d="M10 0h4v16h-4zM0 6h24v4H0z"/></svg></span></button>
+      </div>
+      <button class="burger" aria-label="Меню" data-i18n-aria="ariaMenu">
+        <span></span>
+        <span></span>
+        <span></span>
+      </button>
+    </div>
+  </header>
+
+  <main>
+    <section id="cases" class="section section--cases-first">
+      <div class="container">
+        <h2 class="section__title" data-i18n="casesTitle">Наши кейсы</h2>
+        <p class="section__lead" data-i18n="casesLead">Реальные кейсы: результат, процесс и исходное состояние.</p>
+        <div class="cases-tabs" role="tablist" data-i18n-aria="ariaCaseTabs"></div>
+        <div class="case-card case-card--loading" id="case-card">
+          <div class="case-card__gallery">
+            <button type="button" class="case-carousel__btn case-carousel__btn--prev" data-i18n-aria="ariaPrevPhoto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
+            <div class="case-carousel__track">
+              <div class="case-carousel__list"></div>
+            </div>
+            <button type="button" class="case-carousel__btn case-carousel__btn--next" data-i18n-aria="ariaNextPhoto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+          </div>
+          <div class="case-card__info">
+            <h3 class="case-card__title"></h3>
+            <ul class="case-card__meta">
+              <li class="case-card__meta-item case-card__meta--area"><span class="case-card__meta-label" data-i18n="metaArea">Площадь</span><span class="case-card__meta-value"></span></li>
+              <li class="case-card__meta-item case-card__meta--technology"><span class="case-card__meta-label" data-i18n="metaTechnology">Технология</span><span class="case-card__meta-value"></span></li>
+              <li class="case-card__meta-item case-card__meta--material"><span class="case-card__meta-label" data-i18n="metaMaterial">Материал</span><span class="case-card__meta-value"></span></li>
+              <li class="case-card__meta-item case-card__meta--location"><span class="case-card__meta-label" data-i18n="metaLocation">Локация</span><span class="case-card__meta-value"></span></li>
+              <li class="case-card__meta-item case-card__meta--duration"><span class="case-card__meta-label" data-i18n="metaDuration">Сроки</span><span class="case-card__meta-value"></span></li>
+              <li class="case-card__meta-item case-card__meta--cost"><span class="case-card__meta-label" data-i18n="metaCost">Стоимость</span><span class="case-card__meta-value"></span></li>
+            </ul>
+          </div>
+          <div class="case-card__actions">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4Lm7KFx9Oca_T1ZDqONX0pgtpYdqTKxZd_Hnw7KuK67YCfw/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn btn--primary btn--cost" data-i18n="btnCost">Узнать стоимость Вашего проекта</a>
+          </div>
+          <p class="case-card__load-err" aria-live="polite"></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="hero">
+      <div class="hero__bg"></div>
+      <div class="container hero__content">
+        <div class="hero__panel">
+          <h1 class="hero__title"><span data-i18n="heroTitle">Строительные работы и каменные ковры</span> <span class="hero__accent">TerraWay</span></h1>
+          <p class="hero__lead" data-i18n="heroLead">Экологичная технология водопроницаемого покрытия для дорожек, парковок и территорий. Прочность, долговечность и забота об окружающей среде.</p>
+          <ul class="hero__infographic" data-i18n-aria="ariaInfographic">
+            <li class="hero__info-item">
+              <span class="hero__info-icon" aria-hidden="true">💧</span>
+              <span class="hero__info-value">1800 л/м²·ч</span>
+              <span class="hero__info-label" data-i18n="infoPermeability">Водопроницаемость</span>
+            </li>
+            <li class="hero__info-item">
+              <span class="hero__info-icon" aria-hidden="true">🛡️</span>
+              <span class="hero__info-value">R11</span>
+              <span class="hero__info-label" data-i18n="infoGrip">Противоскольжение</span>
+            </li>
+            <li class="hero__info-item">
+              <span class="hero__info-icon" aria-hidden="true">🌿</span>
+              <span class="hero__info-value" data-i18n="infoYears">30+ лет</span>
+              <span class="hero__info-label" data-i18n="infoExperience">Опыт технологии</span>
+            </li>
+          </ul>
+          <div class="hero__actions">
+            <a href="#terraway" class="btn btn--primary" data-i18n="btnTerraway">Узнать о TerraWay</a>
+            <a href="#contact" class="btn btn--outline" data-i18n="btnContact">Связаться с нами</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero__scroll" data-i18n="heroScroll">Листайте вниз</div>
+    </section>
+
+    <section id="terraway" class="section section--alt">
+      <div class="container">
+        <h2 class="section__title" data-i18n="terrawayTitle">Технология TerraWay®</h2>
+        <p class="section__lead" data-i18n="terrawayLead">Каменный ковёр TerraWay — это водопроницаемая система мощения для участков с лёгкой нагрузкой. Более трёх десятилетий опыта в экологичном мощении.</p>
+        <figure class="water-demo">
+          <video
+            class="water-demo__video"
+            src="assets/video/stone_water_permeable.mp4"
+            autoplay
+            muted
+            loop
+            playsinline
+            preload="metadata"
+            aria-label="Каменный ковёр пропускает воду насквозь"
+          ></video>
+          <figcaption class="water-demo__caption">
+            <span class="water-demo__icon" aria-hidden="true">💧</span>
+            <span data-i18n="waterDemoCap">Вода уходит сквозь покрытие — без луж, без задержек, без водоотводных решёток.</span>
+          </figcaption>
+        </figure>
+
+        <div class="features-grid">
+          <div class="feature-card">
+            <div class="feature-card__icon">💧</div>
+            <h3 data-i18n="featWater">Водопроницаемость</h3>
+            <p data-i18n="featWaterP">Около 1800 литров воды на м² в час. Дождевая вода уходит в грунт, снижая нагрузку на ливнёвку и пополняя грунтовые воды.</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">🛡️</div>
+            <h3 data-i18n="featStrength">Прочность</h3>
+            <p data-i18n="featStrengthP">Минимальная прочность на сжатие 10 Н/мм². Противоскользящая поверхность класса R11 (High Grip).</p>
+          </div>
+          <div class="feature-card">
+            <div class="feature-card__icon">🌿</div>
+            <h3 data-i18n="featEco">Экология</h3>
+            <p data-i18n="featEcoP">Класс LAGA Z0 — укладка без ограничений. Нет вымывания частиц, благоприятно для деревьев и почвы.</p>
+          </div>
+        </div>
+        <div class="details-teaser">
+          <p>Почему ковры разрушаются, чем отличается полиуретан от других смол и как правильно работать с дождём — подробно разобрали в отдельном разделе.</p>
+          <a href="norm_details.html" class="btn btn--outline btn--sm">Читать детали технологии →</a>
+        </div>
+
+        <div class="r11-block">
+          <h3 class="r11-block__title" data-i18n="r11Title">Класс противоскольжения R11 (High Grip)</h3>
+          <p><strong data-i18n="r11What">Что это?</strong> <span data-i18n="r11WhatP">R11 — это класс сопротивления скольжению по европейскому стандарту (DIN 51130). Цифра означает угол наклона, при котором покрытие остаётся безопасным при ходьбе. R11 относится к категории «высокое сцепление» (High Grip).</span></p>
+          <p><strong data-i18n="r11Why">Зачем это нужно?</strong> <span data-i18n="r11WhyP">На дорожках, у бассейнов, на парковках и въездах поверхность часто бывает мокрой или с листвой. Покрытие TerraWay с R11 снижает риск поскользнуться — удобно и безопасно для пешеходов, детей и людей с ограниченной подвижностью, а также для велосипедов и колясок.</span></p>
+        </div>
+        <div class="install-steps">
+          <h3 class="install-steps__title" data-i18n="installTitle">Укладка в четыре этапа</h3>
+          <ol class="install-steps__list">
+            <li data-i18n="install1">Подготовка водопроницаемой подосновы из щебня</li>
+            <li data-i18n="install2">Смешивание каменной фракции 2–4 мм с вяжущей системой</li>
+            <li data-i18n="install3">Распределение и выравнивание смеси</li>
+            <li data-i18n="install4">Нарезка швов. Хождение возможно через 24 часа, полное затвердевание — за 7 дней</li>
+          </ol>
+        </div>
+      </div>
+    </section>
+
+    <section id="benefits" class="section">
+      <div class="container">
+        <h2 class="section__title" data-i18n="benefitsTitle">Почему TerraWay</h2>
+        <ul class="benefits-list">
+          <li data-i18n="benefit1">Деревья и мелкие животные получают достаточно воды и воздуха — улучшается среда</li>
+          <li data-i18n="benefit2">Дождевая вода не перегружает канализацию — меньше затрат на обслуживание</li>
+          <li data-i18n="benefit3">Минимальный поверхностный сток, пополнение грунтовых вод</li>
+          <li data-i18n="benefit4">Снижение шума и пыли, ослабление эффекта теплового острова за счёт испарения</li>
+          <li data-i18n="benefit5">Свободная форма и цвет в зависимости от местных материалов</li>
+          <li data-i18n="benefit6">Простой уход: щётка или мойка высокого давления до 80 бар, устойчивость к противогололёдной соли</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="wellbeing" class="section section--wellbeing">
+      <div class="container">
+        <h2 class="section__title" data-i18n="wellbeingTitle">Тело и забота о себе</h2>
+        <p class="section__lead" data-i18n="wellbeingLead">Ходить по естественному каменному покрытию полезно для развития тела: стопы получают естественную стимуляцию, улучшается баланс и осанка. Это не только про двор или дорожку — это про любовь к себе и к месту, где вы живёте.</p>
+        <ul class="wellbeing-list">
+          <li><span class="wellbeing__icon" aria-hidden="true">🦶</span> <span data-i18n="wellbeing1">Стопы и голеностоп работают естественно — укрепляются связки и мелкие мышцы.</span></li>
+          <li><span class="wellbeing__icon" aria-hidden="true">⚖️</span> <span data-i18n="wellbeing2">Баланс и координация: неровность поверхности тренирует чувство равновесия.</span></li>
+          <li><span class="wellbeing__icon" aria-hidden="true">🌿</span> <span data-i18n="wellbeing3">Экологичное покрытие под ногами — забота об окружающей среде и о себе.</span></li>
+          <li><span class="wellbeing__icon" aria-hidden="true">❤️</span> <span data-i18n="wellbeing4">Любовь к себе начинается с малого: комфортное, безопасное пространство у дома.</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="applications" class="section section--alt">
+      <div class="container">
+        <h2 class="section__title" data-i18n="appTitle">Где применяется TerraWay</h2>
+        <p class="section__lead" data-i18n="appLead">Подходит для любых объектов с лёгкой нагрузкой.</p>
+        <p class="applications__dream" data-i18n="appDream">Предбанник, зона у бассейна, терраса — там, где хочется тепло и уверенность под ногами.</p>
+        <div class="applications-grid">
+          <span class="app-tag" data-i18n="app1">Дорожки и тротуары</span>
+          <span class="app-tag" data-i18n="app2">Парковки и подъезды</span>
+          <span class="app-tag" data-i18n="app3">Велодорожки</span>
+          <span class="app-tag" data-i18n="app4">Детские и спортивные площадки</span>
+          <span class="app-tag" data-i18n="app5">Защита прикорневой зоны деревьев</span>
+          <span class="app-tag" data-i18n="app6">Террасы и крыши</span>
+          <span class="app-tag" data-i18n="app7">Площадки у бассейнов</span>
+          <span class="app-tag" data-i18n="app8">Парковки над подземными гаражами</span>
+          <span class="app-tag" data-i18n="app9">Школьные дворы</span>
+          <span class="app-tag" data-i18n="app10">Доступная среда</span>
+        </div>
+      </div>
+    </section>
+
+    <section id="services" class="section">
+      <div class="container">
+        <h2 class="section__title" data-i18n="servicesTitle">Наши услуги</h2>
+        <div class="services-grid">
+          <article class="service-card">
+            <h3 data-i18n="serv1Title">Укладка каменных ковров TerraWay</h3>
+            <p data-i18n="serv1P">Полный цикл: проектирование, подготовка основания, укладка по технологии TerraWay, нарезка швов и сдача объекта.</p>
+          </article>
+          <article class="service-card">
+            <h3 data-i18n="serv2Title">Строительные и отделочные работы</h3>
+            <p data-i18n="serv2P">Благоустройство территорий, мощение, отмостки, подпорные стенки и сопутствующие строительные работы.</p>
+          </article>
+          <article class="service-card">
+            <h3 data-i18n="serv3Title">Обслуживание и обновление покрытий</h3>
+            <p data-i18n="serv3P">Регулярная очистка, ремонт швов и «освежение» поверхности специальным вяжущим для продления срока службы.</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section section--dark">
+      <div class="container">
+        <h2 class="section__title" data-i18n="contactTitle">Связаться с нами</h2>
+        <p class="section__lead" data-i18n="contactLead">Обсудим ваш проект и подберём решение под задачу.</p>
+        <div class="contact-block">
+          <p data-i18n="contactP">Позвоните Максиму или напишите — ответим в ближайшее время.</p>
+          <p class="contact-phone"><span data-i18n="contactPhone">Макс</span> <a href="tel:+79887680835">+7 988 768 08 35</a></p>
+          <p class="contact-telegram"><a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" data-i18n="contactTelegram">Telegram: ArrMax Public</a></p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer__inner">
+      <p class="footer__copy">© <span data-i18n="logo">Команда Арр Макс</span>. <span data-i18n="footerCopy">Строительные работы и каменные ковры TerraWay.</span> <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener">Telegram</a></p>
+      <p class="footer__note" data-i18n="footerNote">TerraWay® — зарегистрированная торговая марка. Материалы о технологии — terraway.eu</p>
+    </div>
+  </footer>
+
+  <a href="calc/" class="fab fab-calc" title="Калькулятор стоимости">🧮</a>
+
+  <script src="translations.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

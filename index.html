@@ -3,258 +3,923 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Строительные работы — Каменные ковры TerraWay</title>
-  <meta name="description" content="Строительные работы и укладка каменных ковров по технологии TerraWay. Экологичное водопроницаемое покрытие для дорожек, парковок и территорий.">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'><rect fill='%231a1a1a' width='32' height='32'/><text x='16' y='22' font-size='18' text-anchor='middle' fill='%23fff' font-family='system-ui'>A</text></svg>" type="image/svg+xml">
+  <title>Арр Макс — Каменные ковры TerraWay® · Премиум-укладка</title>
+  <meta name="description" content="Команда мастеров каменных ковров TerraWay® в Санкт-Петербурге. Швейцарская технология, ручная укладка, авторские раскладки.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    /* ============================================================ */
+    /*  PREMIUM STUDIO PALETTE                                        */
+    /* ============================================================ */
+    :root {
+      --bg:        #f3eee5;
+      --bg-soft:   #ebe5d8;
+      --bg-dark:   #1a1815;
+      --ink:       #1a1815;
+      --ink-soft:  #555048;
+      --ink-mute:  #8a847a;
+      --line:      #d8d0c2;
+      --accent:    #8b6914;
+      --gold:      #c8a866;
+      --serif:     'Cormorant Garamond', 'Playfair Display', Georgia, serif;
+      --sans:      'Inter', system-ui, sans-serif;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      font-family: var(--sans);
+      font-weight: 400;
+      font-size: 15px;
+      line-height: 1.55;
+      color: var(--ink);
+      background: var(--bg);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    img, video { display: block; max-width: 100%; height: auto; }
+    a { color: inherit; text-decoration: none; transition: color .2s; }
+    a:hover { color: var(--accent); }
+    button { font-family: inherit; }
+
+    .wrap {
+      width: 100%;
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 0 clamp(1rem, 4vw, 3rem);
+    }
+
+    /* ============================================================ */
+    /*  HEADER / NAV                                                   */
+    /* ============================================================ */
+    .nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.3rem 0;
+      background: rgba(243, 238, 229, 0.92);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border-bottom: 1px solid rgba(216, 208, 194, 0.4);
+      transition: padding .3s, background .3s;
+    }
+    .nav__inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+    .nav__logo {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      line-height: 1;
+    }
+    .nav__logo span {
+      font-style: italic;
+      font-weight: 400;
+      color: var(--accent);
+    }
+    .nav__menu {
+      display: flex;
+      gap: 2.2rem;
+      list-style: none;
+      margin: 0; padding: 0;
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+    }
+    .nav__cta {
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 0.7rem 1.4rem;
+      border: 1px solid var(--ink);
+      border-radius: 0;
+      background: transparent;
+      color: var(--ink);
+      cursor: pointer;
+      transition: all .2s;
+    }
+    .nav__cta:hover {
+      background: var(--ink);
+      color: var(--bg);
+    }
+    .nav__burger {
+      display: none;
+      background: none;
+      border: 0;
+      width: 32px; height: 32px;
+      cursor: pointer;
+      position: relative;
+    }
+    .nav__burger span {
+      display: block;
+      width: 22px; height: 1.5px;
+      background: var(--ink);
+      margin: 4px auto;
+      transition: .25s;
+    }
+
+    /* ============================================================ */
+    /*  HERO                                                            */
+    /* ============================================================ */
+    .hero {
+      position: relative;
+      height: 100vh;
+      min-height: 640px;
+      overflow: hidden;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    .hero__video, .hero__poster {
+      position: absolute;
+      inset: 0;
+      width: 100%; height: 100%;
+      object-fit: cover;
+      z-index: 0;
+    }
+    .hero__poster {
+      background:
+        radial-gradient(circle at 30% 20%, rgba(200, 168, 102, 0.18), transparent 50%),
+        radial-gradient(circle at 70% 70%, rgba(139, 105, 20, 0.22), transparent 50%),
+        linear-gradient(135deg, #1f1c18 0%, #2a2520 50%, #1a1815 100%);
+    }
+    .hero::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.15) 0%, rgba(0,0,0,0.65) 100%);
+      z-index: 1;
+    }
+    .hero__content {
+      position: relative;
+      z-index: 2;
+      padding-bottom: clamp(3rem, 8vh, 8rem);
+    }
+    .hero__kicker {
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--gold);
+      margin-bottom: 1.5rem;
+      opacity: 0;
+      animation: fadeUp .9s .2s forwards;
+    }
+    .hero__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2.2rem, 6.5vw, 6rem);
+      line-height: 1.02;
+      letter-spacing: -0.01em;
+      margin: 0 0 2rem;
+      max-width: 1100px;
+      opacity: 0;
+      animation: fadeUp 1s .35s forwards;
+    }
+    .hero__title em {
+      font-style: italic;
+      color: var(--gold);
+    }
+    .hero__sub {
+      max-width: 540px;
+      font-size: 1.05rem;
+      line-height: 1.6;
+      color: rgba(255,255,255,0.78);
+      margin: 0;
+      opacity: 0;
+      animation: fadeUp 1s .55s forwards;
+    }
+    .hero__scroll {
+      position: absolute;
+      bottom: 2rem; left: 50%;
+      transform: translateX(-50%);
+      z-index: 3;
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.55);
+      animation: bob 2s ease-in-out infinite;
+    }
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes bob {
+      0%, 100% { transform: translate(-50%, 0); }
+      50%      { transform: translate(-50%, 8px); }
+    }
+
+    /* ============================================================ */
+    /*  MARQUEE                                                         */
+    /* ============================================================ */
+    .marquee {
+      background: var(--bg-dark);
+      color: var(--bg);
+      overflow: hidden;
+      padding: 1.2rem 0;
+      border-top: 1px solid rgba(255,255,255,0.06);
+      border-bottom: 1px solid rgba(255,255,255,0.06);
+    }
+    .marquee__track {
+      display: flex;
+      white-space: nowrap;
+      animation: scroll 45s linear infinite;
+    }
+    .marquee__item {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: clamp(1.3rem, 2.5vw, 2.2rem);
+      padding: 0 2.5rem;
+      color: var(--bg);
+      flex-shrink: 0;
+    }
+    .marquee__sep {
+      align-self: center;
+      width: 6px; height: 6px;
+      border-radius: 50%;
+      background: var(--gold);
+      flex-shrink: 0;
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to   { transform: translateX(-50%); }
+    }
+
+    /* ============================================================ */
+    /*  SECTIONS                                                        */
+    /* ============================================================ */
+    .section {
+      padding: clamp(4rem, 10vh, 9rem) 0;
+    }
+    .section--dark {
+      background: var(--bg-dark);
+      color: var(--bg);
+    }
+    .section--soft { background: var(--bg-soft); }
+
+    .section__label {
+      font-size: 0.72rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      font-weight: 600;
+      color: var(--accent);
+      margin-bottom: 1.5rem;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+    .section__label::before {
+      content: '';
+      width: 36px; height: 1px;
+      background: var(--accent);
+    }
+    .section--dark .section__label { color: var(--gold); }
+    .section--dark .section__label::before { background: var(--gold); }
+
+    .section__title {
+      font-family: var(--serif);
+      font-weight: 400;
+      font-size: clamp(2rem, 5vw, 4rem);
+      line-height: 1.08;
+      letter-spacing: -0.01em;
+      margin: 0 0 2rem;
+      max-width: 14ch;
+    }
+    .section__title em { font-style: italic; color: var(--accent); }
+    .section--dark .section__title em { color: var(--gold); }
+    .section__title--wide { max-width: 22ch; }
+
+    /* ============================================================ */
+    /*  MANIFESTO                                                       */
+    /* ============================================================ */
+    .manifesto {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: start;
+    }
+    .manifesto__body p {
+      font-family: var(--serif);
+      font-size: clamp(1.3rem, 2.2vw, 1.9rem);
+      line-height: 1.4;
+      font-weight: 400;
+      color: var(--ink);
+      margin: 0 0 1.5rem;
+    }
+    .manifesto__body p em {
+      font-style: italic;
+      color: var(--accent);
+    }
+    .manifesto__body p strong {
+      font-weight: 600;
+    }
+
+    /* ============================================================ */
+    /*  STATS                                                           */
+    /* ============================================================ */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+    }
+    .stats__item {
+      padding: clamp(2rem, 5vw, 4rem) 1.5rem;
+      border-right: 1px solid var(--line);
+      text-align: center;
+    }
+    .stats__item:last-child { border-right: 0; }
+    .stats__num {
+      font-family: var(--serif);
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 400;
+      line-height: 1;
+      color: var(--ink);
+    }
+    .stats__num em { font-style: italic; color: var(--accent); }
+    .stats__label {
+      font-size: 0.74rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      font-weight: 500;
+      color: var(--ink-mute);
+      margin-top: 0.85rem;
+    }
+
+    /* ============================================================ */
+    /*  PORTFOLIO                                                       */
+    /* ============================================================ */
+    .portfolio {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: clamp(1rem, 2vw, 1.8rem);
+    }
+    .case {
+      position: relative;
+      overflow: hidden;
+      background: var(--bg-soft);
+      cursor: pointer;
+      display: block;
+      color: inherit;
+    }
+    .case::before {
+      content: '';
+      display: block;
+      padding-top: 75%;
+    }
+    .case__media {
+      position: absolute;
+      inset: 0;
+      overflow: hidden;
+    }
+    .case__media img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .case:hover .case__media img { transform: scale(1.05); }
+    .case__media::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: linear-gradient(to top, rgba(0,0,0,0.65) 0%, rgba(0,0,0,0) 60%);
+    }
+    .case__meta {
+      position: absolute;
+      bottom: 0; left: 0; right: 0;
+      padding: 1.5rem clamp(1.2rem, 2vw, 2rem);
+      color: #fff;
+      z-index: 2;
+    }
+    .case__kicker {
+      font-size: 0.7rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.5rem;
+    }
+    .case__title {
+      font-family: var(--serif);
+      font-size: clamp(1.2rem, 2vw, 1.7rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 0 0.4rem;
+    }
+    .case__title em { font-style: italic; color: var(--gold); }
+    .case__details {
+      font-size: 0.82rem;
+      color: rgba(255,255,255,0.7);
+      letter-spacing: 0.02em;
+    }
+    .case--lg  { grid-column: span 8; }
+    .case--md  { grid-column: span 4; }
+    .case--md::before { padding-top: 110%; }
+    .case--sm  { grid-column: span 4; }
+    .case--mid { grid-column: span 6; }
+    .case--mid::before { padding-top: 70%; }
+
+    /* ============================================================ */
+    /*  SERVICES                                                        */
+    /* ============================================================ */
+    .services {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+    }
+    .service {
+      padding: clamp(2rem, 4vw, 3.5rem) 0;
+      border-bottom: 1px solid var(--line);
+      border-right: 1px solid var(--line);
+      padding-right: 2rem;
+      padding-left: 2rem;
+    }
+    .service:last-child { border-right: 0; }
+    .service__num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--ink-mute);
+      margin-bottom: 1rem;
+    }
+    .service__title {
+      font-family: var(--serif);
+      font-size: clamp(1.4rem, 2vw, 1.9rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 0 0.8rem;
+    }
+    .service__body {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.6;
+      margin: 0;
+    }
+
+    /* ============================================================ */
+    /*  PERMEABILITY VIDEO                                              */
+    /* ============================================================ */
+    .perm {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .perm__video {
+      width: 100%;
+      aspect-ratio: 3 / 4;
+      object-fit: cover;
+      background: var(--bg-dark);
+    }
+    .perm__text p {
+      font-size: 1.05rem;
+      line-height: 1.65;
+      color: var(--ink-soft);
+      margin: 0 0 1.2rem;
+    }
+    .perm__big {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 5vw, 4rem);
+      font-style: italic;
+      line-height: 1;
+      color: var(--accent);
+      margin: 1rem 0 0.5rem;
+    }
+    .perm__big-label {
+      font-size: 0.75rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--ink-mute);
+    }
+
+    /* ============================================================ */
+    /*  CONTACT                                                         */
+    /* ============================================================ */
+    .contact {
+      display: grid;
+      grid-template-columns: 1.2fr 1fr;
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: center;
+    }
+    .contact__title {
+      font-family: var(--serif);
+      font-size: clamp(2.5rem, 6vw, 5rem);
+      line-height: 1.05;
+      margin: 0 0 2rem;
+      font-weight: 400;
+    }
+    .contact__title em { font-style: italic; color: var(--gold); }
+    .contact__lead {
+      font-size: 1.05rem;
+      color: rgba(255,255,255,0.7);
+      max-width: 480px;
+      margin-bottom: 2.5rem;
+    }
+    .contact__btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .btn-primary, .btn-ghost {
+      font-size: 0.78rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      font-weight: 500;
+      padding: 1.1rem 2.2rem;
+      border-radius: 0;
+      cursor: pointer;
+      transition: all .25s;
+      border: 1px solid;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+    .btn-primary {
+      background: var(--gold);
+      color: var(--bg-dark);
+      border-color: var(--gold);
+    }
+    .btn-primary:hover {
+      background: transparent;
+      color: var(--gold);
+    }
+    .btn-ghost {
+      background: transparent;
+      color: var(--bg);
+      border-color: rgba(255,255,255,0.4);
+    }
+    .btn-ghost:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+    }
+    .contact__info {
+      font-size: 0.95rem;
+      line-height: 1.8;
+    }
+    .contact__info dt {
+      font-size: 0.72rem;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(200, 168, 102, 0.9);
+      margin-bottom: 0.25rem;
+    }
+    .contact__info dd {
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      margin: 0 0 1.5rem;
+    }
+    .contact__info dd a:hover { color: var(--gold); }
+
+    /* ============================================================ */
+    /*  FOOTER                                                          */
+    /* ============================================================ */
+    .foot {
+      padding: 2.5rem 0;
+      background: var(--bg-dark);
+      color: rgba(255,255,255,0.5);
+      font-size: 0.78rem;
+      border-top: 1px solid rgba(255,255,255,0.06);
+    }
+    .foot__inner {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+    .foot a { color: rgba(255,255,255,0.75); }
+    .foot__nav { display: flex; gap: 1.5rem; flex-wrap: wrap; }
+
+    /* ============================================================ */
+    /*  RESPONSIVE                                                      */
+    /* ============================================================ */
+    @media (max-width: 1024px) {
+      .case--lg, .case--md, .case--sm, .case--mid { grid-column: span 6; }
+      .case--lg::before { padding-top: 75%; }
+    }
+    @media (max-width: 768px) {
+      .nav { padding: 1rem 0; }
+      .nav__menu { display: none; }
+      .nav__cta { display: none; }
+      .nav__burger { display: block; }
+      .manifesto { grid-template-columns: 1fr; }
+      .stats { grid-template-columns: repeat(2, 1fr); }
+      .stats__item:nth-child(2) { border-right: 0; }
+      .stats__item:nth-child(1), .stats__item:nth-child(2) {
+        border-bottom: 1px solid var(--line);
+      }
+      .services { grid-template-columns: 1fr; }
+      .service { border-right: 0; }
+      .perm { grid-template-columns: 1fr; }
+      .contact { grid-template-columns: 1fr; }
+      .case--lg, .case--md, .case--sm, .case--mid { grid-column: span 12; }
+      .case::before, .case--md::before, .case--mid::before { padding-top: 75%; }
+      .nav__menu--open {
+        display: flex;
+        position: fixed;
+        top: 60px; left: 0; right: 0; bottom: 0;
+        flex-direction: column;
+        padding: 2rem;
+        gap: 1.5rem;
+        background: var(--bg);
+      }
+    }
+
+    /* fade-in on scroll */
+    [data-reveal] {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 1s cubic-bezier(.2,.6,.3,1), transform 1s cubic-bezier(.2,.6,.3,1);
+    }
+    [data-reveal].is-visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
 </head>
 <body>
-  <header class="header">
-    <div class="container header__inner">
-      <a href="#" class="logo" data-i18n="logo">Команда Арр Макс</a>
-      <nav class="nav">
-        <a href="#terraway" data-i18n="navTerraway">TerraWay</a>
-        <a href="#cases" data-i18n="navCases">Кейсы</a>
-        <a href="#benefits" data-i18n="navBenefits">Преимущества</a>
-        <a href="#wellbeing" data-i18n="navWellbeing">Тело</a>
-        <a href="#services" data-i18n="navServices">Услуги</a>
-        <a href="norm_details.html" data-i18n="navDetails">Детали</a>
-        <a href="success.html" data-i18n="navSuccess">Чек-лист</a>
-        <a href="calc/" class="nav__calc" data-i18n="navCalc">Калькулятор</a>
-        <a href="#contact" data-i18n="navContact">Контакты</a>
-        <a href="tel:+79887680835" class="nav__phone" data-i18n="navPhone">Макс +7 988 768 08 35</a>
-      </nav>
-      <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn-stone btn-stone--typewriter" aria-live="polite"><span class="header__typewriter-text"></span><span class="header__typewriter-cursor" aria-hidden="true"></span></a>
-      <div class="lang-switch" role="group" aria-label="Язык / Language">
-        <button type="button" class="lang-switch__btn" data-lang="ru" title="Русский"><span class="lang-switch__flag" aria-hidden="true"><svg viewBox="0 0 24 16" width="24" height="16"><rect fill="#fff" height="5.33" y="0" width="24"/><rect fill="#0039a6" height="5.33" y="5.33" width="24"/><rect fill="#d52b1e" height="5.34" y="10.67" width="24"/></svg></span></button>
-        <button type="button" class="lang-switch__btn" data-lang="en" title="English"><span class="lang-switch__flag" aria-hidden="true"><svg viewBox="0 0 24 16" width="24" height="16"><rect fill="#fff" width="24" height="16"/><path fill="#C8102E" d="M10 0h4v16h-4zM0 6h24v4H0z"/></svg></span></button>
-      </div>
-      <button class="burger" aria-label="Меню" data-i18n-aria="ariaMenu">
-        <span></span>
-        <span></span>
-        <span></span>
-      </button>
+
+  <!-- ─── NAV ───────────────────────────────────────────────────── -->
+  <nav class="nav">
+    <div class="wrap nav__inner">
+      <a href="#top" class="nav__logo">Арр<span>·</span>Макс</a>
+      <ul class="nav__menu" id="navMenu">
+        <li><a href="#works">Кейсы</a></li>
+        <li><a href="#about">Бюро</a></li>
+        <li><a href="#services">Услуги</a></li>
+        <li><a href="#permeability">Технология</a></li>
+        <li><a href="#contact">Контакты</a></li>
+      </ul>
+      <a href="#contact" class="nav__cta">Обсудить проект</a>
+      <button class="nav__burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
+  </nav>
+
+  <!-- ─── HERO ──────────────────────────────────────────────────── -->
+  <header class="hero" id="top">
+    <div class="hero__poster"></div>
+    <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="">
+      <source src="assets/video/stone_water_permeable.mp4" type="video/mp4">
+    </video>
+    <div class="wrap hero__content">
+      <div class="hero__kicker">Команда мастеров · Санкт-Петербург · с 2015</div>
+      <h1 class="hero__title">
+        Покрытие, которое<br>
+        читается <em>ногами</em><br>
+        раньше, чем <em>глазами</em>.
+      </h1>
+      <p class="hero__sub">
+        Швейцарская технология бесшовного водопроницаемого покрытия из натурального камня. Ручная укладка, авторские раскладки, гарантия 15–25 лет.
+      </p>
+    </div>
+    <div class="hero__scroll">Листайте</div>
   </header>
 
-  <main>
-    <section id="cases" class="section section--cases-first">
-      <div class="container">
-        <h2 class="section__title" data-i18n="casesTitle">Наши кейсы</h2>
-        <p class="section__lead" data-i18n="casesLead">Реальные кейсы: результат, процесс и исходное состояние.</p>
-        <div class="cases-tabs" role="tablist" data-i18n-aria="ariaCaseTabs"></div>
-        <div class="case-card case-card--loading" id="case-card">
-          <div class="case-card__gallery">
-            <button type="button" class="case-carousel__btn case-carousel__btn--prev" data-i18n-aria="ariaPrevPhoto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 18l-6-6 6-6"/></svg></button>
-            <div class="case-carousel__track">
-              <div class="case-carousel__list"></div>
-            </div>
-            <button type="button" class="case-carousel__btn case-carousel__btn--next" data-i18n-aria="ariaNextPhoto"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 18l6-6-6-6"/></svg></button>
+  <!-- ─── MARQUEE ───────────────────────────────────────────────── -->
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee__track">
+      <span class="marquee__item">Каменные ковры TerraWay®</span><span class="marquee__sep"></span>
+      <span class="marquee__item"><i>Мытый бетон</i></span><span class="marquee__sep"></span>
+      <span class="marquee__item">Благоустройство</span><span class="marquee__sep"></span>
+      <span class="marquee__item"><i>Авторские раскладки</i></span><span class="marquee__sep"></span>
+      <span class="marquee__item">Гарантия 15–25 лет</span><span class="marquee__sep"></span>
+      <span class="marquee__item"><i>R11 · LAGA Z0</i></span><span class="marquee__sep"></span>
+      <!-- duplicate for seamless scroll -->
+      <span class="marquee__item">Каменные ковры TerraWay®</span><span class="marquee__sep"></span>
+      <span class="marquee__item"><i>Мытый бетон</i></span><span class="marquee__sep"></span>
+      <span class="marquee__item">Благоустройство</span><span class="marquee__sep"></span>
+      <span class="marquee__item"><i>Авторские раскладки</i></span><span class="marquee__sep"></span>
+      <span class="marquee__item">Гарантия 15–25 лет</span><span class="marquee__sep"></span>
+      <span class="marquee__item"><i>R11 · LAGA Z0</i></span><span class="marquee__sep"></span>
+    </div>
+  </div>
+
+  <!-- ─── MANIFESTO ─────────────────────────────────────────────── -->
+  <section class="section" id="about" data-reveal>
+    <div class="wrap manifesto">
+      <div>
+        <div class="section__label">О бюро</div>
+        <h2 class="section__title">Команда <em>Арр Макс</em></h2>
+      </div>
+      <div class="manifesto__body">
+        <p>Мы укладываем каменные ковры по технологии <em>TerraWay®</em> — швейцарской системе бесшовного водопроницаемого покрытия, в эксплуатации более <strong>30 лет</strong>.</p>
+        <p>Каждый проект — это <em>плато</em>: множество камней, удерживаемых не сплетением нитей, но взаимным давлением и связующим. Качество поверхности — это запись о дисциплине шести фаз, что ей предшествовали.</p>
+        <p>Работаем по Санкт-Петербургу, Ленинградской области и далее по запросу. Выезд на объект — бесплатно.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── STATS ─────────────────────────────────────────────────── -->
+  <section class="section--soft" data-reveal>
+    <div class="wrap" style="padding-top:0;padding-bottom:0">
+      <ul class="stats" style="list-style:none;margin:0;padding:0">
+        <li class="stats__item">
+          <div class="stats__num"><em>30+</em></div>
+          <div class="stats__label">Лет технологии</div>
+        </li>
+        <li class="stats__item">
+          <div class="stats__num">1 800</div>
+          <div class="stats__label">л/м²·ч водопроницаемость</div>
+        </li>
+        <li class="stats__item">
+          <div class="stats__num"><em>R11</em></div>
+          <div class="stats__label">Класс противоскольжения</div>
+        </li>
+        <li class="stats__item">
+          <div class="stats__num">15–25</div>
+          <div class="stats__label">Лет гарантия</div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ─── PORTFOLIO ─────────────────────────────────────────────── -->
+  <section class="section" id="works" data-reveal>
+    <div class="wrap">
+      <div class="section__label">Избранные проекты</div>
+      <h2 class="section__title section__title--wide">Объекты, в которых мы остаёмся <em>надолго</em>.</h2>
+
+      <div class="portfolio">
+
+        <a class="case case--lg" href="#contact">
+          <div class="case__media"><img src="cases/case_11/after_1.jpg" alt="Крыльцо" loading="lazy"></div>
+          <div class="case__meta">
+            <div class="case__kicker">Крыльцо · Санкт-Петербург</div>
+            <h3 class="case__title">Каменный ковёр <em>TerraWay</em> · школьный камень</h3>
+            <div class="case__details">5 м² · 4 часа · полиуретан + натуральный камень</div>
           </div>
-          <div class="case-card__info">
-            <h3 class="case-card__title"></h3>
-            <ul class="case-card__meta">
-              <li class="case-card__meta-item case-card__meta--area"><span class="case-card__meta-label" data-i18n="metaArea">Площадь</span><span class="case-card__meta-value"></span></li>
-              <li class="case-card__meta-item case-card__meta--technology"><span class="case-card__meta-label" data-i18n="metaTechnology">Технология</span><span class="case-card__meta-value"></span></li>
-              <li class="case-card__meta-item case-card__meta--material"><span class="case-card__meta-label" data-i18n="metaMaterial">Материал</span><span class="case-card__meta-value"></span></li>
-              <li class="case-card__meta-item case-card__meta--location"><span class="case-card__meta-label" data-i18n="metaLocation">Локация</span><span class="case-card__meta-value"></span></li>
-              <li class="case-card__meta-item case-card__meta--duration"><span class="case-card__meta-label" data-i18n="metaDuration">Сроки</span><span class="case-card__meta-value"></span></li>
-              <li class="case-card__meta-item case-card__meta--cost"><span class="case-card__meta-label" data-i18n="metaCost">Стоимость</span><span class="case-card__meta-value"></span></li>
-            </ul>
+        </a>
+
+        <a class="case case--md" href="#contact">
+          <div class="case__media"><img src="cases/case_8/photo.jpg" alt="Входная группа на Лиговке" loading="lazy"></div>
+          <div class="case__meta">
+            <div class="case__kicker">Премиум · Лиговский проспект</div>
+            <h3 class="case__title">Входная группа <em>на Лиговке</em></h3>
+            <div class="case__details">2 м² · 2 часа · 60 000 ₽ · чёрный гранит + морская галька + тёплый пол</div>
           </div>
-          <div class="case-card__actions">
-            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd4Lm7KFx9Oca_T1ZDqONX0pgtpYdqTKxZd_Hnw7KuK67YCfw/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn btn--primary btn--cost" data-i18n="btnCost">Узнать стоимость Вашего проекта</a>
+        </a>
+
+        <a class="case case--mid" href="#contact">
+          <div class="case__media"><img src="cases/case_5/photo.jpg" alt="Отмостка частного дома" loading="lazy"></div>
+          <div class="case__meta">
+            <div class="case__kicker">Отмостка · Тосно</div>
+            <h3 class="case__title">Территория возле <em>частного дома</em></h3>
+            <div class="case__details">90 м² · 1 день · 1 100 000 ₽ · галька с эпоксидной смолой</div>
           </div>
-          <p class="case-card__load-err" aria-live="polite"></p>
-        </div>
-      </div>
-    </section>
+        </a>
 
-    <section class="hero">
-      <div class="hero__bg"></div>
-      <div class="container hero__content">
-        <div class="hero__panel">
-          <h1 class="hero__title"><span data-i18n="heroTitle">Строительные работы и каменные ковры</span> <span class="hero__accent">TerraWay</span></h1>
-          <p class="hero__lead" data-i18n="heroLead">Экологичная технология водопроницаемого покрытия для дорожек, парковок и территорий. Прочность, долговечность и забота об окружающей среде.</p>
-          <ul class="hero__infographic" data-i18n-aria="ariaInfographic">
-            <li class="hero__info-item">
-              <span class="hero__info-icon" aria-hidden="true">💧</span>
-              <span class="hero__info-value">1800 л/м²·ч</span>
-              <span class="hero__info-label" data-i18n="infoPermeability">Водопроницаемость</span>
-            </li>
-            <li class="hero__info-item">
-              <span class="hero__info-icon" aria-hidden="true">🛡️</span>
-              <span class="hero__info-value">R11</span>
-              <span class="hero__info-label" data-i18n="infoGrip">Противоскольжение</span>
-            </li>
-            <li class="hero__info-item">
-              <span class="hero__info-icon" aria-hidden="true">🌿</span>
-              <span class="hero__info-value" data-i18n="infoYears">30+ лет</span>
-              <span class="hero__info-label" data-i18n="infoExperience">Опыт технологии</span>
-            </li>
-          </ul>
-          <div class="hero__actions">
-            <a href="#terraway" class="btn btn--primary" data-i18n="btnTerraway">Узнать о TerraWay</a>
-            <a href="#contact" class="btn btn--outline" data-i18n="btnContact">Связаться с нами</a>
+        <a class="case case--mid" href="#contact">
+          <div class="case__media"><img src="cases/case_3/photo.jpg" alt="Каменный ковёр в доме" loading="lazy"></div>
+          <div class="case__meta">
+            <div class="case__kicker">Интерьер · Краснодар</div>
+            <h3 class="case__title">Каменный ковёр <em>в доме</em></h3>
+            <div class="case__details">80 м² · 5 дней · речная галька, мытый бетон</div>
           </div>
-        </div>
-      </div>
-      <div class="hero__scroll" data-i18n="heroScroll">Листайте вниз</div>
-    </section>
+        </a>
 
-    <section id="terraway" class="section section--alt">
-      <div class="container">
-        <h2 class="section__title" data-i18n="terrawayTitle">Технология TerraWay®</h2>
-        <p class="section__lead" data-i18n="terrawayLead">Каменный ковёр TerraWay — это водопроницаемая система мощения для участков с лёгкой нагрузкой. Более трёх десятилетий опыта в экологичном мощении.</p>
-        <figure class="water-demo">
-          <video
-            class="water-demo__video"
-            src="assets/video/stone_water_permeable.mp4"
-            autoplay
-            muted
-            loop
-            playsinline
-            preload="metadata"
-            aria-label="Каменный ковёр пропускает воду насквозь"
-          ></video>
-          <figcaption class="water-demo__caption">
-            <span class="water-demo__icon" aria-hidden="true">💧</span>
-            <span data-i18n="waterDemoCap">Вода уходит сквозь покрытие — без луж, без задержек, без водоотводных решёток.</span>
-          </figcaption>
-        </figure>
-
-        <div class="features-grid">
-          <div class="feature-card">
-            <div class="feature-card__icon">💧</div>
-            <h3 data-i18n="featWater">Водопроницаемость</h3>
-            <p data-i18n="featWaterP">Около 1800 литров воды на м² в час. Дождевая вода уходит в грунт, снижая нагрузку на ливнёвку и пополняя грунтовые воды.</p>
+        <a class="case case--sm" href="#contact">
+          <div class="case__media"><img src="cases/case_4/photo.jpg" alt="Крыльцо в Ропше" loading="lazy"></div>
+          <div class="case__meta">
+            <div class="case__kicker">Крыльцо · Ропша</div>
+            <h3 class="case__title">Каменная крошка <em>с полиуретаном</em></h3>
+            <div class="case__details">10 м² · 6 часов</div>
           </div>
-          <div class="feature-card">
-            <div class="feature-card__icon">🛡️</div>
-            <h3 data-i18n="featStrength">Прочность</h3>
-            <p data-i18n="featStrengthP">Минимальная прочность на сжатие 10 Н/мм². Противоскользящая поверхность класса R11 (High Grip).</p>
+        </a>
+
+        <a class="case case--sm" href="#contact">
+          <div class="case__media"><img src="cases/case_1/photo.jpg" alt="Балкон" loading="lazy"></div>
+          <div class="case__meta">
+            <div class="case__kicker">Балкон · Санкт-Петербург</div>
+            <h3 class="case__title">Каменный ковёр <em>на балконе</em></h3>
+            <div class="case__details">6 м² · 1 день</div>
           </div>
-          <div class="feature-card">
-            <div class="feature-card__icon">🌿</div>
-            <h3 data-i18n="featEco">Экология</h3>
-            <p data-i18n="featEcoP">Класс LAGA Z0 — укладка без ограничений. Нет вымывания частиц, благоприятно для деревьев и почвы.</p>
+        </a>
+
+        <a class="case case--sm" href="#contact">
+          <div class="case__media"><img src="cases/case_2/photo.jpg" alt="Въезд" loading="lazy"></div>
+          <div class="case__meta">
+            <div class="case__kicker">Въезд · Лен. область</div>
+            <h3 class="case__title">Мытый бетон <em>с галькой</em></h3>
+            <div class="case__details">80 м² · 4 дня</div>
           </div>
-        </div>
-        <div class="details-teaser">
-          <p>Почему ковры разрушаются, чем отличается полиуретан от других смол и как правильно работать с дождём — подробно разобрали в отдельном разделе.</p>
-          <a href="norm_details.html" class="btn btn--outline btn--sm">Читать детали технологии →</a>
-        </div>
+        </a>
 
-        <div class="r11-block">
-          <h3 class="r11-block__title" data-i18n="r11Title">Класс противоскольжения R11 (High Grip)</h3>
-          <p><strong data-i18n="r11What">Что это?</strong> <span data-i18n="r11WhatP">R11 — это класс сопротивления скольжению по европейскому стандарту (DIN 51130). Цифра означает угол наклона, при котором покрытие остаётся безопасным при ходьбе. R11 относится к категории «высокое сцепление» (High Grip).</span></p>
-          <p><strong data-i18n="r11Why">Зачем это нужно?</strong> <span data-i18n="r11WhyP">На дорожках, у бассейнов, на парковках и въездах поверхность часто бывает мокрой или с листвой. Покрытие TerraWay с R11 снижает риск поскользнуться — удобно и безопасно для пешеходов, детей и людей с ограниченной подвижностью, а также для велосипедов и колясок.</span></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── PERMEABILITY ──────────────────────────────────────────── -->
+  <section class="section section--soft" id="permeability" data-reveal>
+    <div class="wrap perm">
+      <video class="perm__video" autoplay muted loop playsinline preload="metadata">
+        <source src="assets/video/stone_water_permeable.mp4" type="video/mp4">
+      </video>
+      <div class="perm__text">
+        <div class="section__label">Технология</div>
+        <h2 class="section__title">Покрытие, через которое <em>уходит дождь</em>.</h2>
+        <p>Каменный ковёр TerraWay® пропускает воду как почва. Дождевая влага уходит в основание, а не стоит лужами на дорожках и террасе.</p>
+        <p>Это не «ещё одна плитка». Это другая эстетика, другая физика, другая логика эксплуатации.</p>
+        <div class="perm__big">1 800 л/м²·ч</div>
+        <div class="perm__big-label">класс водопроницаемости А+</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── SERVICES ──────────────────────────────────────────────── -->
+  <section class="section" id="services" data-reveal>
+    <div class="wrap">
+      <div class="section__label">Услуги</div>
+      <h2 class="section__title">Что мы <em>делаем</em>.</h2>
+
+      <div class="services">
+        <div class="service">
+          <div class="service__num">01 / Укладка</div>
+          <h3 class="service__title">Каменные ковры <em>TerraWay®</em></h3>
+          <p class="service__body">Полный цикл: проектирование, подготовка основания, укладка по швейцарской технологии, нарезка швов, сдача объекта. Стандарт от 5 600 ₽/м², премиум от 11 000 ₽/м².</p>
         </div>
-        <div class="install-steps">
-          <h3 class="install-steps__title" data-i18n="installTitle">Укладка в четыре этапа</h3>
-          <ol class="install-steps__list">
-            <li data-i18n="install1">Подготовка водопроницаемой подосновы из щебня</li>
-            <li data-i18n="install2">Смешивание каменной фракции 2–4 мм с вяжущей системой</li>
-            <li data-i18n="install3">Распределение и выравнивание смеси</li>
-            <li data-i18n="install4">Нарезка швов. Хождение возможно через 24 часа, полное затвердевание — за 7 дней</li>
-          </ol>
+        <div class="service">
+          <div class="service__num">02 / Благоустройство</div>
+          <h3 class="service__title">Подготовка <em>территории</em></h3>
+          <p class="service__body">Земляные работы, дренаж, отсыпка основания, установка поребрика, демонтаж старого покрытия. Всё, что нужно сделать до укладки каменного ковра — или как самостоятельная задача.</p>
+        </div>
+        <div class="service">
+          <div class="service__num">03 / Обслуживание</div>
+          <h3 class="service__title">Сервис <em>и обновление</em></h3>
+          <p class="service__body">Регулярная очистка, ремонт швов, обновление поверхностного связующего раз в 5–7 лет. Продлевает жизнь покрытия и возвращает первоначальный вид.</p>
         </div>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section id="benefits" class="section">
-      <div class="container">
-        <h2 class="section__title" data-i18n="benefitsTitle">Почему TerraWay</h2>
-        <ul class="benefits-list">
-          <li data-i18n="benefit1">Деревья и мелкие животные получают достаточно воды и воздуха — улучшается среда</li>
-          <li data-i18n="benefit2">Дождевая вода не перегружает канализацию — меньше затрат на обслуживание</li>
-          <li data-i18n="benefit3">Минимальный поверхностный сток, пополнение грунтовых вод</li>
-          <li data-i18n="benefit4">Снижение шума и пыли, ослабление эффекта теплового острова за счёт испарения</li>
-          <li data-i18n="benefit5">Свободная форма и цвет в зависимости от местных материалов</li>
-          <li data-i18n="benefit6">Простой уход: щётка или мойка высокого давления до 80 бар, устойчивость к противогололёдной соли</li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="wellbeing" class="section section--wellbeing">
-      <div class="container">
-        <h2 class="section__title" data-i18n="wellbeingTitle">Тело и забота о себе</h2>
-        <p class="section__lead" data-i18n="wellbeingLead">Ходить по естественному каменному покрытию полезно для развития тела: стопы получают естественную стимуляцию, улучшается баланс и осанка. Это не только про двор или дорожку — это про любовь к себе и к месту, где вы живёте.</p>
-        <ul class="wellbeing-list">
-          <li><span class="wellbeing__icon" aria-hidden="true">🦶</span> <span data-i18n="wellbeing1">Стопы и голеностоп работают естественно — укрепляются связки и мелкие мышцы.</span></li>
-          <li><span class="wellbeing__icon" aria-hidden="true">⚖️</span> <span data-i18n="wellbeing2">Баланс и координация: неровность поверхности тренирует чувство равновесия.</span></li>
-          <li><span class="wellbeing__icon" aria-hidden="true">🌿</span> <span data-i18n="wellbeing3">Экологичное покрытие под ногами — забота об окружающей среде и о себе.</span></li>
-          <li><span class="wellbeing__icon" aria-hidden="true">❤️</span> <span data-i18n="wellbeing4">Любовь к себе начинается с малого: комфортное, безопасное пространство у дома.</span></li>
-        </ul>
-      </div>
-    </section>
-
-    <section id="applications" class="section section--alt">
-      <div class="container">
-        <h2 class="section__title" data-i18n="appTitle">Где применяется TerraWay</h2>
-        <p class="section__lead" data-i18n="appLead">Подходит для любых объектов с лёгкой нагрузкой.</p>
-        <p class="applications__dream" data-i18n="appDream">Предбанник, зона у бассейна, терраса — там, где хочется тепло и уверенность под ногами.</p>
-        <div class="applications-grid">
-          <span class="app-tag" data-i18n="app1">Дорожки и тротуары</span>
-          <span class="app-tag" data-i18n="app2">Парковки и подъезды</span>
-          <span class="app-tag" data-i18n="app3">Велодорожки</span>
-          <span class="app-tag" data-i18n="app4">Детские и спортивные площадки</span>
-          <span class="app-tag" data-i18n="app5">Защита прикорневой зоны деревьев</span>
-          <span class="app-tag" data-i18n="app6">Террасы и крыши</span>
-          <span class="app-tag" data-i18n="app7">Площадки у бассейнов</span>
-          <span class="app-tag" data-i18n="app8">Парковки над подземными гаражами</span>
-          <span class="app-tag" data-i18n="app9">Школьные дворы</span>
-          <span class="app-tag" data-i18n="app10">Доступная среда</span>
+  <!-- ─── CONTACT ───────────────────────────────────────────────── -->
+  <section class="section section--dark" id="contact" data-reveal>
+    <div class="wrap contact">
+      <div>
+        <div class="section__label">Контакт</div>
+        <h2 class="contact__title">Готовы обсудить <em>ваш проект</em>?</h2>
+        <p class="contact__lead">Пришлите фото и пару слов о территории — в течение дня вернёмся с предварительной сметой и сроком выезда. Без обязательств.</p>
+        <div class="contact__btns">
+          <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn-primary">Написать в Telegram</a>
+          <a href="calc/" class="btn-ghost">Открыть калькулятор</a>
         </div>
       </div>
-    </section>
+      <dl class="contact__info">
+        <dt>Звонок</dt>
+        <dd><a href="tel:+79887680835">+7 988 768 08 35</a></dd>
+        <dt>Telegram · MAX</dt>
+        <dd><a href="https://t.me/arrmax_pub" target="_blank" rel="noopener">@arrmax_pub</a></dd>
+        <dt>География</dt>
+        <dd>Санкт-Петербург и Лен. область</dd>
+      </dl>
+    </div>
+  </section>
 
-    <section id="services" class="section">
-      <div class="container">
-        <h2 class="section__title" data-i18n="servicesTitle">Наши услуги</h2>
-        <div class="services-grid">
-          <article class="service-card">
-            <h3 data-i18n="serv1Title">Укладка каменных ковров TerraWay</h3>
-            <p data-i18n="serv1P">Полный цикл: проектирование, подготовка основания, укладка по технологии TerraWay, нарезка швов и сдача объекта.</p>
-          </article>
-          <article class="service-card">
-            <h3 data-i18n="serv2Title">Строительные и отделочные работы</h3>
-            <p data-i18n="serv2P">Благоустройство территорий, мощение, отмостки, подпорные стенки и сопутствующие строительные работы.</p>
-          </article>
-          <article class="service-card">
-            <h3 data-i18n="serv3Title">Обслуживание и обновление покрытий</h3>
-            <p data-i18n="serv3P">Регулярная очистка, ремонт швов и «освежение» поверхности специальным вяжущим для продления срока службы.</p>
-          </article>
-        </div>
+  <!-- ─── FOOTER ────────────────────────────────────────────────── -->
+  <footer class="foot">
+    <div class="wrap foot__inner">
+      <div>© Команда Арр Макс · TerraWay® — зарегистрированная торговая марка</div>
+      <div class="foot__nav">
+        <a href="index_old.html">Старая версия</a>
+        <a href="calc/">Калькулятор</a>
+        <a href="norm_details.html">Технология</a>
+        <a href="success.html">Чек-лист</a>
+        <a href="glossary.html">Глоссарий</a>
       </div>
-    </section>
-
-    <section id="contact" class="section section--dark">
-      <div class="container">
-        <h2 class="section__title" data-i18n="contactTitle">Связаться с нами</h2>
-        <p class="section__lead" data-i18n="contactLead">Обсудим ваш проект и подберём решение под задачу.</p>
-        <div class="contact-block">
-          <p data-i18n="contactP">Позвоните Максиму или напишите — ответим в ближайшее время.</p>
-          <p class="contact-phone"><span data-i18n="contactPhone">Макс</span> <a href="tel:+79887680835">+7 988 768 08 35</a></p>
-          <p class="contact-telegram"><a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" data-i18n="contactTelegram">Telegram: ArrMax Public</a></p>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer class="footer">
-    <div class="container footer__inner">
-      <p class="footer__copy">© <span data-i18n="logo">Команда Арр Макс</span>. <span data-i18n="footerCopy">Строительные работы и каменные ковры TerraWay.</span> <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener">Telegram</a></p>
-      <p class="footer__note" data-i18n="footerNote">TerraWay® — зарегистрированная торговая марка. Материалы о технологии — terraway.eu</p>
     </div>
   </footer>
 
-  <a href="calc/" class="fab fab-calc" title="Калькулятор стоимости">🧮</a>
+  <script>
+    // Reveal on scroll
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('is-visible');
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -10% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(el => io.observe(el));
 
-  <script src="translations.js"></script>
-  <script src="script.js"></script>
+    // Nav shrink on scroll
+    const nav = document.querySelector('.nav');
+    window.addEventListener('scroll', () => {
+      nav.style.padding = window.scrollY > 40 ? '0.8rem 0' : '1.3rem 0';
+    });
+
+    // Burger menu
+    const burger = document.getElementById('navBurger');
+    const menu   = document.getElementById('navMenu');
+    burger.addEventListener('click', () => menu.classList.toggle('nav__menu--open'));
+    menu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => menu.classList.remove('nav__menu--open')));
+  </script>
 </body>
 </html>
