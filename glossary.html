@@ -102,20 +102,55 @@
       list-style: none;
       justify-content: center;
     }
+    /* ── Category palette (soft tints, deep text) ─────────────── */
+    [data-cat="tech"]  { --cat-bg: #f0e3c6; --cat-fg: #735112; --cat-bd: #d6c08a; }
+    [data-cat="norm"]  { --cat-bg: #dde4f0; --cat-fg: #2c4773; --cat-bd: #afbed6; }
+    [data-cat="sp"]    { --cat-bg: #e2dfd6; --cat-fg: #4a4338; --cat-bd: #c1b9a6; }
+    [data-cat="std"]   { --cat-bg: #d8e7e2; --cat-fg: #1e5b50; --cat-bd: #a3c6bc; }
+    [data-cat="unit"]  { --cat-bg: #ddead7; --cat-fg: #2f6635; --cat-bd: #a8c4a0; }
+    [data-cat="legal"] { --cat-bg: #ecd5d8; --cat-fg: #7a2435; --cat-bd: #d4a3aa; }
+    [data-cat="biz"]   { --cat-bg: #f0debb; --cat-fg: #7d4f0c; --cat-bd: #d6b673; }
+    [data-cat="chem"]  { --cat-bg: #e2d4ec; --cat-fg: #5a2785; --cat-bd: #beaad4; }
+    [data-cat="tool"]  { --cat-bg: #d6e4ee; --cat-fg: #1d4f7a; --cat-bd: #a3c1d6; }
+
     .gl-cat-chip {
       font-family: inherit;
       font-size: .78rem;
       font-weight: 600;
-      padding: .3rem .75rem;
+      padding: .35rem .9rem .35rem 1.85rem;
       border: 1px solid var(--color-border);
       background: var(--color-surface);
       color: var(--color-text);
       border-radius: 999px;
       cursor: pointer;
-      transition: all .15s;
+      transition: all .18s;
+      position: relative;
     }
-    .gl-cat-chip:hover { border-color: var(--color-accent); color: var(--color-accent); }
+    .gl-cat-chip::before {
+      content: '';
+      position: absolute;
+      left: .7rem;
+      top: 50%;
+      width: .55rem; height: .55rem;
+      border-radius: 50%;
+      background: var(--cat-fg, var(--color-text-muted));
+      transform: translateY(-50%);
+      transition: transform .2s;
+    }
+    .gl-cat-chip[data-cat="all"] { padding-left: .9rem; }
+    .gl-cat-chip[data-cat="all"]::before { display: none; }
+    .gl-cat-chip:hover {
+      border-color: var(--cat-bd, var(--color-accent));
+      background: var(--cat-bg, var(--color-surface));
+      color: var(--cat-fg, var(--color-accent));
+    }
     .gl-cat-chip.active {
+      background: var(--cat-fg, var(--color-dark));
+      color: var(--cat-bg, #fff);
+      border-color: var(--cat-fg, var(--color-dark));
+    }
+    .gl-cat-chip.active::before { background: var(--cat-bg, #fff); }
+    .gl-cat-chip[data-cat="all"].active {
       background: var(--color-dark); color: #fff; border-color: var(--color-dark);
     }
     .gl-cat-count {
@@ -134,14 +169,16 @@
     .gl-card {
       background: var(--color-surface);
       border: 1px solid var(--color-border);
-      border-left: 3px solid var(--color-accent);
+      border-left: 3px solid var(--cat-bd, var(--color-accent));
       border-radius: var(--radius);
       padding: 1rem 1.15rem 1.1rem;
-      transition: transform .15s, box-shadow .15s;
+      transition: transform .2s cubic-bezier(.2,.6,.3,1), box-shadow .2s, border-left-color .2s;
+      position: relative;
     }
     .gl-card:hover {
-      transform: translateY(-2px);
-      box-shadow: var(--shadow);
+      transform: translateY(-3px);
+      box-shadow: 0 6px 18px rgba(44, 40, 37, 0.10);
+      border-left-color: var(--cat-fg, var(--color-accent));
     }
     .gl-card__head {
       display: flex;
@@ -154,7 +191,7 @@
       font-family: ui-monospace, 'SF Mono', Menlo, monospace;
       font-size: 1.05rem;
       font-weight: 700;
-      color: var(--color-accent);
+      color: var(--cat-fg, var(--color-accent));
       letter-spacing: -0.01em;
     }
     .gl-card__full {
@@ -175,14 +212,24 @@
       gap: .3rem;
     }
     .gl-card__cat {
-      font-size: .68rem;
+      font-size: .67rem;
       font-weight: 700;
-      letter-spacing: .04em;
+      letter-spacing: .06em;
       text-transform: uppercase;
-      color: var(--color-text-muted);
-      background: var(--color-bg-alt);
-      padding: .15rem .45rem;
-      border-radius: 3px;
+      color: var(--cat-fg, var(--color-text-muted));
+      background: var(--cat-bg, var(--color-bg-alt));
+      border: 1px solid var(--cat-bd, transparent);
+      padding: .2rem .6rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: .35rem;
+    }
+    .gl-card__cat::before {
+      content: '';
+      width: .42rem; height: .42rem;
+      border-radius: 50%;
+      background: var(--cat-fg, currentColor);
     }
     .gl-card__link {
       font-size: .72rem;
@@ -683,7 +730,7 @@
           ? `<a class="gl-card__link" href="${escapeHtml(t.link.href)}" target="_blank" rel="noopener">${escapeHtml(t.link.text)} ↗</a>`
           : '';
         return `
-          <div class="gl-card${r.kind === 'fuzzy' ? ' gl-card--fuzzy' : ''}">
+          <div class="gl-card${r.kind === 'fuzzy' ? ' gl-card--fuzzy' : ''}" data-cat="${escapeHtml(t.c)}">
             <div class="gl-card__head">
               <span class="gl-card__short">${highlight(t.s, q)}</span>
               <span class="gl-card__full">${highlight(t.f, q)}</span>
@@ -691,7 +738,7 @@
             </div>
             <p class="gl-card__desc">${highlight(t.d, q)}</p>
             <div class="gl-card__meta">
-              <span class="gl-card__cat">${escapeHtml(catLabel)}</span>
+              <span class="gl-card__cat" data-cat="${escapeHtml(t.c)}">${escapeHtml(catLabel)}</span>
               ${linkHtml}
             </div>
           </div>`;
