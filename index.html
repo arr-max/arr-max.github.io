@@ -94,6 +94,25 @@
       text-transform: uppercase;
       font-weight: 500;
     }
+    .nav__actions {
+      display: flex;
+      align-items: center;
+      gap: 1.4rem;
+    }
+    .nav__phone {
+      font-family: var(--serif);
+      font-size: 1rem;
+      font-weight: 500;
+      letter-spacing: 0.02em;
+      color: var(--ink);
+      white-space: nowrap;
+      border-bottom: 1px solid transparent;
+      transition: color .2s, border-color .2s;
+    }
+    .nav__phone:hover {
+      color: var(--accent);
+      border-bottom-color: var(--accent);
+    }
     .nav__cta {
       font-size: 0.74rem;
       letter-spacing: 0.14em;
@@ -106,6 +125,7 @@
       color: var(--ink);
       cursor: pointer;
       transition: all .2s;
+      white-space: nowrap;
     }
     .nav__cta:hover {
       background: var(--ink);
@@ -610,6 +630,8 @@
       .nav { padding: 1rem 0; }
       .nav__menu { display: none; }
       .nav__cta { display: none; }
+      .nav__phone { font-size: 0.85rem; }
+      .nav__actions { gap: 0.8rem; }
       .nav__burger { display: block; }
       .manifesto { grid-template-columns: 1fr; }
       .stats { grid-template-columns: repeat(2, 1fr); }
@@ -659,7 +681,10 @@
         <li><a href="#permeability">Технология</a></li>
         <li><a href="#contact">Контакты</a></li>
       </ul>
-      <a href="#contact" class="nav__cta">Обсудить проект</a>
+      <div class="nav__actions">
+        <a href="tel:+79887680835" class="nav__phone">+7 988 768-08-35</a>
+        <a href="#contact" class="nav__cta">Обсудить</a>
+      </div>
       <button class="nav__burger" id="navBurger" aria-label="Меню"><span></span><span></span><span></span></button>
     </div>
   </nav>
@@ -868,8 +893,9 @@
         <h2 class="contact__title">Готовы обсудить <em>ваш проект</em>?</h2>
         <p class="contact__lead">Пришлите фото и пару слов о территории — в течение дня вернёмся с предварительной сметой и сроком выезда. Без обязательств.</p>
         <div class="contact__btns">
-          <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn-primary">Написать в Telegram</a>
-          <a href="calc/" class="btn-ghost">Открыть калькулятор</a>
+          <a href="tel:+79887680835" class="btn-primary">Позвонить +7 988 768-08-35</a>
+          <a href="https://t.me/arrmax_pub" target="_blank" rel="noopener" class="btn-ghost">Написать в Telegram</a>
+          <a href="calc/" class="btn-ghost">Калькулятор</a>
         </div>
       </div>
       <dl class="contact__info">
