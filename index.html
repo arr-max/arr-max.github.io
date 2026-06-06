@@ -522,6 +522,67 @@
     }
 
     /* ============================================================ */
+    /*  KNOWLEDGE BASE CARDS                                            */
+    /* ============================================================ */
+    .know {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 0;
+      border-top: 1px solid var(--line);
+      border-left: 1px solid var(--line);
+    }
+    .know__card {
+      display: block;
+      padding: clamp(2rem, 4vw, 3.5rem);
+      border-right: 1px solid var(--line);
+      border-bottom: 1px solid var(--line);
+      background: transparent;
+      color: inherit;
+      position: relative;
+      transition: background .25s, transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .know__card:hover {
+      background: var(--bg-soft);
+      color: inherit;
+    }
+    .know__card:hover .know__arrow { transform: translate(4px, -4px); }
+    .know__num {
+      font-family: var(--serif);
+      font-style: italic;
+      font-size: 0.95rem;
+      color: var(--accent);
+      letter-spacing: 0.04em;
+      margin-bottom: 1.5rem;
+    }
+    .know__title {
+      font-family: var(--serif);
+      font-size: clamp(1.5rem, 2.4vw, 2.1rem);
+      font-weight: 400;
+      line-height: 1.15;
+      margin: 0 0 0.6rem;
+    }
+    .know__title em { font-style: italic; color: var(--accent); }
+    .know__desc {
+      font-size: 0.95rem;
+      color: var(--ink-soft);
+      line-height: 1.55;
+      margin: 0;
+      max-width: 36ch;
+    }
+    .know__arrow {
+      position: absolute;
+      top: clamp(2rem, 4vw, 3.5rem);
+      right: clamp(2rem, 4vw, 3.5rem);
+      font-family: var(--serif);
+      font-size: 1.4rem;
+      color: var(--accent);
+      transition: transform .35s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    @media (max-width: 700px) {
+      .know { grid-template-columns: 1fr; }
+    }
+
+    /* ============================================================ */
     /*  CONTACT                                                         */
     /* ============================================================ */
     .contact {
@@ -678,7 +739,7 @@
         <li><a href="#works">Кейсы</a></li>
         <li><a href="#about">Бюро</a></li>
         <li><a href="#services">Услуги</a></li>
-        <li><a href="#permeability">Технология</a></li>
+        <li><a href="#knowledge">Знание</a></li>
         <li><a href="#contact">Контакты</a></li>
       </ul>
       <div class="nav__actions">
@@ -881,6 +942,44 @@
           <h3 class="service__title">Сервис <em>и обновление</em></h3>
           <p class="service__body">Регулярная очистка, ремонт швов, обновление поверхностного связующего раз в 5–7 лет. Продлевает жизнь покрытия и возвращает первоначальный вид.</p>
         </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ─── KNOWLEDGE ─────────────────────────────────────────────── -->
+  <section class="section section--soft" id="knowledge" data-reveal>
+    <div class="wrap">
+      <div class="section__label">Что почитать</div>
+      <h2 class="section__title section__title--wide">Технология <em>с открытым исходным кодом</em>.</h2>
+      <p style="max-width:520px;color:var(--ink-soft);font-size:1.05rem;line-height:1.6;margin:0 0 3rem">
+        Мы публикуем всё, что используем сами: нормы, чек-листы, физику смол, словари. Чтобы вы могли проверить, к кому обращаетесь.
+      </p>
+
+      <div class="know">
+        <a class="know__card" href="norm_details.html">
+          <div class="know__num">01 / Технология</div>
+          <h3 class="know__title">Почему ковры <em>разрушаются</em></h3>
+          <p class="know__desc">10 причин расслоения, плесени и трещин. Разница между алифатическим и ароматическим полиуретаном. Что происходит с покрытием при ливне.</p>
+          <span class="know__arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="know__card" href="success.html">
+          <div class="know__num">02 / Чек-лист</div>
+          <h3 class="know__title">Шесть фаз <em>правильной укладки</em></h3>
+          <p class="know__desc">От диагностики до сдачи. С указанием СНиПов, временных окон, погодных стоп-факторов и точек коммуникации с заказчиком.</p>
+          <span class="know__arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="know__card" href="calc/">
+          <div class="know__num">03 / Калькулятор</div>
+          <h3 class="know__title">Расчёт стоимости <em>и 3D-визуализация</em></h3>
+          <p class="know__desc">Площадь, тип основания, дополнительные услуги — пересчёт в реальном времени. Анимация пайплайна укладки. PDF-смета.</p>
+          <span class="know__arrow" aria-hidden="true">↗</span>
+        </a>
+        <a class="know__card" href="glossary.html">
+          <div class="know__num">04 / Глоссарий</div>
+          <h3 class="know__title">Все сокращения <em>с пояснениями</em></h3>
+          <p class="know__desc">ПУ, СНиП, ГОСТ, R11, LAGA Z0 — 90+ терминов в 9 категориях с прямыми ссылками на cntd.ru и нечётким поиском.</p>
+          <span class="know__arrow" aria-hidden="true">↗</span>
+        </a>
       </div>
     </div>
   </section>
